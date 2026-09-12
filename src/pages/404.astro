@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/site/Nav.astro';
+import Footer from '../components/site/Footer.astro';
+import Icon from '../components/site/Icon.astro';
+
+const title = 'Page not found — Rearrange PDF';
+const description = 'That page does not exist. Head back to rearrange your PDF pages.';
+---
+
+<Layout title={title} description={description} canonicalPath="/404" noindex>
+  <Nav />
+  <main id="main">
+    <section class="bg-canvas-soft">
+      <div class="container-page py-20 md:py-28 text-center">
+        <p class="font-black text-display-xxl text-ink/10" aria-hidden="true">404</p>
+        <h1 class="-mt-6 font-black text-display-md sm:text-display-lg">
+          This page took a wrong turn.
+        </h1>
+        <p class="mt-4 text-body-lg text-body max-w-md mx-auto">
+          The page you're looking for doesn't exist — but your PDF's page order can still be
+          fixed in seconds.
+        </p>
+        <a href="/" class="btn btn-primary mt-8">
+          Back to the tool
+          <Icon name="arrow-right" size={18} />
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  variant?: 'dark' | 'light';
+  class?: string;
+}
+
+const { variant = 'dark', class: className } = Astro.props;
+---
+
+<span class:list={['inline-flex items-center gap-2.5 select-none', className]}>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <circle cx="16" cy="16" r="16" fill="#9fe870"></circle>
+    <g
+      transform="translate(2.8 2.8) scale(1.1)"
+      stroke="#0e0f0c"
+      stroke-width="1.65"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+      <polyline points="2 17 12 22 22 17"></polyline>
+      <polyline points="2 12 12 17 22 12"></polyline>
+    </g>
+  </svg>
+  <span class:list={['text-[1.35rem] leading-none font-black tracking-tight', variant === 'dark' ? 'text-ink' : 'text-canvas-soft']}>
+    Rearrange<span class={variant === 'dark' ? 'text-positive-strong' : 'text-positive'}>PDF</span>
+  </span>
+</span>

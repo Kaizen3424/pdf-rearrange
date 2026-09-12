@@ -1,0 +1,117 @@
+---
+import Logo from './Logo.astro';
+
+const links = [
+  { href: '/#how-it-works', label: 'How it works' },
+  { href: '/#features', label: 'Features' },
+  { href: '/#privacy', label: 'Privacy' },
+  { href: '/#faq', label: 'FAQ' },
+];
+---
+
+<header class="sticky top-0 z-40 bg-canvas/90 backdrop-blur-md border-b border-ink/10">
+  <nav class="container-page flex h-16 items-center justify-between gap-4" aria-label="Main navigation">
+    <a href="/" class="focus-ring rounded-md shrink-0">
+      <Logo />
+    </a>
+
+    <ul class="hidden md:flex items-center gap-7">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-body-sm-strong text-ink hover:text-ink-deep transition-colors focus-ring rounded-sm"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <a href="/#rearrange" class="btn btn-primary hidden sm:inline-flex">Rearrange a PDF</a>
+      <button
+        type="button"
+        class="btn-icon md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-nav-toggle
+      >
+        <span class="sr-only">Toggle menu</span>
+        <svg
+          data-icon-open
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg
+          data-icon-close
+          class="hidden"
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" hidden class="md:hidden border-t border-ink/10 bg-canvas">
+    <ul class="container-page py-4 space-y-1">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="block rounded-md px-3 py-2.5 text-body-md-strong text-ink hover:bg-canvas-soft transition-colors"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="pt-2">
+        <a href="/#rearrange" class="btn btn-primary w-full">Rearrange a PDF</a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = toggle?.querySelector('[data-icon-open]');
+  const iconClose = toggle?.querySelector('[data-icon-close]');
+
+  const setMenu = (open: boolean) => {
+    if (!menu || !toggle) return;
+    menu.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    iconOpen?.classList.toggle('hidden', open);
+    iconClose?.classList.toggle('hidden', !open);
+  };
+
+  toggle?.addEventListener('click', () => setMenu(!menu?.hidden));
+  menu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => setMenu(false));
+  });
+</script>

@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/site/Nav.astro';
+import Footer from '../components/site/Footer.astro';
+
+const title = 'Terms of Service — Rearrange PDF';
+const description =
+  'The terms that apply when you use rearrangepdf.com to rearrange PDF pages in your browser.';
+---
+
+<Layout title={title} description={description} canonicalPath="/terms">
+  <Nav />
+  <main id="main">
+    <article class="bg-canvas-soft">
+      <div class="container-page py-12 md:py-16 max-w-3xl">
+        <nav aria-label="Breadcrumb" class="text-body-sm text-mute">
+          <a href="/" class="hover:text-ink transition-colors">Home</a>
+          <span aria-hidden="true"> / </span>
+          <span aria-current="page" class="text-body">Terms of service</span>
+        </nav>
+
+        <h1 class="mt-4 font-black text-display-sm md:text-display-md">Terms of service</h1>
+        <p class="mt-3 text-body-sm text-mute">Last updated: September 2026</p>
+
+        <h2 class="mt-10 text-display-xs font-semibold">1. The service</h2>
+        <p class="mt-2 text-body-md text-body">
+          Rearrange PDF (rearrangepdf.com) is a free, browser-based tool that lets you rearrange,
+          rotate, duplicate, delete and organize the pages of PDF files. All processing takes
+          place locally in your web browser; your files are not uploaded to us.
+        </p>
+
+        <h2 class="mt-8 text-display-xs font-semibold">2. Acceptance</h2>
+        <p class="mt-2 text-body-md text-body">
+          By using the site you agree to these terms. If you don't agree, please don't use the
+          service.
+        </p>
+
+        <h2 class="mt-8 text-display-xs font-semibold">3. Your content</h2>
+        <p class="mt-2 text-body-md text-body">
+          You keep all rights to the documents you work on. Since files are processed on your own
+          device, we never receive, store or process them. You are responsible for having the
+          rights to any document you open in the tool and for complying with applicable law.
+        </p>
+
+        <h2 class="mt-8 text-display-xs font-semibold">4. No warranty</h2>
+        <p class="mt-2 text-body-md text-body">
+          The service is provided "as is", free of charge, without warranties of any kind. We
+          work hard to keep it accurate and reliable — page content is copied byte-for-byte from
+          your original file — but we cannot guarantee uninterrupted availability or fitness for
+          a particular purpose. Keep backups of important documents.
+        </p>
+
+        <h2 class="mt-8 text-display-xs font-semibold">5. Limitation of liability</h2>
+        <p class="mt-2 text-body-md text-body">
+          To the maximum extent permitted by law, we are not liable for any damages arising from
+          the use or inability to use the service.
+        </p>
+
+        <h2 class="mt-8 text-display-xs font-semibold">6. Changes</h2>
+        <p class="mt-2 text-body-md text-body">
+          We may update the service or these terms at any time. Continued use after changes means
+          you accept the updated terms. The current version is always available on this page.
+        </p>
+
+        <h2 class="mt-8 text-display-xs font-semibold">7. Contact</h2>
+        <p class="mt-2 text-body-md text-body">
+          Questions about these terms? Email
+          <a href="mailto:hello@rearrangepdf.com" class="font-semibold underline underline-offset-2">hello@rearrangepdf.com</a>.
+        </p>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>

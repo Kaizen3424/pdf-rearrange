@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/site/Nav.astro';
+import Footer from '../components/site/Footer.astro';
+import Icon from '../components/site/Icon.astro';
+
+const title = 'About — Rearrange PDF';
+const description =
+  'Why we built a PDF page organizer that never uploads your files, how it works under the hood, and how to get in touch.';
+---
+
+<Layout title={title} description={description} canonicalPath="/about">
+  <Nav />
+  <main id="main">
+    <article class="bg-canvas-soft">
+      <div class="container-page py-12 md:py-16 max-w-3xl">
+        <nav aria-label="Breadcrumb" class="text-body-sm text-mute">
+          <a href="/" class="hover:text-ink transition-colors">Home</a>
+          <span aria-hidden="true"> / </span>
+          <span aria-current="page" class="text-body">About</span>
+        </nav>
+
+        <h1 class="mt-4 font-black text-display-sm md:text-display-md">
+          One tool, done properly.
+        </h1>
+
+        <p class="mt-5 text-body-lg text-body">
+          Rearranging the pages of a PDF is a small job. You scanned a contract back-to-front, or
+          a report's summary ended up at the end, and you just want it fixed. Yet most tools for
+          this simple task ask for a lot in return: your file gets uploaded to a server you know
+          nothing about, you hit a daily limit after two documents, and there's usually an
+          upgrade prompt waiting.
+        </p>
+
+        <p class="mt-4 text-body-lg text-body">
+          We built Rearrange PDF because none of that is necessary. Page reordering doesn't need a
+          server — a modern browser has everything required to read, display and rebuild a PDF.
+          So that's all this site is: a single page, a drop zone, and a grid of thumbnails you can
+          drag around. No uploads, no accounts, no ads, no limits.
+        </p>
+
+        <h2 class="mt-10 text-display-xs font-semibold">How it works</h2>
+        <p class="mt-2 text-body-md text-body">
+          Under the hood, the tool uses two open-source libraries that run entirely in your
+          browser: <strong>PDF.js</strong> renders each page as a thumbnail, and
+          <strong>pdf-lib</strong> assembles your new document by copying the original pages —
+          byte-for-byte, so formatting, fonts and quality are preserved exactly. When you click
+          download, the finished PDF is created right there in the tab and handed to your
+          browser's save dialog.
+        </p>
+
+        <h2 class="mt-8 text-display-xs font-semibold">Get in touch</h2>
+        <p class="mt-2 text-body-md text-body">
+          Found a PDF that doesn't work? Have an idea for the tool? We read everything:
+          <a href="mailto:hello@rearrangepdf.com" class="font-semibold underline underline-offset-2">hello@rearrangepdf.com</a>.
+        </p>
+
+        <div class="mt-12 rounded-xl bg-ink p-8 text-center">
+          <h2 class="font-black text-display-sm text-canvas">Try it with your own file</h2>
+          <p class="mt-2 text-body-md text-canvas-soft/80">
+            It's free, unlimited — and nothing ever leaves your browser.
+          </p>
+          <a href="/#rearrange" class="btn btn-primary mt-6">
+            Rearrange a PDF
+            <Icon name="arrow-right" size={18} />
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>

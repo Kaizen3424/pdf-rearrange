@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section id="privacy" class="scroll-mt-24 bg-canvas">
+  <div class="container-page py-16 md:py-24">
+    <div class="rounded-xl bg-ink text-primary p-7 md:p-12 max-w-6xl mx-auto">
+      <div class="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
+        <div>
+          <h2 class="font-black text-display-sm md:text-display-md text-canvas">
+            Your PDF never leaves your browser.
+          </h2>
+          <p class="mt-4 text-body-lg text-canvas-soft/85 max-w-xl">
+            Most online PDF tools upload your file to a server, process it there, and ask you to
+            trust their deletion policy. We flipped the model: rearranging pages happens
+            <strong class="text-canvas">entirely on your device</strong>, using the same rendering
+            engine your browser already has.
+          </p>
+          <p class="mt-4 text-body-md text-canvas-soft/70 max-w-xl">
+            No server ever receives your document. There is nothing to leak, breach, or subpoena.
+            That makes it safe for contracts, medical records, financial statements and anything
+            else you wouldn\u2019t hand to a stranger.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="/privacy" class="btn btn-primary">Read our privacy promise</a>
+            <a href="/#rearrange" class="btn btn-secondary">Try it now</a>
+          </div>
+        </div>
+
+        <ul class="space-y-5 self-center">
+          <li class="flex gap-4">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-ink">
+              <Icon name="cloud-off" size={20} />
+            </span>
+            <div>
+              <h3 class="text-body-md-strong text-canvas">Zero uploads</h3>
+              <p class="text-body-sm text-canvas-soft/70">
+                Your file content is never transmitted anywhere.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-ink">
+              <Icon name="ban" size={20} />
+            </span>
+            <div>
+              <h3 class="text-body-md-strong text-canvas">No accounts, no ads, no trackers</h3>
+              <p class="text-body-sm text-canvas-soft/70">
+                We don\u2019t need your email, and we don\u2019t follow you around the web.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-ink">
+              <Icon name="eye" size={20} />
+            </span>
+            <div>
+              <h3 class="text-body-md-strong text-canvas">Verifiable, not just a promise</h3>
+              <p class="text-body-sm text-canvas-soft/70">
+                Open DevTools → Network while you work. You\u2019ll see zero file requests.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

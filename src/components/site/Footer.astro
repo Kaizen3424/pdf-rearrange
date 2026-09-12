@@ -1,0 +1,74 @@
+---
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: 'Tool',
+    links: [
+      { href: '/#rearrange', label: 'Rearrange PDF pages' },
+      { href: '/#how-it-works', label: 'How it works' },
+      { href: '/how-to-organize-pdf-pages', label: 'Organize PDF guide' },
+      { href: '/#faq', label: 'FAQ' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { href: '/about', label: 'About' },
+      { href: 'mailto:hello@rearrangepdf.com', label: 'Contact' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { href: '/privacy', label: 'Privacy policy' },
+      { href: '/terms', label: 'Terms of service' },
+    ],
+  },
+];
+---
+
+<footer class="bg-ink text-canvas-soft">
+  <div class="container-page py-12 md:py-16 grid gap-10 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
+    <div>
+      <a href="/" class="inline-block focus-ring rounded-md">
+        <Logo variant="light" />
+      </a>
+      <p class="mt-4 text-body-sm text-canvas-soft/70 max-w-xs">
+        The privacy-first way to rearrange, rotate and organize PDF pages. Everything happens in
+        your browser — your files are never uploaded.
+      </p>
+    </div>
+
+    {
+      columns.map((column) => (
+        <nav aria-label={column.title}>
+          <h2 class="text-body-sm-strong text-primary mb-3">{column.title}</h2>
+          <ul class="space-y-2.5 text-body-sm">
+            {column.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-canvas-soft/80 hover:text-primary transition-colors focus-ring rounded-sm"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+  </div>
+
+  <div class="border-t border-canvas-soft/15">
+    <div
+      class="container-page py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-caption text-canvas-soft/60"
+    >
+      <p>© {year} rearrangepdf.com. All rights reserved.</p>
+      <p>No ads. No trackers. No uploads.</p>
+    </div>
+  </div>
+</footer>
