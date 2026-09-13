@@ -12,6 +12,13 @@ const de = {
     ariaLabel: 'Sprache ändern',
   },
 
+  theme: {
+    ariaLabel: 'Farbthema',
+    light: 'Hell',
+    dark: 'Dunkel',
+    system: 'System',
+  },
+
   nav: {
     ariaLabel: 'Hauptnavigation',
     howItWorks: 'So funktioniert es',

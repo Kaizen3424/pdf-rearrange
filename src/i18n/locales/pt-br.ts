@@ -12,6 +12,13 @@ const ptBr = {
     ariaLabel: 'Alterar idioma',
   },
 
+  theme: {
+    ariaLabel: 'Tema de cor',
+    light: 'Claro',
+    dark: 'Escuro',
+    system: 'Sistema',
+  },
+
   nav: {
     ariaLabel: 'Navegação principal',
     howItWorks: 'Como funciona',

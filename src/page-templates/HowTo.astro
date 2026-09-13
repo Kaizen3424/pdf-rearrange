@@ -50,7 +50,7 @@ const trickIcons = ['undo-2', 'layers', 'file-plus', 'plus', 'layout-grid', 'max
             {
               t.pages.howto.quickSteps.map((step, index) => (
                 <li class="flex gap-3">
-                  <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-bold text-primary">
+                  <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-solid text-caption font-bold text-primary">
                     {index + 1}
                   </span>
                   <span>
@@ -106,9 +106,9 @@ const trickIcons = ['undo-2', 'layers', 'file-plus', 'plus', 'layout-grid', 'max
           <RichText text={t.pages.howto.localP} locale={locale} />
         </p>
 
-        <div class="mt-12 rounded-xl bg-ink p-8 text-center">
-          <h2 class="font-black text-display-sm text-canvas">{t.pages.howto.ctaH2}</h2>
-          <p class="mt-2 text-body-md text-canvas-soft/80">
+        <div class="mt-12 rounded-xl bg-solid p-8 text-center">
+          <h2 class="font-black text-display-sm text-on-solid">{t.pages.howto.ctaH2}</h2>
+          <p class="mt-2 text-body-md text-on-solid/80">
             {t.pages.howto.ctaP}
           </p>
           <a href={localePath('/#rearrange', locale)} class="btn btn-primary mt-6">

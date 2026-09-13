@@ -41,13 +41,13 @@ const columns = [
 ];
 ---
 
-<footer class="bg-ink text-canvas-soft">
+<footer class="bg-solid text-on-solid">
   <div class="container-page py-12 md:py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
     <div>
       <a href={localePath('/', locale)} class="inline-block focus-ring rounded-md">
         <Logo variant="light" />
       </a>
-      <p class="mt-4 text-body-sm text-canvas-soft/70 max-w-xs">
+      <p class="mt-4 text-body-sm text-on-solid/70 max-w-xs">
         {t.footer.tagline}
       </p>
     </div>
@@ -61,7 +61,7 @@ const columns = [
               <li>
                 <a
                   href={link.href}
-                  class="text-canvas-soft/80 hover:text-primary transition-colors focus-ring rounded-sm"
+                  class="text-on-solid/80 hover:text-primary transition-colors focus-ring rounded-sm"
                 >
                   {link.label}
                 </a>
@@ -75,9 +75,9 @@ const columns = [
     <LanguagePicker locale={locale} variant="footer" />
   </div>
 
-  <div class="border-t border-canvas-soft/15">
+  <div class="border-t border-on-solid/15">
     <div
-      class="container-page py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-caption text-canvas-soft/60"
+      class="container-page py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-caption text-on-solid/60"
     >
       <p>{t.footer.copyright(year)}</p>
       <p>{t.footer.noAds}</p>

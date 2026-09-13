@@ -1,6 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <circle cx="16" cy="16" r="16" fill="#9fe870" />
+  <style>
+    .disc {
+      fill: #9fe870;
+    }
+    .glyph {
+      stroke: #0e0f0c;
+    }
+    @media (prefers-color-scheme: dark) {
+      .disc {
+        fill: #060906;
+      }
+      .glyph {
+        stroke: #9fe870;
+      }
+    }
+  </style>
+  <circle class="disc" cx="16" cy="16" r="16" />
   <g
+    class="glyph"
     transform="translate(2.8 2.8) scale(1.1)"
     stroke="#0e0f0c"
     stroke-width="1.65"

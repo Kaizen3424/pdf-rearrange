@@ -20,6 +20,13 @@ const en = {
     ariaLabel: 'Change language',
   },
 
+  theme: {
+    ariaLabel: 'Color theme',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'System',
+  },
+
   nav: {
     ariaLabel: 'Main navigation',
     howItWorks: 'How it works',

@@ -12,6 +12,13 @@ const es = {
     ariaLabel: 'Cambiar idioma',
   },
 
+  theme: {
+    ariaLabel: 'Tema de color',
+    light: 'Claro',
+    dark: 'Oscuro',
+    system: 'Sistema',
+  },
+
   nav: {
     ariaLabel: 'Navegación principal',
     howItWorks: 'Cómo funciona',

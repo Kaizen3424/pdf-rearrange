@@ -1,87 +1,105 @@
-# Implementation Plan: Multi-language i18n + hreflang for rearrangepdf.com
+# Implementation Plan: Dark Mode (Wise-inspired)
 
 ## Overview
-Add 7 locales (es, ja, fr, de, pt-br, ko, it) alongside English at `/`, using Astro's built-in i18n routing config + the dictionary pattern from the official i18n recipe. Every page emits a full hreflang cluster (8 locales + x-default), localized SEO meta, JSON-LD, and a language switcher — so the site can rank for non-English keywords.
 
-## Approved Decisions
-- **Locales:** en (default), es, ja, fr, de, pt-br, ko, it. Spanish listed once (Español = Spanish).
-- **Portuguese variant:** pt-BR (folder `pt-br/`, hreflang `pt-BR`).
-- **URL structure:** English stays at `/` (no prefix, `prefixDefaultLocale: false`) — zero risk to existing rankings.
-- **Slugs:** kept in English (`/es/how-to-organize-pdf-pages/`). Localized slugs can be layered on later.
-- **Translations:** AI-drafted for all locales, including legal pages.
+Add a first-class dark mode to the Rearrange PDF site (Astro + React islands) that
+matches the existing Wise-inspired light design. Colors are already centralized as
+Tailwind v4 `@theme` tokens in `src/styles/global.css`, so the core work is a
+semantic token override under `[data-theme="dark"]`, a pre-paint theme script, and
+an accessible Light/Dark/System toggle. Dark bands (footer, dark cards, scrims)
+stay dark via new role tokens. `DESIGN.md` gains a documented dark palette.
 
 ## Architecture Decisions
-1. **Astro i18n config** in `astro.config.mjs`: `locales: ['en','es','ja','fr','de','pt-br','ko','it']`, `defaultLocale: 'en'`, `routing: { prefixDefaultLocale: false }`.
-2. **Dictionaries, not duplicated pages**: `src/i18n/locales/*.ts` — one structured file per locale (~500 segments). `en.ts` defines the shape via `export type Dictionary = typeof en`; every other locale is typed `Dictionary`, so **missing keys fail `astro check`**.
-3. **Shared page templates**: root pages become thin wrappers around `src/page-templates/*.astro`; `src/pages/[lang]/*.astro` dynamic routes (`getStaticPaths` × 7 locales) render the same templates. Page logic exists exactly once.
-4. **React tool i18n**: `OrganizeTool` accepts a `locale` prop; ~140 client strings move to `dict.tool` (functions for plurals/placeholders); `formatBytes` → `Intl.NumberFormat`.
-5. **404/500 stay English root-only** (Cloudflare Pages serves a single `404.html`); both remain `noindex`.
 
-### Locale matrix
-| Locale | URL prefix | hreflang | og:locale | html lang | Font |
-|---|---|---|---|---|---|
-| English | `/` (none) | `en` | `en_US` | `en` | Inter |
-| Español | `/es/` | `es` | `es_ES` | `es` | Inter |
-| 日本語 | `/ja/` | `ja` | `ja_JP` | `ja` | + Noto Sans JP |
-| Français | `/fr/` | `fr` | `fr_FR` | `fr` | Inter |
-| Deutsch | `/de/` | `de` | `de_DE` | `de` | Inter |
-| Português (BR) | `/pt-br/` | `pt-BR` | `pt_BR` | `pt-BR` | Inter |
-| 한국어 | `/ko/` | `ko` | `ko_KR` | `ko` | + Noto Sans KR |
-| Italiano | `/it/` | `it` | `it_IT` | `it` | Inter |
+- **Single lever point.** All colors are `@theme` custom properties in
+  `global.css`; utilities compile to `var(--color-*)`, so overriding the variables
+  under `[data-theme="dark"]` flips the whole site without touching most markup.
+- **Switching mechanism: one attribute.** `<html data-theme="light|dark">` is the
+  only signal CSS reads. A pre-paint inline script resolves `localStorage` mode
+  (`light|dark|system`) + `matchMedia` into the attribute and keeps `color-scheme`
+  in sync. No mixed media/class token logic.
+- **Role tokens for dark bands.** `ink` was overloaded as text *and* dark fill.
+  Add `--color-solid`, `--color-on-solid`, `--color-scrim` (constants, dark in
+  both themes) and migrate `bg-ink`→`bg-solid`, band text→`text-on-solid*`,
+  scrims→`bg-scrim/xx`. All other neutrals flip via variable override.
+- **Keep dark bands dark** in dark mode (user decision).
+- **Elevation via surface contrast**, matching DESIGN.md; shadows reinforced with
+  hairline borders on opaque dark surfaces.
+- **Accent preserved.** Lime `#9fe870` is the single accent in both themes.
 
-Head additions on every page: self-canonical, `<link rel="alternate" hreflang="…">` × 8 + `x-default` → English, `og:locale` + `og:locale:alternate` × 7.
+## Dark Palette (measured WCAG contrast)
 
-## File Structure (target)
-```
-src/i18n/
-  ui.ts          — locale registry (code, native label, hreflang, og:locale, htmlLang)
-  utils.ts       — getLangFromUrl, localePath, getAlternateUrls, getDictionary
-  schema.ts      — JSON-LD builders taking a dictionary
-  locales/       — en.ts (master), es.ts, ja.ts, fr.ts, de.ts, pt-br.ts, ko.ts, it.ts, index.ts
-src/page-templates/  — Home, HowTo, About, Contact, Privacy, Terms (.astro)
-src/pages/           — root wrappers (en) + [lang]/ dynamic routes (7 locales)
-```
+| Role | Token | Light | Dark | Contrast page / surface |
+|---|---|---|---|---|
+| Page bg | `--color-canvas-soft` | `#e8ebe6` | `#0d120c` | — |
+| Card/surface | `--color-canvas` | `#ffffff` | `#1a2018` | — |
+| Primary text | `--color-ink` | `#0e0f0c` | `#f2f5ee` | 17.2 / 15.1 |
+| Hover text | `--color-ink-deep` | `#163300` | `#c9f7ad` | 14.8 / 13.0 |
+| Secondary text | `--color-body` | `#454745` | `#b9c0b2` | 10.1 / 8.9 |
+| Muted text | `--color-mute` | `#6d6f6d` | `#949c8c` | 6.7 / 5.9 |
+| Soft green surface | `--color-primary-pale` | `#e2f6d5` | `#21331b` | — |
+| Positive | `--color-positive` | `#2ead4b` | `#5fd67a` | 10.3 / 9.0 |
+| Positive strong | `--color-positive-strong` | `#22833c` | `#8ce89a` | 12.7 / 11.2 |
+| Positive deep | `--color-positive-deep` | `#054d28` | `#b7f0c0` | 10.5 on pale |
+| Negative | `--color-negative` | `#d03238` | `#ff6b70` | 6.8 / 6.0 |
+| Negative deep | `--color-negative-deep` | `#a72027` | `#ff8a8e` | 8.4 / 7.3 |
+| Warning deep | `--color-warning-deep` | `#b86700` | `#e0a24a` | 8.4 / 7.4 |
+| Warning content | `--color-warning-content` | `#4a3b1c` | `#f2d9a8` | 14.3 / 12.5 |
+| Gold (stars) | `--color-gold` | `#f59e0b` | `#fbbf24` | 11.3 / 10.0 |
+| Accent | `--color-primary` | `#9fe870` | `#9fe870` | 12.9 / 11.3 |
+| Solid band (new) | `--color-solid` | `#0e0f0c` | `#060906` | on-solid 16.6 |
+| On-solid (new) | `--color-on-solid` | `#e8ebe6` | `#e8ebe6` | — |
+| Scrim (new) | `--color-scrim` | `#0b0d0a` | `#0b0d0a` | always dark |
 
 ## Task List
 
-### Phase 1: Foundation (English parity, no new content)
-- [x] T1 — i18n config + scaffolding + Layout head (hreflang cluster, og:locale, html lang, CJK font stacks)
-- [x] T2 — English master dictionary (absorbs src/data/faqs.ts)
-- [x] T3 — Refactor chrome components (Nav, Footer, Hero, CtaSection, ErrorPage/404/500)
-- [x] T4 — Refactor content sections (HowItWorks, Features, PrivacySection, Faq, SeoContent)
-- [x] T5 — Home + HowTo templates & [lang] routes; localized meta/keywords/JSON-LD from dict
-- [x] T6 — About/Contact/Privacy/Terms templates & [lang] routes
-- [x] T7 — React tool i18n part 1 (OrganizeTool, DropZone, Toolbar, types/formatBytes)
-- [x] T8 — React tool i18n part 2 (PageGrid, PageCard, PreviewModal, PasswordModal, SuccessPanel, BatchBar, StarRating, Toasts)
-- [x] T9 — Language switcher (Nav dropdown + Footer links)
+### Phase 0: Foundation
+- [ ] Task 1: Dark tokens + mechanism in `global.css`
+- [ ] Task 2: Pre-paint theme script + `<meta name="theme-color">` in `Layout.astro`
 
-**Checkpoint A:** `npx astro check` + `npm run build` green; English HTML output identical to pre-refactor; `/es/`…`/it/` return 200 with English fallback strings.
+### Checkpoint: Foundation
+- [ ] `npm run build` clean
+- [ ] Manually setting `data-theme="dark"` flips the home page
 
-### Phase 2: Translations (parallelizable, one per locale)
-- [x] T10 es · [x] T11 ja (+Noto Sans JP) · [x] T12 ko (+Noto Sans KR) · [x] T13 fr · [x] T14 de · [x] T15 it · [x] T16 pt-br
-- AC per task: `astro check` passes (typed = no missing keys); pages fully translated incl. meta, keywords & JSON-LD; hreflang/og:locale correct.
+### Phase 1: Toggle
+- [ ] Task 3: `sun`/`moon`/`monitor` icons in `Icon.astro`
+- [ ] Task 4: `theme.*` i18n strings across 8 locales
+- [ ] Task 5: `ThemeToggle.astro` + mount in `Nav`
 
-**Checkpoint B:** all 8 languages live and complete.
+### Checkpoint: Toggle
+- [ ] Toggle works, persists, follows OS in system mode, no FOUC, keyboard accessible
 
-### Phase 3: SEO hardening & verification
-- [x] T17 — Sitemap `serialize` → `xhtml:link` hreflang alternates; `scripts/verify-i18n.mjs` crawling `dist/` (all locale URLs 200, reciprocal & complete hreflang clusters, html lang/og:locale/canonical match)
-- [x] T18 — Browser E2E pass (language switching across pages, tool interactions in 3+ locales, ja/ko font rendering)
+### Phase 2: Core migration
+- [ ] Task 6: Solid/on-solid migration on marketing surfaces
 
-**Checkpoint Complete:** verification script 100% clean → ready for review before deploy.
+### Checkpoint: Core migration
+- [ ] All marketing pages correct in both themes; light unchanged
 
-## Verification Commands
-- Type check: `npx astro check`
-- Build: `npm run build`
-- i18n verification: `node scripts/verify-i18n.mjs`
-- Dev server: `astro dev --background` (see AGENTS.md)
+### Phase 3: React PDF tool
+- [ ] Task 7: Scrim/solid migration in React tool
+- [ ] Task 8: Dark elevation + status tints
 
-## Risks & Mitigations
+### Checkpoint: Tool
+- [ ] Full tool flow usable in dark (upload → reorder → preview → password → success)
+
+### Phase 4: Assets, docs, verification
+- [ ] Task 9: `DESIGN.md` dark section + drift fixes
+- [ ] Task 10: Favicon SVG theme handling
+- [ ] Task 11: Verification pass (build/check/i18n/browser)
+
+### Checkpoint: Complete
+- [ ] All acceptance criteria met
+- [ ] Contrast re-measured; docs updated
+
+## Risks and Mitigations
+
 | Risk | Impact | Mitigation |
-|---|---|---|
-| Translation quality (AI-drafted) | Med | Typed dicts + native-speaker review later; strings are simple UI/SEO copy |
-| CJK font payload | Med | Fontsource unicode-range subsets → only ja/ko pages download slices |
-| Tool bundle +7 locale dicts | Low | ~15KB gz total, cached across site |
-| Trailing-slash/canonical mismatches in hreflang | Med | T17 script verifies built URLs match emitted hreflang exactly |
+|------|--------|------------|
+| CSP may not hash the inline pre-paint script | High | Keep tiny + `is:inline`; verify built hash; fall back to bundled module if blocked |
+| Missed overloaded `ink`/`canvas` role | Med | Grep sweep (`bg-ink`, `text-canvas`, `bg-ink/`) + visual pass |
+| Shadow-only elevation invisible on dark | Med | Add hairline borders to modal/toast/dropdown surfaces |
+| i18n type break across 8 locales | Med | Update `en.ts` master then all locales; `astro check` gates |
+| Translucent nav over dark content | Low | `bg-canvas/90` + blur; verify over dark sections |
 
-## Out of Scope
-Translated URL slugs, localized og-images, localized 404 pages, robots.txt changes (already points to sitemap).
+## Open Questions
+- None blocking. Assumption: raster social/favicon assets stay light; only the SVG favicon may adapt.

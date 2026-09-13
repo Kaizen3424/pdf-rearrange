@@ -12,6 +12,13 @@ const ko = {
     ariaLabel: '언어 변경',
   },
 
+  theme: {
+    ariaLabel: '색상 테마',
+    light: '라이트',
+    dark: '다크',
+    system: '시스템',
+  },
+
   nav: {
     ariaLabel: '주요 내비게이션',
     howItWorks: '사용 방법',

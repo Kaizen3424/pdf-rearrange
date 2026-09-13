@@ -57,7 +57,7 @@ export default function PreviewModal({
   return (
     <div
       ref={dialogRef}
-      className="fixed inset-0 z-50 flex flex-col bg-ink/85 outline-none backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex flex-col bg-scrim/85 outline-none backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label={t.preview.dialogLabel(index + 1, pages.length)}
@@ -90,7 +90,7 @@ export default function PreviewModal({
         }
       }}
     >
-      <div className="flex items-center justify-between gap-4 px-4 py-3 text-canvas sm:px-6">
+      <div className="flex items-center justify-between gap-4 px-4 py-3 text-on-solid sm:px-6">
         <p className="min-w-0 truncate text-body-sm-strong">
           {source.blank
             ? t.preview.headerBlank(index + 1, pages.length)
@@ -98,7 +98,7 @@ export default function PreviewModal({
         </p>
         <button
           type="button"
-          className="flex size-10 shrink-0 items-center justify-center rounded-full text-canvas transition-colors hover:bg-canvas-soft/20"
+          className="flex size-10 shrink-0 items-center justify-center rounded-full text-on-solid transition-colors hover:bg-on-solid/20"
           onClick={onClose}
           aria-label={t.preview.close}
         >
@@ -109,7 +109,7 @@ export default function PreviewModal({
       <div className="flex flex-1 items-center justify-center gap-2 px-4 pb-6 sm:gap-4 sm:px-6">
         <button
           type="button"
-          className="flex size-11 shrink-0 items-center justify-center rounded-full text-canvas transition-colors hover:bg-canvas-soft/20 disabled:opacity-25"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full text-on-solid transition-colors hover:bg-on-solid/20 disabled:opacity-25"
           onClick={() => onNavigate(-1)}
           disabled={index === 0}
           aria-label={t.preview.prev}
@@ -127,13 +127,13 @@ export default function PreviewModal({
           />
         ) : (
           <div className="flex size-24 items-center justify-center">
-            <LoaderCircle className="size-8 animate-spin text-canvas-soft" />
+            <LoaderCircle className="size-8 animate-spin text-on-solid" />
           </div>
         )}
 
         <button
           type="button"
-          className="flex size-11 shrink-0 items-center justify-center rounded-full text-canvas transition-colors hover:bg-canvas-soft/20 disabled:opacity-25"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full text-on-solid transition-colors hover:bg-on-solid/20 disabled:opacity-25"
           onClick={() => onNavigate(1)}
           disabled={index === pages.length - 1}
           aria-label={t.preview.next}

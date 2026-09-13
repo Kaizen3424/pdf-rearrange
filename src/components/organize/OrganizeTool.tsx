@@ -647,10 +647,10 @@ function OrganizeToolInner() {
       )}
 
       {filesDragging && editorActive && (
-        <div className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-ink/50 p-8">
-          <div className="rounded-xl border-2 border-dashed border-primary bg-ink/90 px-10 py-8 text-center">
+        <div className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-scrim/50 p-8">
+          <div className="rounded-xl border-2 border-dashed border-primary bg-scrim/90 px-10 py-8 text-center">
             <Upload className="mx-auto size-10 text-primary" />
-            <p className="mt-3 text-body-lg font-semibold text-canvas">
+            <p className="mt-3 text-body-lg font-semibold text-on-solid">
               {t.tool.dropOverlay}
             </p>
           </div>

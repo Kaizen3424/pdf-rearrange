@@ -15,6 +15,13 @@ const it = {
     ariaLabel: 'Cambia lingua',
   },
 
+  theme: {
+    ariaLabel: 'Tema colori',
+    light: 'Chiaro',
+    dark: 'Scuro',
+    system: 'Sistema',
+  },
+
   nav: {
     ariaLabel: 'Navigazione principale',
     howItWorks: 'Come funziona',

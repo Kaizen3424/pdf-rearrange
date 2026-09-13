@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Class/attribute-based dark mode. The active theme is resolved before paint by
+   the inline script in Layout.astro and written to `<html data-theme="…">`, so
+   one selector drives every theme decision (no mixed media/class logic). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   /* ─── Brand colors (DESIGN.md — Wise-inspired system) ─── */
   --color-primary: #9fe870;
@@ -30,6 +35,14 @@
   --color-accent-orange: #ffc091;
   --color-accent-cyan: #38c8ff;
   --color-gold: #f59e0b;
+
+  /* ─── Role tokens for dark bands (constant in both themes) ───
+     `solid` is the dark fill for the footer, dark feature cards and dark bars;
+     `on-solid` is text/icons on it; `scrim` is the modal + drag overlay wash.
+     These never invert, so dark bands stay dark in dark mode. */
+  --color-solid: #0e0f0c;
+  --color-on-solid: #e8ebe6;
+  --color-scrim: #0b0d0a;
 
   /* ─── Typography ─── */
   --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -97,9 +110,51 @@
   }
 }
 
+/* ─── Dark theme token overrides ───
+   Only the tokens that should invert. `solid` / `on-solid` / `scrim` stay put.
+   Contrast of every foreground/background pair documented in DESIGN.md. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-primary: #9fe870;
+  --color-primary-active: #bff59a;
+  --color-primary-neutral: #7fb768;
+  --color-primary-pale: #21331b;
+  --color-on-primary: #0e0f0c;
+
+  --color-ink: #f2f5ee;
+  --color-ink-deep: #c9f7ad;
+  --color-body: #b9c0b2;
+  --color-mute: #949c8c;
+
+  --color-canvas: #1a2018;
+  --color-canvas-soft: #0d120c;
+
+  /* Dark bands sit below the page in dark mode for separation. */
+  --color-solid: #060906;
+
+  --color-positive: #5fd67a;
+  --color-positive-strong: #8ce89a;
+  --color-positive-deep: #b7f0c0;
+  --color-warning: #ffd11a;
+  --color-warning-deep: #e0a24a;
+  --color-warning-content: #f2d9a8;
+  --color-negative: #ff6b70;
+  --color-negative-deep: #ff8a8e;
+  --color-negative-darkest: #ff9a9d;
+  --color-negative-bg: #320707;
+
+  --color-gold: #fbbf24;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
   }
 
   body {
@@ -161,7 +216,7 @@
   left: -10000px;
   top: 0;
   z-index: 100;
-  background-color: var(--color-ink);
+  background-color: var(--color-solid);
   color: var(--color-primary);
   padding: 0.75rem 1.5rem;
   border-end-end-radius: var(--radius-md);

@@ -12,6 +12,13 @@ const ja = {
     ariaLabel: '言語を変更',
   },
 
+  theme: {
+    ariaLabel: 'カラーテーマ',
+    light: 'ライト',
+    dark: 'ダーク',
+    system: 'システム',
+  },
+
   nav: {
     ariaLabel: 'メインナビゲーション',
     howItWorks: '使い方',

@@ -43,7 +43,7 @@ function CardAction({
       title={label}
       aria-label={label}
       className={[
-        'flex size-7 items-center justify-center rounded-md bg-ink/75 text-canvas shadow-sm backdrop-blur transition-colors hover:bg-ink',
+        'flex size-7 items-center justify-center rounded-md bg-scrim/75 text-on-solid shadow-sm backdrop-blur transition-colors hover:bg-scrim',
         danger ? 'hover:bg-negative' : '',
       ].join(' ')}
       onPointerDown={(event) => event.stopPropagation()}
@@ -154,7 +154,7 @@ export default function PageCard({
               'absolute start-1.5 top-1.5 flex size-5 items-center justify-center rounded-full border-2 transition-colors',
               selected
                 ? 'border-primary bg-primary text-on-primary'
-                : 'border-white/80 bg-ink/35 text-transparent backdrop-blur-sm group-hover:border-white',
+                : 'border-on-solid/80 bg-scrim/35 text-transparent backdrop-blur-sm group-hover:border-on-solid',
             ].join(' ')}
             aria-hidden="true"
           >
@@ -172,7 +172,7 @@ export default function PageCard({
               title={t.pageCard.sourceTitle(source.name, item.sourcePageIndex + 1)}
             >
               <span
-                className="size-1.5 shrink-0 rounded-full"
+                className="size-1.5 shrink-0 rounded-full ring-1 ring-ink/25"
                 style={{ backgroundColor: color }}
                 aria-hidden="true"
               />

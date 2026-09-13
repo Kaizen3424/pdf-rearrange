@@ -12,10 +12,17 @@ colors:
   ink: "#0e0f0c"
   ink-deep: "#163300"
   body: "#454745"
-  mute: "#868685"
+  mute: "#6d6f6d"
   canvas: "#ffffff"
   canvas-soft: "#e8ebe6"
+  # Role tokens — theme-invariant. `solid` + `on-solid` are the always-dark
+  # band pair (footer, dark cards, CTA bands); `scrim` is the translucent
+  # overlay behind modals and drag UI. See "Dark Mode" below.
+  solid: "#0e0f0c"
+  on-solid: "#e8ebe6"
+  scrim: "#0b0d0a"
   positive: "#2ead4b"
+  positive-strong: "#22833c"
   positive-deep: "#054d28"
   warning: "#ffd11a"
   warning-deep: "#b86700"
@@ -26,6 +33,7 @@ colors:
   negative-bg: "#320707"
   accent-orange: "#ffc091"
   accent-cyan: "#38c8ff"
+  gold: "#f59e0b"
 
 typography:
   display-mega:
@@ -180,7 +188,7 @@ components:
     rounded: "{rounded.xl}"
     padding: "{spacing.xl}"
   card-feature-dark:
-    backgroundColor: "{colors.ink}"
+    backgroundColor: "{colors.solid}"
     textColor: "{colors.primary}"
     typography: "{typography.body-md}"
     rounded: "{rounded.xl}"
@@ -191,7 +199,7 @@ components:
     typography: "{typography.display-mega}"
     padding: "{spacing.3xl} {spacing.xl}"
   hero-band-dark:
-    backgroundColor: "{colors.ink}"
+    backgroundColor: "{colors.solid}"
     textColor: "{colors.primary}"
     typography: "{typography.display-mega}"
     padding: "{spacing.3xl} {spacing.xl}"
@@ -220,8 +228,8 @@ components:
     rounded: "{rounded.pill}"
     padding: "{spacing.xs} {spacing.md}"
   footer:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.canvas-soft}"
+    backgroundColor: "{colors.solid}"
+    textColor: "{colors.on-solid}"
     typography: "{typography.body-sm}"
     padding: "{spacing.3xl} {spacing.xl}"
 
@@ -235,8 +243,8 @@ components:
     padding: "{spacing.xl}"
   ex-pricing-tier-featured:
     description: "Featured/highlighted tier — polarity-flipped surface (dark fill + light text in light mode, light fill + dark text in dark mode)."
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.on-primary}"
+    backgroundColor: "{colors.solid}"
+    textColor: "{colors.on-solid}"
     rounded: "{rounded.xl}"
     padding: "{spacing.xl}"
   ex-product-selector:
@@ -303,6 +311,7 @@ Cards are universally pill-rounded — `{rounded.xl}` 24 px is the brand's signa
 - `{rounded.xl}` 24 px is the canonical card and button radius. Generous, friendly.
 - Sage-tinted canvas `{colors.canvas-soft}` (`#e8ebe6`) is the brand's hero surface; white `{colors.canvas}` is reserved for cards within the sage band.
 - A full semantic palette: positive green family, warning yellow family, negative red family — each documented with content / hover / active variants for in-product use.
+- **Theme-aware tokens**: Light / Dark / System via one `data-theme` attribute. Dark bands (footer, dark cards, CTA bands) stay dark through the `{colors.solid}` / `{colors.on-solid}` role pair. See [Dark Mode](#dark-mode).
 - Currency-converter card on the hero — the brand's signature interactive component, hosting from/to amount inputs.
 
 ## Colors
@@ -317,14 +326,21 @@ Cards are universally pill-rounded — `{rounded.xl}` 24 px is the brand's signa
 - **Canvas** (`{colors.canvas}` — `#ffffff`): Pure white for card interiors.
 - **Canvas Soft** (`{colors.canvas-soft}` — `#e8ebe6`): The sage-tinted page background. Defining mood of the brand.
 
+### Role tokens (theme-invariant)
+Three tokens exist so a surface can stay dark regardless of the active theme — they are the stable reference for the brand's dark bands and overlays, and they never flip.
+- **Solid** (`{colors.solid}` — `#0e0f0c` light / `#060906` dark): The always-dark band fill. Used by the footer, dark feature cards, CTA bands, icon chips, the batch action bar and the drag overlay's inner panel. Replaces the earlier (incorrect) use of `{colors.ink}` as a fill — `ink` is a *text* token and flips to near-white in dark mode.
+- **On Solid** (`{colors.on-solid}` — `#e8ebe6`): Text, icons and hairline borders on top of `{colors.solid}`. Opacity ramps (`/85`, `/80`, `/70`, `/60`, `/15`) build the text hierarchy on dark bands.
+- **Scrim** (`{colors.scrim}` — `#0b0d0a`): Near-black translucent overlay behind modals, the preview lightbox and drag-over targets. Used at `50`–`90%` opacity.
+
 ### Text
 - **Ink** (`{colors.ink}` — `#0e0f0c`): Near-black with a hint of olive warmth — the brand's default text and headings color.
 - **Ink Deep** (`{colors.ink-deep}` — `#163300`): A deep forest-green ink used on positive-state surfaces.
 - **Body** (`{colors.body}` — `#454745`): Secondary body text.
-- **Mute** (`{colors.mute}` — `#868685`): Lowest-priority text — captions, placeholder, fine print.
+- **Mute** (`{colors.mute}` — `#6d6f6d`): Lowest-priority text — captions, placeholder, fine print.
 
 ### Semantic
 - **Positive** (`{colors.positive}` — `#2ead4b`): Success indicator.
+- **Positive Strong** (`{colors.positive-strong}` — `#22833c`): Higher-emphasis success text and icons; the accessible green for text-size use on light surfaces.
 - **Positive Deep** (`{colors.positive-deep}` — `#054d28`): Pressed positive state.
 - **Warning** (`{colors.warning}` — `#ffd11a`): Caution indicator.
 - **Warning Deep** (`{colors.warning-deep}` — `#b86700`): Pressed warning.
@@ -337,6 +353,7 @@ Cards are universally pill-rounded — `{rounded.xl}` 24 px is the brand's signa
 ### Brand Accent — Tertiary
 - **Accent Orange** (`{colors.accent-orange}` — `#ffc091`): Bright peach used inside illustrative content / pricing cards.
 - **Accent Cyan** (`{colors.accent-cyan}` — `#38c8ff`): Bright sky-blue used as a tertiary illustration accent.
+- **Gold** (`{colors.gold}` — `#f59e0b` light / `#fbbf24` dark): Warm amber reserved for warning-adjacent highlights where `{colors.warning}` yellow is too loud. Darkened in light mode and brightened in dark mode to hold contrast.
 
 ## Typography
 
@@ -407,7 +424,7 @@ Photography is sparse; the brand prefers illustrative SVGs and product mockups i
 | Level | Treatment | Use |
 |---|---|---|
 | Level 0 — Flat | No shadow, no border. | Default. |
-| Level 1 — Hairline on Dark | 1 px solid `{colors.ink}` border. | Tertiary outline buttons, form inputs. |
+| Level 1 — Hairline on Dark | 1 px solid `{colors.ink}` border, or `{colors.on-solid}` at low opacity on `{colors.solid}` bands. | Tertiary outline buttons, form inputs, dividers. |
 | Level 2 — Soft Card | Implicit Level 0 white card sitting on sage canvas — the surface contrast IS the elevation. | Cards on the sage hero band. |
 
 The brand uses surface contrast (`{colors.canvas-soft}` background vs `{colors.canvas}` cards) as the primary elevation cue.
@@ -454,7 +471,7 @@ The brand uses surface contrast (`{colors.canvas-soft}` background vs `{colors.c
 - Background `{colors.primary-pale}`, text `{colors.ink}`, padding `{spacing.xl}`, shape `{rounded.xl}`.
 
 **`card-feature-dark`** — the polarity-flipped dark card with green text.
-- Background `{colors.ink}`, text `{colors.primary}` (Wise green!), padding `{spacing.xl}`, shape `{rounded.xl}`. Used for promotional moments.
+- Background `{colors.solid}`, text `{colors.primary}` (Wise green!), padding `{spacing.xl}`, shape `{rounded.xl}`. Used for promotional moments. Stays dark in both themes.
 
 **`currency-converter-card`** — the brand's signature interactive widget.
 - Background `{colors.canvas}`, text `{colors.ink}`, 1 px solid `{colors.ink}` border, padding `{spacing.xl}`, shape `{rounded.xl}`. Hosts from/to amount inputs + currency selectors.
@@ -473,7 +490,7 @@ The brand uses surface contrast (`{colors.canvas-soft}` background vs `{colors.c
 - Text `{colors.ink}`, set in `{typography.body-sm-strong}`.
 
 **`footer`** — the dark footer band.
-- Background `{colors.ink}`, text `{colors.canvas-soft}`, padding `{spacing.3xl} {spacing.xl}`. Body in `{typography.body-sm}`.
+- Background `{colors.solid}`, text `{colors.on-solid}`, padding `{spacing.3xl} {spacing.xl}`. Body in `{typography.body-sm}`. Stays dark in both themes.
 
 ### Signature Components
 
@@ -481,7 +498,7 @@ The brand uses surface contrast (`{colors.canvas-soft}` background vs `{colors.c
 - Background `{colors.canvas-soft}`, text `{colors.ink}`, padding `{spacing.3xl} {spacing.xl}`. Headline in `{typography.display-mega}` (Wise Sans weight 900).
 
 **`hero-band-dark`** — the polarity-flipped dark hero.
-- Background `{colors.ink}`, text `{colors.primary}` (Wise green headline on near-black!), same padding / scale.
+- Background `{colors.solid}`, text `{colors.primary}` (Wise green headline on near-black!), same padding / scale. Stays dark in both themes.
 
 **`content-band`** — the white content band that follows hero.
 - Background `{colors.canvas}`, text `{colors.ink}`, padding `{spacing.3xl} {spacing.xl}`. Section headline in `{typography.display-md}`.
@@ -527,6 +544,61 @@ The brand uses surface contrast (`{colors.canvas-soft}` background vs `{colors.c
 - Properties: `backgroundColor`, `rounded`, `padding`, `typography`
 
 
+## Dark Mode
+
+The site ships a first-class dark theme, not an inverted duplicate. Every colour is a Tailwind v4 `@theme` token in `src/styles/global.css`, so a theme swap is one set of variable overrides — no component-level colour branches.
+
+### Mechanism
+
+- **Switch**: a single `<html data-theme="light|dark">` attribute. `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *))` wires Tailwind's `dark:` variant to that attribute.
+- **Control**: a three-state `ThemeToggle` in the nav — **Light / Dark / System** — persisted to `localStorage['theme']`.
+- **Resolution**: an inline `is:inline` script in `src/layouts/Layout.astro` runs before paint, reads `localStorage` + `prefers-color-scheme`, and writes `dataset.theme`, `style.colorScheme` and the `<meta name="theme-color">` content. No flash of the wrong theme (FOUC).
+- **System follow**: when the stored value is `system`, a `matchMedia('(prefers-color-scheme: dark)')` listener re-resolves live.
+- **Single-sourcing**: utilities compile to `var(--color-*)`; only the `@theme` token block is overridden under `[data-theme="dark"]`.
+
+### Token Overrides
+
+Light values are the canonical palette above. Dark values:
+
+| Token | Light | Dark | Notes |
+|---|---|---|---|
+| `{colors.canvas-soft}` | `#e8ebe6` | `#0d120c` | Page background — deep olive-black. |
+| `{colors.canvas}` | `#ffffff` | `#1a2018` | Card / raised surface. |
+| `{colors.ink}` | `#0e0f0c` | `#f2f5ee` | Primary text — flips to near-white. |
+| `{colors.ink-deep}` | `#163300` | `#c9f7ad` | Ink on positive surfaces brightens. |
+| `{colors.body}` | `#454745` | `#b9c0b2` | Secondary text. |
+| `{colors.mute}` | `#6d6f6d` | `#949c8c` | Tertiary text. |
+| `{colors.primary}` | `#9fe870` | `#9fe870` | Constant — the lime accent. |
+| `{colors.primary-active}` | `#cdffad` | `#bff59a` | |
+| `{colors.primary-neutral}` | `#c5edab` | `#7fb768` | |
+| `{colors.primary-pale}` | `#e2f6d5` | `#21331b` | Soft green surface darkens. |
+| `{colors.on-primary}` | `#0e0f0c` | `#0e0f0c` | Constant ink on lime. |
+| `{colors.positive}` | `#2ead4b` | `#5fd67a` | Brightened for dark. |
+| `{colors.positive-strong}` | `#22833c` | `#8ce89a` | |
+| `{colors.positive-deep}` | `#054d28` | `#b7f0c0` | |
+| `{colors.warning-deep}` | `#b86700` | `#e0a24a` | |
+| `{colors.warning-content}` | `#4a3b1c` | `#f2d9a8` | |
+| `{colors.negative}` | `#d03238` | `#ff6b70` | |
+| `{colors.negative-deep}` | `#a72027` | `#ff8a8e` | |
+| `{colors.negative-darkest}` | `#a7000d` | `#ff9a9d` | |
+| `{colors.gold}` | `#f59e0b` | `#fbbf24` | |
+| `{colors.solid}` | `#0e0f0c` | `#060906` | Dark bands stay dark. |
+| `{colors.on-solid}` | `#e8ebe6` | `#e8ebe6` | Constant. |
+| `{colors.scrim}` | `#0b0d0a` | `#0b0d0a` | Constant. |
+
+Untouched, identical in both themes: `{colors.warning}` `#ffd11a`, `{colors.negative-bg}` `#320707`, `{colors.accent-orange}` `#ffc091`, `{colors.accent-cyan}` `#38c8ff`.
+
+### Decisions
+
+- **Dark bands stay dark.** The footer, dark feature cards, CTA bands and icon chips keep their near-black `{colors.solid}` fill in both themes; only `{colors.solid}` deepens slightly (`#0e0f0c` → `#060906`) so they separate from the dark page (`{colors.canvas-soft}` `#0d120c`) instead of inverting to light.
+- **`ink` is text-only.** The original system overloaded `{colors.ink}` as both a text colour and a dark-band fill. In dark mode those conflict — text must go light, bands must stay dark — which is why `{colors.solid}` / `{colors.on-solid}` / `{colors.scrim}` were introduced.
+- **PDF page rasters are untouched.** Thumbnails and previews render the user's actual document and are never theme-tinted.
+- **Contrast measured.** Every dark pair above clears WCAG AA: body and heading text ≥ 4.5:1, large display text ≥ 3:1.
+
+### Adding a colour
+
+Add it once to the `@theme` block and, if it flips, once to the `[data-theme="dark"]` block. Never branch colours inside components — use a token (or a role token) so both themes stay in sync.
+
 ## Do's and Don'ts
 
 ### Do
@@ -535,6 +607,7 @@ The brand uses surface contrast (`{colors.canvas-soft}` background vs `{colors.c
 - Use `{rounded.xl}` 24 px for buttons and cards. The generous radius is the brand's friendliness signature.
 - Cycle page surfaces in `{colors.canvas-soft}` sage canvas → `{colors.canvas}` white cards. Surface contrast carries elevation.
 - Use the full semantic palette (positive / warning / negative) for in-product status — never repurpose Wise green as success indicator since it IS the brand CTA.
+- Use `{colors.solid}` for anything that must stay dark (footer, dark cards, overlays' inner panel) and `{colors.scrim}` for translucent overlays — both are theme-invariant.
 
 ### Don't
 - Don't introduce a second brand accent. Wise green is the sole identity colour.
@@ -542,3 +615,5 @@ The brand uses surface contrast (`{colors.canvas-soft}` background vs `{colors.c
 - Don't render CTAs as sharp rectangles. The 24 px pill geometry is non-negotiable.
 - Don't pair the green CTA with a green background. The brand always sits Wise green on neutral surfaces (sage / white / ink).
 - Don't replace Wise Sans with a generic geometric sans for hero typography — the proprietary face IS the brand's voice.
+- Don't use `{colors.ink}` as a fill for dark bands or overlays — it flips to near-white in dark mode. Use `{colors.solid}` for dark surfaces and `{colors.scrim}` for overlays.
+- Don't hard-code hex values in components. Every colour goes through a token so the dark override stays the single source of truth.

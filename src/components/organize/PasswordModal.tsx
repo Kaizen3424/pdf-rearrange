@@ -25,12 +25,12 @@ export default function PasswordModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-scrim/60 p-4"
       role="dialog"
       aria-modal="true"
       aria-label={t.password.dialogLabel}
     >
-      <div className="w-full max-w-sm rounded-xl bg-canvas p-6 shadow-xl">
+      <div className="w-full max-w-sm rounded-xl border border-ink/10 bg-canvas p-6 shadow-xl">
         <span className="flex size-11 items-center justify-center rounded-md bg-canvas-soft">
           <KeyRound className="size-5 text-ink" />
         </span>

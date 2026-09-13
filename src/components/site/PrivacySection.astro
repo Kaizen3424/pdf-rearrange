@@ -15,16 +15,16 @@ const bulletIcons = ['cloud-off', 'ban', 'eye'];
 
 <section id="privacy" class="scroll-mt-24 bg-canvas">
   <div class="container-page py-16 md:py-24">
-    <div class="rounded-xl bg-ink text-primary p-7 md:p-12 max-w-6xl mx-auto">
+    <div class="rounded-xl bg-solid text-primary p-7 md:p-12 max-w-6xl mx-auto">
       <div class="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
         <div>
-          <h2 class="font-black text-display-sm md:text-display-md text-canvas">
+          <h2 class="font-black text-display-sm md:text-display-md text-on-solid">
             {t.privacySection.h2}
           </h2>
-          <p class="mt-4 text-body-lg text-canvas-soft/85 max-w-xl">
+          <p class="mt-4 text-body-lg text-on-solid/85 max-w-xl">
             <RichText text={t.privacySection.p1} locale={locale} />
           </p>
-          <p class="mt-4 text-body-md text-canvas-soft/70 max-w-xl">
+          <p class="mt-4 text-body-md text-on-solid/70 max-w-xl">
             <RichText text={t.privacySection.p2} locale={locale} />
           </p>
           <div class="mt-7 flex flex-wrap gap-3">
@@ -41,8 +41,8 @@ const bulletIcons = ['cloud-off', 'ban', 'eye'];
                   <Icon name={bulletIcons[index] ?? 'check'} size={20} />
                 </span>
                 <div>
-                  <h3 class="text-body-md-strong text-canvas">{bullet.title}</h3>
-                  <p class="text-body-sm text-canvas-soft/70">{bullet.text}</p>
+                  <h3 class="text-body-md-strong text-on-solid">{bullet.title}</h3>
+                  <p class="text-body-sm text-on-solid/70">{bullet.text}</p>
                 </div>
               </li>
             ))

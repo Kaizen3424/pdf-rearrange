@@ -74,7 +74,7 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     {cjkFontCss && <link rel="stylesheet" href={cjkFontCss} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#e8ebe6" />
+    <meta name="theme-color" content="#e8ebe6" id="theme-color" />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={dict.siteName} />
     <meta property="og:locale" content={meta.ogLocale} />
@@ -104,6 +104,23 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
         data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
       ></script>
     )}
+    {/* Resolve the theme before first paint to avoid a flash of the wrong theme.
+        Stored preference is `light` | `dark` | `system` (absent = system). */}
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        let stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch {}
+        const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored === 'light' || stored === 'dark' ? stored : preferDark ? 'dark' : 'light';
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        const meta = document.getElementById('theme-color');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0d120c' : '#e8ebe6');
+      })();
+    </script>
   </head>
   <body>
     <a href="#main" class="skip-link">{dict.skipToContent}</a>

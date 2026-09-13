@@ -1,0 +1,130 @@
+---
+import Icon from './Icon.astro';
+import { defaultLocale, getDictionary, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = defaultLocale } = Astro.props;
+const t = getDictionary(locale);
+
+const options = [
+  { value: 'light', label: t.theme.light, icon: 'sun' },
+  { value: 'dark', label: t.theme.dark, icon: 'moon' },
+  { value: 'system', label: t.theme.system, icon: 'monitor' },
+];
+---
+
+<div class="relative" data-theme-switcher>
+  <button type="button" class="btn-icon" aria-haspopup="true" aria-expanded="false" aria-label={t.theme.ariaLabel} data-theme-toggle>
+    <Icon name="sun" size={20} class="hidden" data-theme-icon="light" />
+    <Icon name="moon" size={20} class="hidden" data-theme-icon="dark" />
+    <Icon name="monitor" size={20} class="hidden" data-theme-icon="system" />
+  </button>
+  <div
+    hidden
+    data-theme-menu
+    class="absolute end-0 top-full z-50 mt-2 w-44 rounded-xl border border-ink/10 bg-canvas p-1.5 shadow-lg"
+  >
+    <ul class="list-none space-y-0.5 p-0">
+      {
+        options.map((option) => (
+          <li>
+            <button
+              type="button"
+              data-theme-option={option.value}
+              class="flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 text-body-sm transition-colors text-body hover:bg-canvas-soft"
+            >
+              <span class="inline-flex items-center gap-2">
+                <Icon name={option.icon} size={16} />
+                {option.label}
+              </span>
+              <Icon name="check" size={16} class="hidden text-positive" data-theme-check />
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script>
+  type ThemeMode = 'light' | 'dark' | 'system';
+
+  const STORAGE_KEY = 'theme';
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const readStored = (): ThemeMode => {
+    try {
+      const value = localStorage.getItem(STORAGE_KEY);
+      if (value === 'light' || value === 'dark' || value === 'system') return value;
+    } catch {}
+    return 'system';
+  };
+
+  const resolve = (mode: ThemeMode): 'light' | 'dark' =>
+    mode === 'system' ? (media.matches ? 'dark' : 'light') : mode;
+
+  const apply = (mode: ThemeMode) => {
+    const theme = resolve(mode);
+    const root = document.documentElement;
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+    const meta = document.getElementById('theme-color');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0d120c' : '#e8ebe6');
+
+    document.querySelectorAll<HTMLElement>('[data-theme-icon]').forEach((icon) => {
+      icon.classList.toggle('hidden', icon.dataset.themeIcon !== mode);
+    });
+    document.querySelectorAll<HTMLElement>('[data-theme-option]').forEach((option) => {
+      const active = option.dataset.themeOption === mode;
+      option.classList.toggle('bg-primary-pale', active);
+      option.classList.toggle('font-semibold', active);
+      option.classList.toggle('text-ink', active);
+      option.classList.toggle('text-body', !active);
+      option.querySelector('[data-theme-check]')?.classList.toggle('hidden', !active);
+    });
+  };
+
+  let mode = readStored();
+  apply(mode);
+
+  media.addEventListener('change', () => {
+    if (mode === 'system') apply(mode);
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-theme-switcher]').forEach((switcher) => {
+    const toggle = switcher.querySelector<HTMLElement>('[data-theme-toggle]');
+    const menu = switcher.querySelector<HTMLElement>('[data-theme-menu]');
+    if (!toggle || !menu) return;
+
+    const setOpen = (open: boolean) => {
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+
+    toggle.addEventListener('click', () => setOpen(menu.hidden === true));
+
+    switcher.querySelectorAll<HTMLElement>('[data-theme-option]').forEach((option) => {
+      option.addEventListener('click', () => {
+        mode = (option.dataset.themeOption as ThemeMode) ?? 'system';
+        try {
+          localStorage.setItem(STORAGE_KEY, mode);
+        } catch {}
+        apply(mode);
+        setOpen(false);
+        toggle.focus();
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (menu.hidden) return;
+      if (!switcher.contains(event.target as Node)) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+  });
+</script>
