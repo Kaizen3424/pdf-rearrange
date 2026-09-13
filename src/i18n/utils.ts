@@ -20,15 +20,18 @@ export function getLangFromUrl(url: URL): Locale {
 }
 
 /**
- * Prefixes a logical path with the locale. The default locale keeps clean URLs:
- * `localePath('/', 'es')` → `/es/`, `localePath('/about', 'es')` → `/es/about`,
- * `localePath('/#faq', 'fr')` → `/fr/#faq`, `localePath('/about', 'en')` → `/about`.
+ * Prefixes a logical path with the locale. Non-root paths carry a trailing
+ * slash so the emitted URLs match the directory-index pages served by the host
+ * (and the canonical/hreflang/sitemap forms agree):
+ * `localePath('/', 'es')` → `/es/`, `localePath('/about', 'es')` → `/es/about/`,
+ * `localePath('/about', 'en')` → `/about/`, `localePath('/#faq', 'fr')` → `/fr/#faq`.
  */
 export function localePath(path: string, locale: Locale): string {
-  if (locale === defaultLocale) return path;
   const [purePath, ...fragment] = path.split('#');
+  const normalized =
+    purePath === '/' ? '/' : `${purePath.replace(/\/+$/, '')}/`;
   const prefixed =
-    purePath === '/' ? `/${locale}/` : `/${locale}${purePath}`;
+    locale === defaultLocale ? normalized : `/${locale}${normalized}`;
   return fragment.length > 0 ? `${prefixed}#${fragment.join('#')}` : prefixed;
 }
 

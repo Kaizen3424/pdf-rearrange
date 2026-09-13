@@ -39,11 +39,11 @@ function fail(msg) {
   failures.push(msg);
 }
 
-/** Expected clean URL for a logical page in a locale (home keeps a slash). */
+/** Expected canonical URL for a logical page in a locale (trailing slash; home included). */
 function localeUrl(logical, code) {
   const prefix = code === DEFAULT_LOCALE ? '' : `/${code}`;
-  if (logical === '/') return `${SITE}${prefix}/`;
-  return `${SITE}${prefix}${logical}`;
+  const leaf = logical === '/' ? '' : logical;
+  return `${SITE}${prefix}${leaf}/`;
 }
 
 /** On-disk path for a logical page in a locale. */
@@ -169,10 +169,10 @@ for (const special of ['404', '500']) {
 }
 
 // Sitemap: one <url> per indexable page, 9 alternates each, x-default = English,
-// canonical URL form (no trailing slash except home pages).
-const sitemapPath = path.join(dist, 'sitemap-0.xml');
+// canonical URL form (trailing slash on every directory-index page).
+const sitemapPath = path.join(dist, 'sitemap.xml');
 if (!existsSync(sitemapPath)) {
-  fail('missing dist/sitemap-0.xml');
+  fail('missing dist/sitemap.xml');
 } else {
   const xml = await readFile(sitemapPath, 'utf8');
   const urlBodies = matchAll(xml, /<url>([\s\S]*?)<\/url>/g).map((m) => m[1]);
@@ -198,8 +198,6 @@ if (!existsSync(sitemapPath)) {
   for (const url of expectedUrls) {
     if (!xml.includes(`<loc>${url}</loc>`)) fail(`sitemap: missing ${url}`);
   }
-  const index = await readFile(path.join(dist, 'sitemap-index.xml'), 'utf8');
-  if (!index.includes('sitemap-0.xml')) fail('sitemap-index.xml does not reference sitemap-0.xml');
 }
 
 // Report

@@ -72,8 +72,45 @@ for (const p of pages) {
 }
 
 if (!existsSync(join(DIST, 'robots.txt'))) errors.push('missing dist/robots.txt');
-else if (!readFileSync(join(DIST, 'robots.txt'), 'utf8').includes('sitemap-index.xml'))
+else if (!readFileSync(join(DIST, 'robots.txt'), 'utf8').includes('sitemap.xml'))
   errors.push('dist/robots.txt does not reference the sitemap');
+if (!existsSync(join(DIST, 'sitemap.xml'))) errors.push('missing dist/sitemap.xml');
+else {
+  const sitemap = readFileSync(join(DIST, 'sitemap.xml'), 'utf8');
+  if (
+    !sitemap.includes(
+      'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"'
+    )
+  )
+    errors.push('sitemap.xml: missing xsi:schemaLocation for the sitemaps.org schema');
+
+  const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  if (new Set(locs).size !== locs.length) errors.push('sitemap.xml: duplicate <loc> URLs');
+
+  const today = new Date().toISOString().slice(0, 10);
+  for (const block of sitemap.match(/<url>[\s\S]*?<\/url>/g) ?? []) {
+    const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1] ?? '(no <loc>)';
+    const lastmod = block.match(/<lastmod>([^<]*)<\/lastmod>/)?.[1];
+    if (!lastmod) errors.push(`sitemap.xml: ${loc} missing <lastmod>`);
+    else if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod))
+      errors.push(`sitemap.xml: ${loc} lastmod not YYYY-MM-DD: ${lastmod}`);
+    else if (lastmod > today) errors.push(`sitemap.xml: ${loc} lastmod is in the future`);
+  }
+
+  // The sitemap must list exactly the canonical URLs of the indexable pages.
+  const expected = new Set(
+    pages
+      .filter((p) => indexable(p.robots))
+      .map((p) => p.canonical)
+      .filter(Boolean),
+  );
+  for (const canonical of expected)
+    if (!locs.includes(canonical)) errors.push(`sitemap.xml: missing indexable page ${canonical}`);
+  for (const loc of locs)
+    if (!expected.has(loc)) errors.push(`sitemap.xml: lists ${loc} with no matching indexable page`);
+}
+if (existsSync(join(DIST, 'sitemap-index.xml')) || existsSync(join(DIST, 'sitemap-0.xml')))
+  errors.push('dist contains a stale sitemap-index.xml / sitemap-0.xml');
 
 console.log(`SEO audit — ${pages.length} HTML pages in ${DIST}`);
 console.log(`  indexable: ${pages.filter((p) => indexable(p.robots)).length}, noindex: ${pages.filter((p) => !indexable(p.robots)).length}`);
