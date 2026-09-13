@@ -44,26 +44,33 @@
   --color-on-solid: #e8ebe6;
   --color-scrim: #0b0d0a;
 
-  /* ─── Typography ─── */
+  /* ─── Typography ───
+     Display sizes are fluid (`clamp`) with size-specific leading and negative
+     tracking, per the Apple "optical typography" guidance: large text tightens
+     and loses tracking as it grows. Body sizes stay fixed for a stable measure. */
   --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --text-display-mega: 126px;
-  --text-display-mega--line-height: 107.1px;
-  --text-display-xxl: 96px;
-  --text-display-xxl--line-height: 81.6px;
-  --text-display-xl: 64px;
-  --text-display-xl--line-height: 54.4px;
-  --text-display-lg: 47px;
-  --text-display-lg--line-height: 70.5px;
-  --text-display-lg--letter-spacing: -0.108px;
-  --text-display-md: 40px;
-  --text-display-md--line-height: 34px;
-  --text-display-sm: 32px;
-  --text-display-sm--line-height: 38.4px;
-  --text-display-sm--letter-spacing: -0.96px;
-  --text-display-xs: 24px;
-  --text-display-xs--line-height: 31.2px;
-  --text-display-xs--letter-spacing: -0.48px;
+  --text-display-mega: clamp(3.25rem, 7.6vw, 7.875rem); /* 52 → 126 */
+  --text-display-mega--line-height: 0.9;
+  --text-display-mega--letter-spacing: -0.03em;
+  --text-display-xxl: clamp(2.75rem, 6.2vw, 6rem); /* 44 → 96 */
+  --text-display-xxl--line-height: 0.9;
+  --text-display-xxl--letter-spacing: -0.03em;
+  --text-display-xl: clamp(2.5rem, 5vw, 4rem); /* 40 → 64 */
+  --text-display-xl--line-height: 0.92;
+  --text-display-xl--letter-spacing: -0.028em;
+  --text-display-lg: clamp(2rem, 4.4vw, 2.9375rem); /* 32 → 47 */
+  --text-display-lg--line-height: 1.05;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-md: clamp(2.125rem, 4vw, 2.5rem); /* 34 → 40 */
+  --text-display-md--line-height: 0.95;
+  --text-display-md--letter-spacing: -0.022em;
+  --text-display-sm: clamp(1.75rem, 3.2vw, 2rem); /* 28 → 32 */
+  --text-display-sm--line-height: 1.16;
+  --text-display-sm--letter-spacing: -0.024em;
+  --text-display-xs: clamp(1.3125rem, 2.4vw, 1.5rem); /* 21 → 24 */
+  --text-display-xs--line-height: 1.25;
+  --text-display-xs--letter-spacing: -0.016em;
   --text-body-lg: 20px;
   --text-body-lg--line-height: 30px;
   --text-body-md: 16px;
@@ -81,11 +88,64 @@
   --radius-2xl: 24px;
   --radius-3xl: 32px;
 
-  /* ─── Motion ─── */
+  /* ─── Motion ───
+     Apple's model: respond instantly, settle on springs. `standard` is the
+     critically-damped workhorse; `spring` carries a touch of overshoot and is
+     reserved for momentum/drag-driven moments. */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  --animate-pop-in: pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  --animate-rise-in: rise-in 420ms cubic-bezier(0.2, 0, 0, 1) both;
+  /* ─── Elevation ───
+     Layered ambient + key shadows. Deepened in dark mode where shadows read
+     weaker against dark surfaces. Hairline is the theme-aware separator. */
+  --shadow-e1: 0 1px 2px -0.5px rgb(14 15 12 / 0.06), 0 1px 1px 0 rgb(14 15 12 / 0.04);
+  --shadow-e2: 0 10px 24px -10px rgb(14 15 12 / 0.18), 0 2px 6px -2px rgb(14 15 12 / 0.08);
+  --shadow-e3: 0 32px 64px -24px rgb(14 15 12 / 0.32), 0 12px 28px -14px rgb(14 15 12 / 0.18);
+  --color-hairline: rgb(14 15 12 / 0.1);
+
+  --animate-fade-in: fade-in 240ms var(--ease-standard) both;
+  --animate-menu-in: menu-in 200ms var(--ease-out-expo) both;
+  --animate-scale-in: scale-in 180ms var(--ease-out-expo) both;
+  --animate-rise-in: rise-in 420ms var(--ease-out-expo) both;
+  --animate-pop-in: pop-in 420ms var(--ease-spring) both;
+  --animate-toast-in: toast-in var(--duration-slow) var(--ease-out-expo) both;
+  --animate-bar-in: bar-in 340ms var(--ease-spring) both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
 
   @keyframes pop-in {
     0% {
@@ -101,11 +161,33 @@
   @keyframes rise-in {
     0% {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(14px);
     }
     100% {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateX(16px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes bar-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: none;
     }
   }
 }
@@ -145,12 +227,25 @@
   --color-negative-bg: #320707;
 
   --color-gold: #fbbf24;
+
+  /* Elevation reads weaker on dark surfaces — deepen and warm the shadows, and
+     lift the hairline to a light neutral so separators stay visible. */
+  --shadow-e1: 0 1px 2px -0.5px rgb(0 0 0 / 0.4), 0 1px 1px 0 rgb(0 0 0 / 0.3);
+  --shadow-e2: 0 10px 24px -10px rgb(0 0 0 / 0.6), 0 2px 6px -2px rgb(0 0 0 / 0.45);
+  --shadow-e3: 0 32px 64px -24px rgb(0 0 0 / 0.75), 0 12px 28px -14px rgb(0 0 0 / 0.55);
+  --color-hairline: rgb(242 245 238 / 0.12);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
     color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    /* Reserve the scrollbar track so opening a scroll-locked modal can't shift
+       the page horizontally. */
+    scrollbar-gutter: stable;
+    overscroll-behavior-y: none;
   }
 
   [data-theme="dark"] {
@@ -162,8 +257,24 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-feature-settings: "calt";
+    font-optical-sizing: auto;
+    font-synthesis: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Optical typography: balance multi-line headings, keep body copy from
+     leaving a single orphan word. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
   }
 
   :lang(ja) body {
@@ -226,6 +337,112 @@
   }
 }
 
+/* ─── Material surfaces (translucent chrome) ───
+   A floating functional layer that keeps content visible beneath: blur +
+   saturation + a semi-transparent fill. `material` is the light chip/popover
+   weight; `material-thick` is for larger panels (nav, sheets). Both frost to
+   opaque under `prefers-reduced-transparency`. */
+@utility material {
+  background-color: color-mix(in srgb, var(--color-canvas) 78%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+@utility material-thick {
+  background-color: color-mix(in srgb, var(--color-canvas) 88%, transparent);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+}
+
+/* Theme-aware elevation. Tailwind's built-in `shadow-*` inlines its value at
+   build time, so a runtime `[data-theme="dark"]` override can't reach it. These
+   reference the variable at use time, so dark surfaces get deeper shadows. */
+@utility elev-1 {
+  box-shadow: var(--shadow-e1);
+}
+
+@utility elev-2 {
+  box-shadow: var(--shadow-e2);
+}
+
+@utility elev-3 {
+  box-shadow: var(--shadow-e3);
+}
+
+/* Expand a small icon control to a ≥44px touch target without changing its
+   visual box. The pseudo-element is a child of the button, so taps still
+   activate the control. */
+@utility tap-target {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+}
+
+@utility pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+@utility pt-safe {
+  padding-top: max(1rem, env(safe-area-inset-top));
+}
+
+@layer utilities {
+  /* Cross-fade colors when the theme flips. Toggled onto <html> for a beat by
+     ThemeToggle, then removed so it never interferes with interactive motion. */
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition:
+      background-color var(--duration-base) var(--ease-standard),
+      border-color var(--duration-base) var(--ease-standard),
+      color var(--duration-base) var(--ease-standard),
+      fill var(--duration-base) var(--ease-standard),
+      stroke var(--duration-base) var(--ease-standard),
+      box-shadow var(--duration-base) var(--ease-standard) !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .material,
+  .material-thick {
+    background-color: var(--color-canvas);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* When a user asks for more contrast, strengthen separation: darker hairlines,
+   solid chrome, and an emphatic focus ring. */
+@media (prefers-contrast: more) {
+  :root {
+    --color-hairline: color-mix(in srgb, var(--color-ink) 42%, transparent);
+  }
+
+  [data-theme="dark"] {
+    --color-hairline: color-mix(in srgb, var(--color-ink) 48%, transparent);
+  }
+
+  .material,
+  .material-thick {
+    background-color: var(--color-canvas);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .btn:focus-visible,
+  .btn-icon:focus-visible,
+  :focus-visible {
+    outline-width: 3px;
+  }
+}
+
 /* ─── Component classes (stable primitives per DESIGN.md) ─── */
 
 @layer components {
@@ -243,9 +460,15 @@
     cursor: pointer;
     text-decoration: none;
     white-space: nowrap;
-    transition: background-color 150ms ease, color 150ms ease, transform 100ms ease;
+    max-width: 100%;
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-base) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard);
     &:active {
       transform: scale(0.97);
+      transition-duration: var(--duration-fast);
     }
     &:focus-visible {
       outline: 2px solid var(--color-ink);
@@ -262,6 +485,7 @@
     color: var(--color-on-primary);
     &:hover {
       background-color: var(--color-primary-active);
+      box-shadow: var(--shadow-e1);
     }
   }
 
@@ -314,5 +538,68 @@
     line-height: 1.43;
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
+  }
+
+  /* Long localized CTA labels would otherwise force horizontal overflow on
+     narrow phones; let them wrap instead of clipping or scrolling. */
+  @media (max-width: 26.25rem) {
+    .btn {
+      white-space: normal;
+      text-wrap: balance;
+    }
+  }
+}
+
+/* ─── Restrained scroll reveals (progressive enhancement) ───
+   Content is visible by default. `reveal-ready` is added to <html> only once the
+   observer script has run, and the whole effect is inert under
+   prefers-reduced-motion, so nothing can get stuck hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 700ms var(--ease-out-expo),
+      transform 700ms var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .reveal-ready [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+}
+
+/* ─── Smooth <details> expand (progressive; Chromium today) ───
+   Uses the same critically-damped easing as the rest of the site. Browsers
+   without ::details-content simply keep the native instant toggle. */
+@supports selector(details::details-content) {
+  details {
+    interpolate-size: allow-keywords;
+  }
+
+  details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    content-visibility: hidden;
+    transition:
+      block-size 320ms var(--ease-out-expo),
+      opacity 220ms var(--ease-standard),
+      content-visibility 320ms allow-discrete;
+  }
+
+  details[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+    content-visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details::details-content {
+    transition: none;
   }
 }

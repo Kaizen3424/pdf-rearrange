@@ -39,7 +39,7 @@ const entries = locales.map((code) => ({
               hreflang={localeMeta[entry.code].hreflang}
               aria-current={entry.current ? 'page' : undefined}
               class:list={[
-                'text-on-solid/80 hover:text-primary transition-colors focus-ring rounded-sm',
+                'inline-block py-0.5 text-on-solid/80 hover:text-primary transition-colors focus-ring rounded-sm',
                 entry.current ? 'text-primary' : '',
               ]}
             >
@@ -53,7 +53,7 @@ const entries = locales.map((code) => ({
     <div class="relative" data-lang-switcher>
       <button
         type="button"
-        class="btn-icon"
+        class="btn-icon tap-target"
         aria-haspopup="true"
         aria-expanded="false"
         aria-label={t.langSwitcher.ariaLabel}
@@ -64,7 +64,7 @@ const entries = locales.map((code) => ({
       <div
         hidden
         data-lang-menu
-        class="absolute end-0 top-full z-50 mt-2 w-48 rounded-xl border border-ink/10 bg-canvas p-1.5 shadow-lg"
+        class="absolute end-0 top-full z-50 mt-2 w-48 origin-top-right material-thick rounded-xl border border-hairline p-1.5 elev-3"
       >
         <ul class="list-none space-y-0.5 p-0">
           {entries.map((entry) => (
@@ -93,13 +93,19 @@ const entries = locales.map((code) => ({
 
 <script>
   const switcher = document.querySelector('[data-lang-switcher]');
-  const toggle = switcher?.querySelector('[data-lang-toggle]');
+  const toggle = switcher?.querySelector<HTMLElement>('[data-lang-toggle]');
   const menu = switcher?.querySelector<HTMLElement>('[data-lang-menu]');
 
-  const setMenu = (open: boolean) => {
+  const setMenu = (open: boolean, restoreFocus = false) => {
     if (!menu || !toggle) return;
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
+    menu.classList.remove('animate-scale-in');
+    if (open) {
+      void menu.offsetWidth; // restart the entrance
+      menu.classList.add('animate-scale-in');
+    }
+    if (restoreFocus) toggle.focus();
   };
 
   toggle?.addEventListener('click', () => {
@@ -112,7 +118,7 @@ const entries = locales.map((code) => ({
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') setMenu(false);
+    if (event.key === 'Escape' && menu && !menu.hidden) setMenu(false, true);
   });
 
   menu?.querySelectorAll('a').forEach((a) => {

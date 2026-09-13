@@ -22,7 +22,7 @@ export default function BatchBar({
 
   return (
     <div
-      className="fixed inset-x-0 bottom-4 z-40 mx-auto flex w-fit max-w-[calc(100vw-2rem)] flex-wrap items-center justify-center gap-x-1 gap-y-2 rounded-xl border border-on-solid/15 bg-solid px-3 py-2 text-on-solid shadow-lg"
+      className="animate-toast-in fixed inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 mx-auto flex w-fit max-w-[calc(100vw-2rem)] flex-wrap items-center justify-center gap-x-1 gap-y-1.5 rounded-xl border border-on-solid/15 bg-solid px-2.5 py-2 text-on-solid elev-3"
       role="toolbar"
       aria-label={t.batch.label}
     >
@@ -30,7 +30,7 @@ export default function BatchBar({
       <span className="h-5 w-px bg-on-solid/25" aria-hidden="true" />
       <button
         type="button"
-        className="flex items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-colors hover:bg-on-solid/15"
+        className="tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard hover:bg-on-solid/15 active:scale-95"
         onClick={onRotate}
       >
         <RotateCw className="size-4" />
@@ -38,7 +38,7 @@ export default function BatchBar({
       </button>
       <button
         type="button"
-        className="flex items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-colors hover:bg-on-solid/15"
+        className="tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard hover:bg-on-solid/15 active:scale-95"
         onClick={onDuplicate}
       >
         <Copy className="size-4" />
@@ -46,7 +46,7 @@ export default function BatchBar({
       </button>
       <button
         type="button"
-        className="flex items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-colors hover:bg-negative/25"
+        className="tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard hover:bg-negative/25 active:scale-95"
         onClick={onDelete}
       >
         <Trash2 className="size-4" />
@@ -55,7 +55,7 @@ export default function BatchBar({
       <span className="h-5 w-px bg-on-solid/25" aria-hidden="true" />
       <button
         type="button"
-        className="flex items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-colors hover:bg-on-solid/15"
+        className="tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard hover:bg-on-solid/15 active:scale-95"
         onClick={onSelectAll}
       >
         <Check className="size-4" />
@@ -63,7 +63,7 @@ export default function BatchBar({
       </button>
       <button
         type="button"
-        className="flex items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-colors hover:bg-on-solid/15"
+        className="tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard hover:bg-on-solid/15 active:scale-95"
         onClick={onClear}
       >
         <X className="size-4" />

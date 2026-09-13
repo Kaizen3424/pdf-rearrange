@@ -17,7 +17,7 @@ const steps = t.howItWorks.steps.map((step, index) => ({
 
 <section id="how-it-works" class="scroll-mt-24 bg-canvas">
   <div class="container-page py-16 md:py-24">
-    <div class="max-w-2xl">
+    <div class="max-w-2xl" data-reveal>
       <h2 class="text-display-sm font-semibold">{t.howItWorks.heading}</h2>
       <p class="mt-3 text-body-lg text-body">
         {t.howItWorks.sub}
@@ -27,7 +27,11 @@ const steps = t.howItWorks.steps.map((step, index) => ({
     <ol class="mt-10 grid gap-6 md:grid-cols-3">
       {
         steps.map((step, index) => (
-          <li class="relative rounded-xl bg-canvas-soft p-6 md:p-7">
+          <li
+            class="relative rounded-xl bg-canvas-soft p-6 md:p-7 transition-[transform,box-shadow] duration-200 ease-standard hover:-translate-y-1 hover:elev-2"
+            data-reveal
+            style={`--reveal-delay:${index * 80}ms`}
+          >
             <div class="flex items-center justify-between">
               <span class="flex size-11 items-center justify-center rounded-md bg-solid text-primary">
                 <Icon name={step.icon} size={22} />

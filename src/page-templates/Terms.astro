@@ -43,7 +43,7 @@ const jsonLd = webPageSchemas(t, locale, site, {
 
         {
           t.pages.terms.sections.map((section) => (
-            <section class="mt-10">
+            <section class="mt-10" data-reveal>
               <h2 class="text-display-xs font-semibold">{section.title}</h2>
               <p class="mt-2 text-body-md text-body">
                 <RichText text={section.text} locale={locale} linkClass="font-semibold underline underline-offset-2" />

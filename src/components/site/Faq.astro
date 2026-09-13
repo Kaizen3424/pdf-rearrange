@@ -12,7 +12,7 @@ const t = getDictionary(locale);
 
 <section id="faq" class="scroll-mt-24 bg-canvas-soft">
   <div class="container-page py-16 md:py-24">
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto" data-reveal>
       <h2 class="text-display-sm font-semibold text-center">{t.faq.heading}</h2>
       <p class="mt-3 text-body-lg text-body text-center">
         {t.faq.sub}
@@ -20,9 +20,13 @@ const t = getDictionary(locale);
 
       <div class="mt-10 space-y-3">
         {
-          t.faq.items.map((faq) => (
-            <details class="group rounded-xl bg-canvas">
-              <summary class="flex cursor-pointer items-center justify-between gap-4 rounded-xl p-5 text-body-md-strong text-ink list-none [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+          t.faq.items.map((faq, index) => (
+            <details
+              class="group rounded-xl bg-canvas transition-[box-shadow,transform] duration-200 ease-standard open:elev-1 hover:elev-1"
+              data-reveal
+              style={`--reveal-delay:${index * 60}ms`}
+            >
+              <summary class="flex cursor-pointer items-center justify-between gap-4 rounded-xl p-5 text-body-md-strong text-ink list-none transition-colors duration-150 hover:bg-canvas-soft [&::-webkit-details-marker]:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
                 {faq.q}
                 <Icon
                   name="chevron-down"

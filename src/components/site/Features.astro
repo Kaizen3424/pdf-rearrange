@@ -19,7 +19,7 @@ const features = t.features.items.map((feature, index) => ({
 
 <section id="features" class="scroll-mt-24 bg-canvas-soft">
   <div class="container-page py-16 md:py-24">
-    <div class="max-w-2xl">
+    <div class="max-w-2xl" data-reveal>
       <h2 class="text-display-sm font-semibold">{t.features.heading}</h2>
       <p class="mt-3 text-body-lg text-body">
         {t.features.sub}
@@ -28,12 +28,14 @@ const features = t.features.items.map((feature, index) => ({
 
     <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {
-        features.map((feature) => (
+        features.map((feature, index) => (
           <li
             class:list={[
-              'rounded-xl p-6 md:p-7 h-full',
+              'rounded-xl p-6 md:p-7 h-full transition-[transform,box-shadow] duration-200 ease-standard hover:-translate-y-1 hover:elev-2',
               feature.highlight ? 'bg-primary-pale' : 'bg-canvas',
             ]}
+            data-reveal
+            style={`--reveal-delay:${index * 70}ms`}
           >
             <span
               class:list={[

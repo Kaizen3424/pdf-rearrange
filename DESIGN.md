@@ -364,15 +364,17 @@ Two faces ladder the system:
 
 ### Hierarchy
 
-| Token | Size | Weight | Line Height | Letter Spacing | Use |
+Display sizes are **fluid**: each is a `clamp(min → max)` that scales with the viewport, with a size-specific line height (ratio) and negative letter spacing. Body sizes stay fixed to hold a stable measure.
+
+| Token | Size (fluid) | Weight | Line Height | Letter Spacing | Use |
 |---|---|---|---|---|---|
-| `{typography.display-mega}` | 126px | 900 | 107.1px | 0 | Hero stencil at maximum scale. |
-| `{typography.display-xxl}` | 96px | 900 | 81.6px | 0 | Sub-hero scale. |
-| `{typography.display-xl}` | 64px | 900 | 54.4px | 0 | Standard hero headline. |
-| `{typography.display-lg}` | 47px | 400 | 70.5px | -0.108px | Lighter sub-display. |
-| `{typography.display-md}` | 40px | 900 | 34px | 0 | Section / card headlines. |
-| `{typography.display-sm}` | 32px | 600 | 38.4px | -0.96px | Inter-rendered section headings. |
-| `{typography.display-xs}` | 24px | 600 | 31.2px | -0.48px | Sub-section displays. |
+| `{typography.display-mega}` | `clamp(52px → 126px)` | 900 | 0.9 | -0.03em | Hero stencil at maximum scale. |
+| `{typography.display-xxl}` | `clamp(44px → 96px)` | 900 | 0.9 | -0.03em | Sub-hero scale. |
+| `{typography.display-xl}` | `clamp(40px → 64px)` | 900 | 0.92 | -0.028em | Standard hero headline. |
+| `{typography.display-lg}` | `clamp(32px → 47px)` | 400 | 1.05 | -0.02em | Lighter sub-display. |
+| `{typography.display-md}` | `clamp(34px → 40px)` | 900 | 0.95 | -0.022em | Section / card headlines. |
+| `{typography.display-sm}` | `clamp(28px → 32px)` | 600 | 1.16 | -0.024em | Inter-rendered section headings. |
+| `{typography.display-xs}` | `clamp(21px → 24px)` | 600 | 1.25 | -0.016em | Sub-section displays. |
 | `{typography.body-lg}` | 20px | 400 | 30px | 0 | Lead paragraphs. |
 | `{typography.body-md}` | 16px | 400 | 24px | 0 | Default body. |
 | `{typography.body-md-strong}` | 16px | 600 | 24px | 0 | Bold inline body. |
@@ -384,6 +386,7 @@ Two faces ladder the system:
 ### Principles
 - **Weight 900 for hero, weight 600 for everything else.** The brand's display ceiling is full-black weight; everything below is semibold.
 - **Wise Sans for the brand voice, Inter for utility.** Strict role separation.
+- **Fluid display, fixed body.** Displays scale via `clamp()` and tighten tracking as they grow (optical typography); body and caption sizes stay fixed so paragraphs keep a stable measure.
 
 ### Note on Font Substitutes
 Wise Sans is proprietary. Open-source substitutes:
@@ -428,6 +431,62 @@ Photography is sparse; the brand prefers illustrative SVGs and product mockups i
 | Level 2 — Soft Card | Implicit Level 0 white card sitting on sage canvas — the surface contrast IS the elevation. | Cards on the sage hero band. |
 
 The brand uses surface contrast (`{colors.canvas-soft}` background vs `{colors.canvas}` cards) as the primary elevation cue.
+
+### Shadow Scale (theme-aware)
+
+Shadows are layered (an ambient pass plus a tighter key pass) and deepen in dark mode, where they read weaker against dark surfaces. Tailwind's built-in `shadow-*` inlines its value at build time and so can't be re-themed at runtime; these tokens are referenced at use time through the `elev-*` utilities.
+
+| Token / Utility | Treatment | Use |
+|---|---|---|
+| `{shadow.e1}` / `elev-1` | 1 px ambient + 1 px key, near-flat. | Hover lift on CTAs, small raised chips. |
+| `{shadow.e2}` / `elev-2` | 10 px ambient + 2 px key. | Popovers, dropdowns, floating toolbars. |
+| `{shadow.e3}` / `elev-3` | 32 px ambient + 12 px key, deepest. | Modals and sheets above the `scrim`. |
+
+### Hairline
+
+`{colors.hairline}` is the theme-aware 1 px separator — translucent ink in light mode, translucent near-white in dark. Use it for dividers and container outlines instead of `{colors.ink}` at full strength. Under `prefers-contrast: more` it strengthens to 42% ink (48% in dark) and focuses ring width grows to 3 px.
+
+## Motion & Materials
+
+Motion is functional, not decorative. The system follows a "respond instantly, settle on springs" model: short durations on interaction, eased entrances, and full respect for the user's reduced-motion preference.
+
+### Motion Tokens
+
+| Group | Token | Value | Use |
+|---|---|---|---|
+| Duration | `{motion.duration-fast}` | 120ms | Presses, colour and transform on interaction. |
+| Duration | `{motion.duration-base}` | 200ms | Default UI transitions, theme cross-fade. |
+| Duration | `{motion.duration-slow}` | 320ms | Larger surfaces, `<details>` expand, toasts. |
+| Easing | `{motion.ease-standard}` | `cubic-bezier(0.2, 0, 0, 1)` | Critically-damped workhorse. |
+| Easing | `{motion.ease-out-expo}` | `cubic-bezier(0.16, 1, 0.3, 1)` | Entrances that decelerate into place. |
+| Easing | `{motion.ease-spring}` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Momentum / drag moments; a touch of overshoot. |
+
+### Entrance Animations
+
+| Utility | Definition | Use |
+|---|---|---|
+| `animate-fade-in` | 240ms `standard` | Generic fade of a surface. |
+| `animate-menu-in` | 200ms `out-expo` | Popovers and menus (slides down 6 px). |
+| `animate-scale-in` | 180ms `out-expo` | Compact reveals from 0.96 scale. |
+| `animate-rise-in` | 420ms `out-expo` | Content rising 14 px into place. |
+| `animate-pop-in` | 420ms `spring` | Celebratory / badge pop from 0.55 scale. |
+| `animate-toast-in` | 320ms `out-expo` | Toast entry. |
+| `animate-bar-in` | 340ms `spring` | Batch / action bars sliding in. |
+
+### Reduced Motion
+
+- A global `@media (prefers-reduced-motion: reduce)` rule clamps animation and transition durations to `0.01ms` and stops `scroll-behavior: smooth`.
+- Scroll reveals are wrapped in `@media (prefers-reduced-motion: no-preference)`, so content is **visible by default** and can never get stuck hidden if the observer never runs.
+- The `<details>` expand transition is disabled under reduced motion (native instant toggle).
+
+### Material Surfaces
+
+A floating functional layer keeps content legible beneath it via a translucent fill + backdrop blur and saturation. Both frost to an opaque `{colors.canvas}` under `prefers-reduced-transparency` and `prefers-contrast`.
+
+| Utility | Fill | Backdrop | Use |
+|---|---|---|---|
+| `material` | 78% `{colors.canvas}` | `blur(20px) saturate(180%)` | Chips, popovers, small floating chrome. |
+| `material-thick` | 88% `{colors.canvas}` | `blur(28px) saturate(180%)` | Nav bar, sheets, larger panels. |
 
 ## Shapes
 

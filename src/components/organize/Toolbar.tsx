@@ -49,7 +49,7 @@ function ToolButton({
       type="button"
       title={label}
       aria-label={label}
-      className="flex size-9 items-center justify-center rounded-md text-ink transition-colors hover:bg-canvas-soft disabled:opacity-35 disabled:hover:bg-transparent"
+      className="tap-target flex size-9 items-center justify-center rounded-md text-ink transition-[background-color,transform] duration-150 ease-standard hover:bg-canvas-soft active:scale-95 disabled:opacity-35 disabled:hover:bg-transparent"
       onClick={onClick}
       disabled={disabled}
     >
@@ -99,7 +99,7 @@ export default function Toolbar({
   const exporting = status === 'exporting';
 
   return (
-    <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-ink/10 bg-canvas p-3 shadow-sm">
+    <div className="mb-5 flex flex-wrap items-center gap-x-2.5 gap-y-2 rounded-xl border border-hairline bg-canvas p-2.5 elev-1 sm:gap-x-3 sm:p-3">
       <div className="flex min-w-0 items-center gap-2">
         <span className="flex size-9 items-center justify-center rounded-md bg-canvas-soft">
           <FileText className="size-4 text-ink" />
@@ -129,7 +129,7 @@ export default function Toolbar({
         </div>
       )}
 
-      <div className="mx-1 hidden h-6 w-px bg-ink/10 sm:block" />
+      <div className="mx-1 hidden h-6 w-px bg-hairline sm:block" />
 
       <div className="flex items-center gap-0.5">
         <ToolButton label={t.toolbar.undo} onClick={onUndo} disabled={!canUndo}>
@@ -147,13 +147,17 @@ export default function Toolbar({
           aria-label={t.toolbar.resetLabel}
           onClick={onReset}
           disabled={pageCount === 0}
-          className="h-9 rounded-md px-2.5 text-body-sm font-semibold text-ink transition-colors hover:bg-canvas-soft disabled:opacity-35 disabled:hover:bg-transparent"
+          className="tap-target h-9 rounded-md px-2.5 text-body-sm font-semibold text-ink transition-[background-color,transform] duration-150 ease-standard hover:bg-canvas-soft active:scale-95 disabled:opacity-35 disabled:hover:bg-transparent"
         >
           {t.toolbar.reset}
         </button>
       </div>
 
-      <div className="flex items-center rounded-md bg-canvas-soft p-0.5" role="group" aria-label={t.toolbar.thumbnailSize}>
+      <div
+        className="flex items-center rounded-lg bg-canvas-soft p-0.5"
+        role="group"
+        aria-label={t.toolbar.thumbnailSize}
+      >
         {zoomOptions.map((option) => (
           <button
             key={option}
@@ -168,8 +172,8 @@ export default function Toolbar({
                   : t.toolbar.zoomLg
             }
             className={[
-              'rounded-sm px-2.5 py-1 text-caption font-semibold uppercase transition-colors',
-              zoom === option ? 'bg-canvas text-ink shadow-sm' : 'text-mute hover:text-ink',
+              'tap-target min-w-9 rounded-md px-2.5 py-1.5 text-caption font-semibold uppercase transition-[background-color,color,box-shadow,transform] duration-150 ease-standard active:scale-95',
+              zoom === option ? 'bg-canvas text-ink elev-1' : 'text-mute hover:text-ink',
             ].join(' ')}
           >
             {option === 'sm' ? 'S' : option === 'md' ? 'M' : 'L'}
@@ -177,10 +181,14 @@ export default function Toolbar({
         ))}
       </div>
 
-      <div className="mx-1 hidden h-6 w-px bg-ink/10 sm:block" />
+      <div className="mx-1 hidden h-6 w-px bg-hairline sm:block" />
 
       <div className="flex items-center gap-2">
-        <button type="button" className="btn btn-secondary px-4 py-2 text-body-sm" onClick={onAddFiles}>
+        <button
+          type="button"
+          className="btn btn-secondary tap-target px-4 py-2 text-body-sm"
+          onClick={onAddFiles}
+        >
           <FilePlus className="size-4" />
           <span className="hidden sm:inline">{t.toolbar.addPdfs}</span>
         </button>
@@ -192,7 +200,7 @@ export default function Toolbar({
       <div className="ml-auto flex items-center gap-2">
         <button
           type="button"
-          className="btn btn-secondary px-4 py-2 text-body-sm"
+          className="btn btn-secondary tap-target px-4 py-2 text-body-sm"
           onClick={handleStartOver}
         >
           {confirmReset ? t.toolbar.confirm : t.toolbar.startNew}

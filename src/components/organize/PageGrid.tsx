@@ -100,7 +100,7 @@ export default function PageGrid({
     >
       <SortableContext items={pages.map((page) => page.id)} strategy={rectSortingStrategy}>
         <ul
-          className="grid list-none gap-4 p-0"
+          className="grid list-none gap-4 p-0 sm:gap-5"
           style={{ gridTemplateColumns: `repeat(auto-fill, minmax(${zoomWidth}px, 1fr))` }}
         >
           {pages.map((item, index) => {
@@ -130,10 +130,10 @@ export default function PageGrid({
         </ul>
       </SortableContext>
 
-      <DragOverlay dropAnimation={{ duration: 240, easing: 'cubic-bezier(0.2, 0, 0, 1)' }}>
+      <DragOverlay dropAnimation={{ duration: 260, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
         {activeItem && activeSource && activeKey ? (
           <div
-            className="w-fit rotate-2 scale-105 rounded-lg border-2 border-primary bg-canvas p-2 shadow-2xl"
+            className="w-fit rotate-2 scale-105 rounded-lg border-2 border-primary bg-canvas p-2 elev-3"
             aria-hidden="true"
           >
             <div

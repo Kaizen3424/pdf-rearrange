@@ -17,7 +17,7 @@ const options = [
 ---
 
 <div class="relative" data-theme-switcher>
-  <button type="button" class="btn-icon" aria-haspopup="true" aria-expanded="false" aria-label={t.theme.ariaLabel} data-theme-toggle>
+  <button type="button" class="btn-icon tap-target" aria-haspopup="true" aria-expanded="false" aria-label={t.theme.ariaLabel} data-theme-toggle>
     <Icon name="sun" size={20} class="hidden" data-theme-icon="light" />
     <Icon name="moon" size={20} class="hidden" data-theme-icon="dark" />
     <Icon name="monitor" size={20} class="hidden" data-theme-icon="system" />
@@ -25,7 +25,7 @@ const options = [
   <div
     hidden
     data-theme-menu
-    class="absolute end-0 top-full z-50 mt-2 w-44 rounded-xl border border-ink/10 bg-canvas p-1.5 shadow-lg"
+    class="absolute end-0 top-full z-50 mt-2 w-44 origin-top-right material-thick rounded-xl border border-hairline p-1.5 elev-3"
   >
     <ul class="list-none space-y-0.5 p-0">
       {
@@ -54,6 +54,8 @@ const options = [
 
   const STORAGE_KEY = 'theme';
   const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let transitionTimer = 0;
 
   const readStored = (): ThemeMode => {
     try {
@@ -66,9 +68,15 @@ const options = [
   const resolve = (mode: ThemeMode): 'light' | 'dark' =>
     mode === 'system' ? (media.matches ? 'dark' : 'light') : mode;
 
-  const apply = (mode: ThemeMode) => {
+  const apply = (mode: ThemeMode, animate = false) => {
     const theme = resolve(mode);
     const root = document.documentElement;
+    // Ease the color change on user/system switches; never on first paint.
+    if (animate && !reduceMotion.matches) {
+      root.classList.add('theme-transition');
+      window.clearTimeout(transitionTimer);
+      transitionTimer = window.setTimeout(() => root.classList.remove('theme-transition'), 240);
+    }
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
     const meta = document.getElementById('theme-color');
@@ -91,7 +99,7 @@ const options = [
   apply(mode);
 
   media.addEventListener('change', () => {
-    if (mode === 'system') apply(mode);
+    if (mode === 'system') apply(mode, true);
   });
 
   document.querySelectorAll<HTMLElement>('[data-theme-switcher]').forEach((switcher) => {
@@ -99,9 +107,15 @@ const options = [
     const menu = switcher.querySelector<HTMLElement>('[data-theme-menu]');
     if (!toggle || !menu) return;
 
-    const setOpen = (open: boolean) => {
+    const setOpen = (open: boolean, restoreFocus = false) => {
       menu.hidden = !open;
       toggle.setAttribute('aria-expanded', String(open));
+      menu.classList.remove('animate-scale-in');
+      if (open) {
+        void menu.offsetWidth; // restart the entrance
+        menu.classList.add('animate-scale-in');
+      }
+      if (restoreFocus) toggle.focus();
     };
 
     toggle.addEventListener('click', () => setOpen(menu.hidden === true));
@@ -112,7 +126,7 @@ const options = [
         try {
           localStorage.setItem(STORAGE_KEY, mode);
         } catch {}
-        apply(mode);
+        apply(mode, true);
         setOpen(false);
         toggle.focus();
       });
@@ -124,7 +138,7 @@ const options = [
     });
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape' && !menu.hidden) setOpen(false, true);
     });
   });
 </script>

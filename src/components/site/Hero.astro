@@ -15,7 +15,7 @@ const t = getDictionary(locale);
     <div
       class="hero-grid mx-auto max-w-6xl text-center lg:grid lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-14 lg:text-left"
     >
-      <div data-hero-copy>
+      <div data-hero-copy data-reveal>
         <p class="chip">
           <Icon name="shield-check" size={16} />
           {t.hero.chip}
@@ -39,7 +39,7 @@ const t = getDictionary(locale);
         </ul>
       </div>
 
-      <div class="mt-10 lg:mt-0 w-full" data-hero-tool>
+      <div class="mt-10 lg:mt-0 w-full" data-hero-tool data-reveal style="--reveal-delay:120ms">
         <slot />
       </div>
     </div>

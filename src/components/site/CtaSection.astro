@@ -10,15 +10,15 @@ const { locale = defaultLocale } = Astro.props;
 const t = getDictionary(locale);
 ---
 
-<section class="bg-canvas">
-  <div class="container-page py-16 md:py-24 text-center">
+<section class="bg-canvas border-t border-hairline">
+  <div class="container-page py-16 md:py-24 text-center" data-reveal>
     <h2 class="font-black text-display-md sm:text-display-lg">{t.cta.h2}</h2>
     <p class="mt-4 text-body-lg text-body max-w-xl mx-auto">
       {t.cta.sub}
     </p>
-    <a href={localePath('/#rearrange', locale)} class="btn btn-primary mt-8">
+    <a href={localePath('/#rearrange', locale)} class="btn btn-primary mt-8 group">
       {t.cta.button}
-      <Icon name="arrow-right" size={18} />
+      <Icon name="arrow-right" size={18} class="transition-transform duration-200 ease-out-expo group-hover:translate-x-1" />
     </a>
   </div>
 </section>

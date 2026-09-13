@@ -32,8 +32,8 @@ export default function SuccessPanel({
 
   return (
     <div ref={panelRef} className="scroll-mt-28">
-      <div className="mx-auto max-w-xl rounded-xl border border-ink/10 bg-canvas p-8 text-center shadow-sm sm:p-12">
-        <span className="animate-pop-in mx-auto flex size-18 items-center justify-center rounded-full bg-primary shadow-md">
+      <div className="mx-auto max-w-xl rounded-xl border border-hairline bg-canvas p-8 text-center elev-2 sm:p-12">
+        <span className="animate-pop-in mx-auto flex size-18 items-center justify-center rounded-full bg-primary elev-2">
           <Check className="size-9 text-on-primary" strokeWidth={3} />
         </span>
 
@@ -88,7 +88,7 @@ export default function SuccessPanel({
           {t.success.backToEditing}
         </button>
 
-        <div className="animate-rise-in mt-8 border-t border-ink/10 pt-8 [animation-delay:380ms]">
+        <div className="animate-rise-in mt-8 border-t border-hairline pt-8 [animation-delay:380ms]">
           <StarRating />
         </div>
       </div>

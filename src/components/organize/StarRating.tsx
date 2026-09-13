@@ -57,7 +57,7 @@ export default function StarRating() {
       <div
         role="radiogroup"
         aria-label={t.rating.label}
-        className="flex items-center justify-center gap-1"
+        className="flex items-center justify-center gap-0"
         onKeyDown={onKeyDown}
       >
         {Array.from({ length: MAX_RATING }, (_, index) => {
@@ -73,7 +73,7 @@ export default function StarRating() {
               aria-checked={rating === value}
               aria-label={t.rating.star(value)}
               tabIndex={rating === value || (rating === null && value === 1) ? 0 : -1}
-              className="focus-ring rounded-md p-1 text-gold transition-transform duration-150 hover:scale-110"
+              className="focus-ring tap-target rounded-md p-2 text-gold transition-[transform,color] duration-150 ease-spring hover:scale-110 active:scale-95"
               onMouseEnter={() => setPreview(value)}
               onMouseLeave={() => setPreview(0)}
               onFocus={() => setPreview(value)}

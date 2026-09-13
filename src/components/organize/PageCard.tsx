@@ -43,7 +43,7 @@ function CardAction({
       title={label}
       aria-label={label}
       className={[
-        'flex size-7 items-center justify-center rounded-md bg-scrim/75 text-on-solid shadow-sm backdrop-blur transition-colors hover:bg-scrim',
+        'flex size-8 items-center justify-center rounded-md bg-scrim/75 text-on-solid elev-1 backdrop-blur transition-[background-color,transform] duration-150 ease-standard hover:bg-scrim active:scale-90',
         danger ? 'hover:bg-negative' : '',
       ].join(' ')}
       onPointerDown={(event) => event.stopPropagation()}
@@ -108,7 +108,7 @@ export default function PageCard({
       ref={setNodeRef}
       style={{
         transform: CSS.Translate.toString(transform),
-        transition: transition ? 'transform 180ms cubic-bezier(0.2, 0, 0, 1)' : undefined,
+        transition: transition ? 'transform 220ms var(--ease-standard)' : undefined,
       }}
       className={`relative list-none ${isDragging ? 'z-20 opacity-30' : ''}`}
     >
@@ -120,10 +120,10 @@ export default function PageCard({
           onToggleSelect(item.id, event.shiftKey);
         }}
         className={[
-          'group relative cursor-grab touch-manipulation select-none rounded-lg border-2 bg-canvas p-2 shadow-sm transition-[border-color,box-shadow] duration-150 active:cursor-grabbing',
+          'group relative cursor-grab touch-manipulation select-none rounded-lg border-2 bg-canvas p-2 transition-[border-color,box-shadow,transform] duration-200 ease-standard active:scale-[0.99] active:cursor-grabbing',
           selected
-            ? 'border-primary shadow-md'
-            : 'border-transparent hover:border-ink/15 hover:shadow-md',
+            ? 'border-primary elev-2'
+            : 'border-transparent elev-1 hover:border-ink/15 hover:elev-2',
         ].join(' ')}
         aria-label={ariaLabel}
       >
@@ -190,7 +190,7 @@ export default function PageCard({
 
         <div
           className={[
-            'absolute end-1.5 top-1.5 flex flex-col gap-1 transition-opacity duration-150 focus-within:opacity-100 group-hover:opacity-100',
+            'absolute end-1.5 top-1.5 flex flex-col gap-1.5 transition-opacity duration-150 focus-within:opacity-100 group-hover:opacity-100',
             selected ? 'opacity-100' : 'opacity-0',
           ].join(' ')}
         >

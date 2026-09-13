@@ -57,7 +57,7 @@ export default function PreviewModal({
   return (
     <div
       ref={dialogRef}
-      className="fixed inset-0 z-50 flex flex-col bg-scrim/85 outline-none backdrop-blur-sm"
+      className="animate-fade-in fixed inset-0 z-50 flex flex-col bg-scrim/85 outline-none backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label={t.preview.dialogLabel(index + 1, pages.length)}
@@ -98,7 +98,7 @@ export default function PreviewModal({
         </p>
         <button
           type="button"
-          className="flex size-10 shrink-0 items-center justify-center rounded-full text-on-solid transition-colors hover:bg-on-solid/20"
+          className="tap-target flex size-11 shrink-0 items-center justify-center rounded-full text-on-solid transition-[background-color,transform] duration-150 ease-standard hover:bg-on-solid/20 active:scale-95"
           onClick={onClose}
           aria-label={t.preview.close}
         >
@@ -120,7 +120,7 @@ export default function PreviewModal({
         {url ? (
           <img
             src={url}
-            className="max-h-[calc(100vh-9rem)] max-w-full rounded-lg bg-canvas object-contain shadow-2xl"
+            className="max-h-[calc(100dvh-9rem)] max-w-full rounded-lg bg-canvas object-contain elev-3"
             style={{ aspectRatio: `${ratio}` }}
             alt={t.preview.alt(index + 1)}
             draggable={false}

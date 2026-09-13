@@ -29,10 +29,13 @@ export default function DropZone({ loading, loadLabel, onBrowse }: DropZoneProps
         setDragOver(false);
       }}
       className={[
-        'relative rounded-xl border-2 border-dashed bg-canvas p-8 text-center shadow-sm transition-colors duration-150 sm:p-12',
-        dragOver ? 'border-primary bg-primary-pale/50' : 'border-ink/20',
+        'group relative rounded-xl border-2 border-dashed bg-canvas p-8 text-center transition-[border-color,background-color,box-shadow,transform] duration-200 ease-standard sm:p-12',
+        dragOver
+          ? 'scale-[1.01] border-primary bg-primary-pale/50 elev-2'
+          : 'border-ink/20 elev-1',
       ].join(' ')}
       aria-hidden={loading}
+      aria-busy={loading}
     >
       {loading ? (
         <div className="flex flex-col items-center gap-4 py-8">
@@ -42,7 +45,7 @@ export default function DropZone({ loading, loadLabel, onBrowse }: DropZoneProps
         </div>
       ) : (
         <>
-          <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-canvas-soft">
+          <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-canvas-soft ring-1 ring-inset ring-ink/5 transition-transform duration-300 ease-spring group-hover:scale-105">
             <Upload className="size-7 text-ink" strokeWidth={1.75} />
           </span>
           <h2 className="mt-6 text-display-xs font-semibold">{t.dropZone.heading}</h2>

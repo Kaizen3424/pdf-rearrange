@@ -19,19 +19,22 @@ const links = [
 ];
 ---
 
-<header class="sticky top-0 z-40 bg-canvas/90 backdrop-blur-md border-b border-ink/10">
+<header
+  data-nav
+  class="sticky top-0 z-40 material-thick border-b border-transparent transition-[border-color,box-shadow] duration-200 data-[scrolled=true]:border-hairline data-[scrolled=true]:elev-1 data-[open=true]:border-hairline"
+>
   <nav class="container-page flex h-16 items-center justify-between gap-4" aria-label={t.nav.ariaLabel}>
     <a href={localePath('/', locale)} class="focus-ring rounded-md shrink-0">
       <Logo />
     </a>
 
-    <ul class="hidden md:flex items-center gap-7">
+    <ul class="hidden lg:flex items-center gap-7">
       {
         links.map((link) => (
           <li>
             <a
               href={link.href}
-              class="text-body-sm-strong text-ink hover:text-ink-deep transition-colors focus-ring rounded-sm"
+              class="inline-block py-1 text-body-sm-strong text-ink hover:text-ink-deep transition-colors focus-ring rounded-sm"
             >
               {link.label}
             </a>
@@ -40,15 +43,15 @@ const links = [
       }
     </ul>
 
-    <div class="flex items-center gap-2 sm:gap-3">
-      <div class="hidden md:flex">
+    <div class="flex items-center gap-1.5 sm:gap-2.5">
+      <div class="hidden lg:flex">
         <ThemeToggle locale={locale} />
       </div>
       <LanguagePicker locale={locale} variant="nav" />
       <a href={localePath('/#rearrange', locale)} class="btn btn-primary hidden sm:inline-flex">{t.nav.cta}</a>
       <button
         type="button"
-        class="btn-icon md:hidden"
+        class="btn-icon tap-target lg:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
         data-nav-toggle
@@ -89,14 +92,14 @@ const links = [
     </div>
   </nav>
 
-  <div id="mobile-menu" hidden class="md:hidden border-t border-ink/10 bg-canvas">
-    <ul class="container-page py-4 space-y-1">
+  <div id="mobile-menu" hidden class="lg:hidden border-t border-hairline max-h-[calc(100dvh-3.5rem)] overflow-y-auto overscroll-contain">
+    <ul class="container-page py-4 space-y-1 pb-safe">
       {
         links.map((link) => (
           <li>
             <a
               href={link.href}
-              class="block rounded-md px-3 py-2.5 text-body-md-strong text-ink hover:bg-canvas-soft transition-colors"
+              class="block rounded-md px-3 py-2.5 text-body-md-strong text-ink hover:bg-canvas-soft transition-colors focus-ring"
             >
               {link.label}
             </a>
@@ -115,21 +118,40 @@ const links = [
 </header>
 
 <script>
-  const toggle = document.querySelector('[data-nav-toggle]');
+  const header = document.querySelector<HTMLElement>('[data-nav]');
+  const toggle = document.querySelector<HTMLElement>('[data-nav-toggle]');
   const menu = document.getElementById('mobile-menu');
   const iconOpen = toggle?.querySelector('[data-icon-open]');
   const iconClose = toggle?.querySelector('[data-icon-close]');
 
-  const setMenu = (open: boolean) => {
+  const setScrolled = () => {
+    if (header) header.dataset.scrolled = window.scrollY > 8 ? 'true' : 'false';
+  };
+  setScrolled();
+  window.addEventListener('scroll', setScrolled, { passive: true });
+
+  const setMenu = (open: boolean, restoreFocus = false) => {
     if (!menu || !toggle) return;
     menu.hidden = !open;
+    if (header) header.dataset.open = String(open);
     toggle.setAttribute('aria-expanded', String(open));
     iconOpen?.classList.toggle('hidden', open);
     iconClose?.classList.toggle('hidden', !open);
+    menu.classList.remove('animate-menu-in');
+    if (open) {
+      void menu.offsetWidth; // restart the entrance
+      menu.classList.add('animate-menu-in');
+    }
+    document.documentElement.classList.toggle('overflow-hidden', open);
+    if (restoreFocus) toggle.focus();
   };
 
   toggle?.addEventListener('click', () => setMenu(!!menu?.hidden));
   menu?.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => setMenu(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu && !menu.hidden) setMenu(false, true);
   });
 </script>

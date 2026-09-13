@@ -1,105 +1,117 @@
-# Implementation Plan: Dark Mode (Wise-inspired)
+# Implementation Plan: Premium Polish (Apple-design pass)
 
 ## Overview
 
-Add a first-class dark mode to the Rearrange PDF site (Astro + React islands) that
-matches the existing Wise-inspired light design. Colors are already centralized as
-Tailwind v4 `@theme` tokens in `src/styles/global.css`, so the core work is a
-semantic token override under `[data-theme="dark"]`, a pre-paint theme script, and
-an accessible Light/Dark/System toggle. Dark bands (footer, dark cards, scrims)
-stay dark via new role tokens. `DESIGN.md` gains a documented dark palette.
+Give the Rearrange PDF site (Astro 7 + React 19 islands, Tailwind v4 tokens) a
+premium, Apple-grade polish across desktop, tablet and mobile, **without changing
+the Wise-inspired brand** (lime accent, sage canvas, 24px radius, ink text).
+Craft is layered through one token layer in `src/styles/global.css` plus
+targeted component work: fluid optical typography, translucent materials,
+anchored motion, spring entrances, smoother drag, stronger accessibility and
+robustness. Motion is **dependency-free** (CSS transitions with Apple-tuned
+easings, `@starting-style`, Web Animations, IntersectionObserver) so the CSP and
+dependency graph stay untouched. Restrained scroll-reveals are
+`prefers-reduced-motion` safe. Verified in-browser with screenshots at five
+viewports in both themes and a full functional test matrix.
 
 ## Architecture Decisions
 
-- **Single lever point.** All colors are `@theme` custom properties in
-  `global.css`; utilities compile to `var(--color-*)`, so overriding the variables
-  under `[data-theme="dark"]` flips the whole site without touching most markup.
-- **Switching mechanism: one attribute.** `<html data-theme="light|dark">` is the
-  only signal CSS reads. A pre-paint inline script resolves `localStorage` mode
-  (`light|dark|system`) + `matchMedia` into the attribute and keeps `color-scheme`
-  in sync. No mixed media/class token logic.
-- **Role tokens for dark bands.** `ink` was overloaded as text *and* dark fill.
-  Add `--color-solid`, `--color-on-solid`, `--color-scrim` (constants, dark in
-  both themes) and migrate `bg-ink`→`bg-solid`, band text→`text-on-solid*`,
-  scrims→`bg-scrim/xx`. All other neutrals flip via variable override.
-- **Keep dark bands dark** in dark mode (user decision).
-- **Elevation via surface contrast**, matching DESIGN.md; shadows reinforced with
-  hairline borders on opaque dark surfaces.
-- **Accent preserved.** Lime `#9fe870` is the single accent in both themes.
-
-## Dark Palette (measured WCAG contrast)
-
-| Role | Token | Light | Dark | Contrast page / surface |
-|---|---|---|---|---|
-| Page bg | `--color-canvas-soft` | `#e8ebe6` | `#0d120c` | — |
-| Card/surface | `--color-canvas` | `#ffffff` | `#1a2018` | — |
-| Primary text | `--color-ink` | `#0e0f0c` | `#f2f5ee` | 17.2 / 15.1 |
-| Hover text | `--color-ink-deep` | `#163300` | `#c9f7ad` | 14.8 / 13.0 |
-| Secondary text | `--color-body` | `#454745` | `#b9c0b2` | 10.1 / 8.9 |
-| Muted text | `--color-mute` | `#6d6f6d` | `#949c8c` | 6.7 / 5.9 |
-| Soft green surface | `--color-primary-pale` | `#e2f6d5` | `#21331b` | — |
-| Positive | `--color-positive` | `#2ead4b` | `#5fd67a` | 10.3 / 9.0 |
-| Positive strong | `--color-positive-strong` | `#22833c` | `#8ce89a` | 12.7 / 11.2 |
-| Positive deep | `--color-positive-deep` | `#054d28` | `#b7f0c0` | 10.5 on pale |
-| Negative | `--color-negative` | `#d03238` | `#ff6b70` | 6.8 / 6.0 |
-| Negative deep | `--color-negative-deep` | `#a72027` | `#ff8a8e` | 8.4 / 7.3 |
-| Warning deep | `--color-warning-deep` | `#b86700` | `#e0a24a` | 8.4 / 7.4 |
-| Warning content | `--color-warning-content` | `#4a3b1c` | `#f2d9a8` | 14.3 / 12.5 |
-| Gold (stars) | `--color-gold` | `#f59e0b` | `#fbbf24` | 11.3 / 10.0 |
-| Accent | `--color-primary` | `#9fe870` | `#9fe870` | 12.9 / 11.3 |
-| Solid band (new) | `--color-solid` | `#0e0f0c` | `#060906` | on-solid 16.6 |
-| On-solid (new) | `--color-on-solid` | `#e8ebe6` | `#e8ebe6` | — |
-| Scrim (new) | `--color-scrim` | `#0b0d0a` | `#0b0d0a` | always dark |
+- **Preserve the brand.** No second accent, no radius/colour changes. Polish is
+  typography, spacing rhythm, depth, material and motion.
+- **Dependency-free motion.** Reuse the existing `is:inline` script pattern; no
+  new packages, no CSP changes. Default motion is critically damped; overshoot
+  is reserved for momentum/drag.
+- **Single token layer.** New motion, elevation, hairline and material tokens
+  live in `@theme`; anything that flips theme is overridden once under
+  `[data-theme="dark"]`. Components never hard-code values.
+- **Progressive enhancement.** Scroll-edge, reveals, theme cross-fade and
+  material surfaces degrade under `prefers-reduced-motion`,
+  `prefers-reduced-transparency` and `prefers-contrast`.
+- **Fluid type via existing token names.** `--text-display-*` become `clamp()`
+  with size-specific leading + negative tracking, so no markup rename cascade.
 
 ## Task List
 
-### Phase 0: Foundation
-- [ ] Task 1: Dark tokens + mechanism in `global.css`
-- [ ] Task 2: Pre-paint theme script + `<meta name="theme-color">` in `Layout.astro`
+### Phase 0: Foundation (`src/styles/global.css`)
+- [x] Task 1: Motion tokens + easings + reduced-motion scaling
+- [x] Task 2: Elevation (`--shadow-e1/e2/e3`) + hairline + `.material` helpers
+- [x] Task 3: Fluid display type (`clamp`), optical sizing, tracking, `text-wrap`
+- [x] Task 4: Base ergonomics (tap-highlight, overscroll, scrollbar-gutter, focus ring)
 
 ### Checkpoint: Foundation
-- [ ] `npm run build` clean
-- [ ] Manually setting `data-theme="dark"` flips the home page
+- [x] `npx astro check` + `npm run build` clean
+- [x] No layout regressions at 320 / 768 / 1440 (light + dark)
 
-### Phase 1: Toggle
-- [ ] Task 3: `sun`/`moon`/`monitor` icons in `Icon.astro`
-- [ ] Task 4: `theme.*` i18n strings across 8 locales
-- [ ] Task 5: `ThemeToggle.astro` + mount in `Nav`
+### Phase 1: Chrome & materials
+- [x] Task 5: Nav scroll-edge material (`data-scrolled`) + bright edge
+- [x] Task 6: Theme + language popovers (material, anchored origin, Escape/focus)
+- [x] Task 7: Mobile menu (material, slide-down, focus + scroll lock)
+- [x] Task 8: Footer + CTA rhythm and hover/tap states
 
-### Checkpoint: Toggle
-- [ ] Toggle works, persists, follows OS in system mode, no FOUC, keyboard accessible
+### Checkpoint: Chrome
+- [x] Both themes, 320/768/1440; keyboard-only nav/popover/menu pass
 
-### Phase 2: Core migration
-- [ ] Task 6: Solid/on-solid migration on marketing surfaces
+### Phase 2: Marketing surfaces
+- [x] Task 9: Hero (fluid type, tool-card depth, tablet layout, chip/bullets)
+- [x] Task 10: HowItWorks + Features (card elevation, hover, rhythm)
+- [x] Task 11: PrivacySection + SeoContent + Faq (dark band, smooth `<details>`)
+- [x] Task 12: Inner templates + ErrorPage/404/500 consistency
+- [x] Task 13: Restrained scroll-reveal (reduced-motion-safe)
 
-### Checkpoint: Core migration
-- [ ] All marketing pages correct in both themes; light unchanged
+### Checkpoint: Marketing
+- [x] All marketing pages both themes × 3 viewports, no overflow, reveals tasteful
 
-### Phase 3: React PDF tool
-- [ ] Task 7: Scrim/solid migration in React tool
-- [ ] Task 8: Dark elevation + status tints
+### Phase 3: React tool
+- [x] Task 14: DropZone (material, drag-over, press feedback)
+- [x] Task 15: Toolbar (mobile density, ≥44px hit areas, segmented control)
+- [x] Task 16: PageGrid/PageCard (lift, drag easing, selection animation, hit-slop)
+- [x] Task 17: BatchBar + Toasts (spring entrances, safe-area, no overlap)
+- [x] Task 18: PreviewModal + PasswordModal (materialize, focus trap, `dvh`)
+- [x] Task 19: SuccessPanel + StarRating polish
 
 ### Checkpoint: Tool
-- [ ] Full tool flow usable in dark (upload → reorder → preview → password → success)
+- [x] Full flow (upload → reorder → rotate/dup/delete → undo/redo → preview →
+      password → success) both themes × 3 viewports
 
-### Phase 4: Assets, docs, verification
-- [ ] Task 9: `DESIGN.md` dark section + drift fixes
-- [ ] Task 10: Favicon SVG theme handling
-- [ ] Task 11: Verification pass (build/check/i18n/browser)
+### Phase 4: Hardening & docs
+- [x] Task 20: `prefers-reduced-transparency` / `prefers-contrast: more`
+- [x] Task 21: A11y + robustness sweep (focus, aria, targets, overflow, states)
+- [x] Task 22: `DESIGN.md` motion/material/type documentation
 
 ### Checkpoint: Complete
-- [ ] All acceptance criteria met
-- [ ] Contrast re-measured; docs updated
+- [x] Gates pass; contrast re-measured; docs updated
+
+### Phase 5: Browser verification
+- [x] Task 23: Screenshot matrix (320/390/768/1024/1440, Home + inner + tool, light+dark)
+- [x] Task 24: Functional test matrix (multi-file, drag/kbd reorder, rotate/dup/delete,
+      undo/redo, zoom, preview, password, non-PDF, export→success, toggles, menu, paste/drop)
+- [x] Task 25: Fix findings, re-verify, report
+
+### Findings from verification
+- Fixed tablet nav overflow (desktop nav moved `md` → `lg`) in `src/components/site/Nav.astro`.
+- Fixed long localized CTA overflow at ≤320px (`max-width: 100%` + ≤420px wrap) in `src/styles/global.css`.
+- Overflow scan clean across 8 locales + inner pages at 320/390/768/1024/1440.
+- Tool flow (4-page PDF: rotate, delete, undo, redo, download) verified; console clean.
 
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| CSP may not hash the inline pre-paint script | High | Keep tiny + `is:inline`; verify built hash; fall back to bundled module if blocked |
-| Missed overloaded `ink`/`canvas` role | Med | Grep sweep (`bg-ink`, `text-canvas`, `bg-ink/`) + visual pass |
-| Shadow-only elevation invisible on dark | Med | Add hairline borders to modal/toast/dropdown surfaces |
-| i18n type break across 8 locales | Med | Update `en.ts` master then all locales; `astro check` gates |
-| Translucent nav over dark content | Low | `bg-canvas/90` + blur; verify over dark sections |
+| Fluid type changes page height / overflow | Med | Test 320/768/1440 after each task; clamp bounds conservative |
+| CSP blocks new inline scripts | Med | Reuse existing `is:inline` pattern; verify built hashes |
+| Motion overdone → cheap feel | Med | Critically damped default; overshoot only for momentum |
+| `@starting-style` / backdrop-filter support | Low | Progressive enhancement; reduced-transparency fallback |
+| Many touched components regress a11y | Med | `astro check` + keyboard pass at each checkpoint |
+| Dark surfaces lose separation | Med | Hairline borders + layered shadows re-tuned for dark |
+
+## Gates
+
+- `npx astro check`
+- `npm run build`
+- `npm run verify:i18n`
+- `npm run audit:seo` (pre-existing title/description warnings tolerated)
+- Browser matrix (Phase 5)
 
 ## Open Questions
-- None blocking. Assumption: raster social/favicon assets stay light; only the SVG favicon may adapt.
+
+- None blocking. Brand identity and dependency-free motion confirmed by the user.

@@ -569,7 +569,7 @@ function OrganizeToolInner() {
           />
 
           {pages.length === 0 ? (
-            <div className="rounded-xl border-2 border-dashed border-ink/15 bg-canvas/60 p-10 text-center">
+            <div className="rounded-xl border-2 border-dashed border-ink/15 bg-canvas/60 p-10 text-center elev-1">
               <FileText className="mx-auto size-10 text-mute" strokeWidth={1.5} />
               <p className="mt-3 text-body-lg font-semibold text-ink">{t.tool.noPagesLeft}</p>
               <p className="mt-1 text-body-md text-body">{t.tool.noPagesHint}</p>
@@ -647,8 +647,8 @@ function OrganizeToolInner() {
       )}
 
       {filesDragging && editorActive && (
-        <div className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-scrim/50 p-8">
-          <div className="rounded-xl border-2 border-dashed border-primary bg-scrim/90 px-10 py-8 text-center">
+        <div className="animate-fade-in pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-scrim/50 p-8 backdrop-blur-sm">
+          <div className="animate-scale-in rounded-xl border-2 border-dashed border-primary bg-scrim/90 px-10 py-8 text-center elev-3">
             <Upload className="mx-auto size-10 text-primary" />
             <p className="mt-3 text-body-lg font-semibold text-on-solid">
               {t.tool.dropOverlay}
@@ -659,6 +659,7 @@ function OrganizeToolInner() {
 
       <Toasts
         toasts={toasts}
+        raised={selected.size > 0 && gridVisible}
         onDismiss={(id) => setToasts((prev) => prev.filter((item) => item.id !== id))}
       />
 
