@@ -1,21 +1,2 @@
-# Security headers for rearrangepdf.com
-#
-# `frame-ancestors` is not supported by a meta CSP, so it is set here as an
-# HTTP header. All other CSP directives (script-src, style-src, img-src,
-# connect-src, worker-src, object-src, base-uri, form-action) are emitted
-# per-page by Astro as <meta http-equiv="content-security-policy">, so the
-# inline script/style hashes always match the current build. Do not add a
-# `default-src` or `script-src` here, or it would be enforced alongside the
-# meta policy and block Astro's hashed inline scripts.
-#
-# If Cloudflare Web Analytics is enabled, add the beacon origin in
-# astro.config.mjs under security.csp.scriptDirective.resources, e.g.
-# resources: ["'self'", "https://static.cloudflareinsights.com"]
-
-/*
-  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
-  Content-Security-Policy: frame-ancestors 'none'
+https://rearrangepdf.pages.dev/*
+  X-Robots-Tag: noindex

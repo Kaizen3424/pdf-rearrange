@@ -10,7 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "favicon": "node scripts/generate-favicon.mjs"
+    "favicon": "node scripts/generate-favicon.mjs",
+    "deploy": "astro build && wrangler pages deploy dist --project-name=rearrangepdf --commit-dirty=true",
+    "deploy:preview": "astro build && wrangler pages deploy dist --project-name=rearrangepdf --branch=preview --commit-dirty=true"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",
@@ -37,6 +39,7 @@
     "@astrojs/check": "^0.9.10",
     "png-to-ico": "^3.0.2",
     "sharp": "^0.35.4",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.105.0"
   }
 }
