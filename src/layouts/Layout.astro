@@ -1,31 +1,55 @@
 ---
 import '@fontsource-variable/inter';
+import jpFontCss from '@fontsource-variable/noto-sans-jp/index.css?url';
+import krFontCss from '@fontsource-variable/noto-sans-kr/index.css?url';
 import '../styles/global.css';
+import { defaultLocale, getAlternates, getDictionary, localeMeta, localePath, type Locale } from '../i18n/utils';
 
 interface Props {
   title: string;
   description: string;
+  /** Logical (locale-independent) path used for canonical + hreflang URLs, e.g. `/about`. */
   canonicalPath?: string;
   noindex?: boolean;
   ogType?: 'website' | 'article';
   keywords?: string[];
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  locale?: Locale;
 }
 
-const { title, description, canonicalPath, noindex = false, ogType = 'website', keywords, jsonLd } =
-  Astro.props;
+const {
+  title,
+  description,
+  canonicalPath,
+  noindex = false,
+  ogType = 'website',
+  keywords,
+  jsonLd,
+  locale = defaultLocale,
+} = Astro.props;
 
+const meta = localeMeta[locale];
+const dict = getDictionary(locale);
+
+const cjkFontCss = locale === 'ja' ? jpFontCss : locale === 'ko' ? krFontCss : null;
 const site = Astro.site ?? new URL('https://rearrangepdf.com');
-const canonical = new URL(canonicalPath ?? Astro.url.pathname, site).href;
+const canonical = canonicalPath
+  ? new URL(localePath(canonicalPath, locale), site).href
+  : new URL(Astro.url.pathname, site).href;
+const alternates = canonicalPath && !noindex ? getAlternates(canonicalPath, site) : [];
+const ogAlternates = noindex
+  ? []
+  : Object.values(localeMeta)
+      .filter((entry) => entry.code !== locale)
+      .map((entry) => entry.ogLocale);
 const ogImage = new URL('/og-image.png', site).href;
-const ogImageAlt =
-  'Rearrange PDF — free online tool to rearrange, merge and delete PDF pages in your browser.';
+const ogImageAlt = dict.ogImageAlt;
 const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={meta.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,16 +57,30 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     <meta name="description" content={description} />
     {keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <meta
+        name="robots"
+        content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      />
+    )}
+    {alternates.map((alternate) => (
+      <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+    ))}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {cjkFontCss && <link rel="stylesheet" href={cjkFontCss} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#e8ebe6" />
     <meta property="og:type" content={ogType} />
-    <meta property="og:site_name" content="Rearrange PDF" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content={dict.siteName} />
+    <meta property="og:locale" content={meta.ogLocale} />
+    {ogAlternates.map((ogLocale) => (
+      <meta property="og:locale:alternate" content={ogLocale} />
+    ))}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -68,7 +106,7 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     )}
   </head>
   <body>
-    <a href="#main" class="skip-link">Skip to content</a>
+    <a href="#main" class="skip-link">{dict.skipToContent}</a>
     <slot />
   </body>
 </html>

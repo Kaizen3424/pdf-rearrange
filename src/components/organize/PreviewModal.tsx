@@ -4,6 +4,7 @@ import type { PageItem, SourceDoc } from './types';
 import { A4_RATIO, blankPageRatio } from './types';
 import type { ThumbnailsApi } from './hooks/useThumbnails';
 import { renderBlankThumbnail, renderThumbnail } from './lib/pdfService';
+import { useToolI18n } from './i18n';
 
 interface PreviewModalProps {
   pages: PageItem[];
@@ -24,6 +25,7 @@ export default function PreviewModal({
   onClose,
   onNavigate,
 }: PreviewModalProps) {
+  const { t } = useToolI18n();
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const item = pages[index];
@@ -58,7 +60,7 @@ export default function PreviewModal({
       className="fixed inset-0 z-50 flex flex-col bg-ink/85 outline-none backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
-      aria-label={`Page preview, page ${index + 1} of ${pages.length}`}
+      aria-label={t.preview.dialogLabel(index + 1, pages.length)}
       tabIndex={-1}
       onKeyDown={(event) => {
         if (event.key === 'Escape') {
@@ -90,14 +92,15 @@ export default function PreviewModal({
     >
       <div className="flex items-center justify-between gap-4 px-4 py-3 text-canvas sm:px-6">
         <p className="min-w-0 truncate text-body-sm-strong">
-          Page {index + 1} of {pages.length}
-          {source.blank ? ' — blank page' : ` — ${source.name}`}
+          {source.blank
+            ? t.preview.headerBlank(index + 1, pages.length)
+            : t.preview.headerFile(index + 1, pages.length, source.name)}
         </p>
         <button
           type="button"
           className="flex size-10 shrink-0 items-center justify-center rounded-full text-canvas transition-colors hover:bg-canvas-soft/20"
           onClick={onClose}
-          aria-label="Close preview"
+          aria-label={t.preview.close}
         >
           <X className="size-5" />
         </button>
@@ -109,7 +112,7 @@ export default function PreviewModal({
           className="flex size-11 shrink-0 items-center justify-center rounded-full text-canvas transition-colors hover:bg-canvas-soft/20 disabled:opacity-25"
           onClick={() => onNavigate(-1)}
           disabled={index === 0}
-          aria-label="Previous page"
+          aria-label={t.preview.prev}
         >
           <ChevronLeft className="size-6" />
         </button>
@@ -119,7 +122,7 @@ export default function PreviewModal({
             src={url}
             className="max-h-[calc(100vh-9rem)] max-w-full rounded-lg bg-canvas object-contain shadow-2xl"
             style={{ aspectRatio: `${ratio}` }}
-            alt={`Preview of page ${index + 1}`}
+            alt={t.preview.alt(index + 1)}
             draggable={false}
           />
         ) : (
@@ -133,7 +136,7 @@ export default function PreviewModal({
           className="flex size-11 shrink-0 items-center justify-center rounded-full text-canvas transition-colors hover:bg-canvas-soft/20 disabled:opacity-25"
           onClick={() => onNavigate(1)}
           disabled={index === pages.length - 1}
-          aria-label="Next page"
+          aria-label={t.preview.next}
         >
           <ChevronRight className="size-6" />
         </button>

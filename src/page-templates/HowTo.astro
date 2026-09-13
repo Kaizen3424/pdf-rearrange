@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/site/Nav.astro';
+import Footer from '../components/site/Footer.astro';
+import Icon from '../components/site/Icon.astro';
+import RichText from '../components/RichText.astro';
+import { getDictionary, localePath, type Locale } from '../i18n/utils';
+import { howToSchemas } from '../i18n/schema';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const site = Astro.site ?? new URL('https://rearrangepdf.com');
+const jsonLd = howToSchemas(t, locale, site);
+
+const trickIcons = ['undo-2', 'layers', 'file-plus', 'plus', 'layout-grid', 'maximize-2'];
+---
+
+<Layout
+  title={t.pages.howto.meta.title}
+  description={t.pages.howto.meta.description}
+  canonicalPath="/how-to-organize-pdf-pages"
+  ogType="article"
+  locale={locale}
+  jsonLd={jsonLd}
+>
+  <Nav locale={locale} />
+  <main id="main">
+    <article class="bg-canvas-soft">
+      <div class="container-page py-12 md:py-16 max-w-3xl">
+        <nav aria-label={t.breadcrumbAriaLabel} class="text-body-sm text-mute">
+          <a href={localePath('/', locale)} class="hover:text-ink transition-colors">{t.breadcrumbHome}</a>
+          <span aria-hidden="true"> / </span>
+          <span aria-current="page" class="text-body">{t.pages.howto.breadcrumb}</span>
+        </nav>
+
+        <h1 class="mt-4 font-black text-display-sm md:text-display-md">
+          {t.pages.howto.h1}
+        </h1>
+        <p class="mt-4 text-body-lg text-body">
+          <RichText text={t.pages.howto.intro} locale={locale} />
+        </p>
+
+        <div class="mt-8 rounded-xl bg-primary-pale p-6">
+          <h2 class="text-display-xs font-semibold">{t.pages.howto.quickH2}</h2>
+          <ol class="mt-4 space-y-3 text-body-md text-body">
+            {
+              t.pages.howto.quickSteps.map((step, index) => (
+                <li class="flex gap-3">
+                  <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-bold text-primary">
+                    {index + 1}
+                  </span>
+                  <span>
+                    <RichText text={step} locale={locale} linkClass="font-semibold underline underline-offset-2" />
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <h2 class="mt-12 text-display-sm font-semibold">{t.pages.howto.detailedH2}</h2>
+
+        <h3 class="mt-6 text-display-xs font-semibold">{t.pages.howto.step1H}</h3>
+        <p class="mt-2 text-body-md text-body">
+          <RichText text={t.pages.howto.step1P} locale={locale} />
+        </p>
+
+        <h3 class="mt-6 text-display-xs font-semibold">{t.pages.howto.step2H}</h3>
+        <p class="mt-2 text-body-md text-body">
+          <RichText text={t.pages.howto.step2P1} locale={locale} />
+        </p>
+        <p class="mt-2 text-body-md text-body">
+          <RichText text={t.pages.howto.step2P2} locale={locale} />
+        </p>
+
+        <h3 class="mt-6 text-display-xs font-semibold">{t.pages.howto.step3H}</h3>
+        <p class="mt-2 text-body-md text-body">
+          <RichText text={t.pages.howto.step3P} locale={locale} />
+        </p>
+
+        <h2 class="mt-12 text-display-sm font-semibold">{t.pages.howto.tricksH2}</h2>
+        <ul class="mt-4 space-y-4 text-body-md text-body">
+          {
+            t.pages.howto.tricks.map((trick, index) => (
+              <li class="flex gap-3">
+                <Icon name={trickIcons[index] ?? 'check'} size={20} class="mt-0.5 shrink-0 text-ink" />
+                <span>
+                  <RichText text={trick} locale={locale} />
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <h2 class="mt-12 text-display-sm font-semibold">{t.pages.howto.mobileH2}</h2>
+        <p class="mt-3 text-body-md text-body">
+          <RichText text={t.pages.howto.mobileP} locale={locale} />
+        </p>
+
+        <h2 class="mt-12 text-display-sm font-semibold">{t.pages.howto.localH2}</h2>
+        <p class="mt-3 text-body-md text-body">
+          <RichText text={t.pages.howto.localP} locale={locale} />
+        </p>
+
+        <div class="mt-12 rounded-xl bg-ink p-8 text-center">
+          <h2 class="font-black text-display-sm text-canvas">{t.pages.howto.ctaH2}</h2>
+          <p class="mt-2 text-body-md text-canvas-soft/80">
+            {t.pages.howto.ctaP}
+          </p>
+          <a href={localePath('/#rearrange', locale)} class="btn btn-primary mt-6">
+            {t.pages.howto.ctaButton}
+            <Icon name="arrow-right" size={18} />
+          </a>
+        </div>
+
+        <p class="mt-8 text-body-sm text-mute">
+          <RichText text={t.pages.howto.faqOutro} locale={locale} linkClass="underline underline-offset-2 hover:text-ink" />
+        </p>
+      </div>
+    </article>
+  </main>
+  <Footer locale={locale} />
+</Layout>

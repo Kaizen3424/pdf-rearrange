@@ -1,50 +1,60 @@
 ---
 import Logo from './Logo.astro';
+import LanguagePicker from './LanguagePicker.astro';
+import { defaultLocale, getDictionary, localePath, type Locale } from '../../i18n/utils';
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = defaultLocale } = Astro.props;
+const t = getDictionary(locale);
 const year = new Date().getFullYear();
 
 const columns = [
   {
-    title: 'Tool',
+    title: t.footer.colTool,
+    ariaLabel: t.footer.colTool,
     links: [
-      { href: '/#rearrange', label: 'Rearrange PDF pages' },
-      { href: '/#how-it-works', label: 'How it works' },
-      { href: '/how-to-organize-pdf-pages', label: 'Organize PDF guide' },
-      { href: '/#faq', label: 'FAQ' },
+      { href: localePath('/#rearrange', locale), label: t.footer.rearrangePages },
+      { href: localePath('/#how-it-works', locale), label: t.footer.howItWorks },
+      { href: localePath('/how-to-organize-pdf-pages', locale), label: t.footer.guide },
+      { href: localePath('/#faq', locale), label: t.footer.faq },
     ],
   },
   {
-    title: 'Company',
+    title: t.footer.colCompany,
+    ariaLabel: t.footer.colCompany,
     links: [
-      { href: '/about', label: 'About' },
-      { href: '/contact', label: 'Contact' },
+      { href: localePath('/about', locale), label: t.footer.about },
+      { href: localePath('/contact', locale), label: t.footer.contact },
     ],
   },
   {
-    title: 'Legal',
+    title: t.footer.colLegal,
+    ariaLabel: t.footer.colLegal,
     links: [
-      { href: '/privacy', label: 'Privacy policy' },
-      { href: '/terms', label: 'Terms of service' },
+      { href: localePath('/privacy', locale), label: t.footer.privacyPolicy },
+      { href: localePath('/terms', locale), label: t.footer.termsOfService },
     ],
   },
 ];
 ---
 
 <footer class="bg-ink text-canvas-soft">
-  <div class="container-page py-12 md:py-16 grid gap-10 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
+  <div class="container-page py-12 md:py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
     <div>
-      <a href="/" class="inline-block focus-ring rounded-md">
+      <a href={localePath('/', locale)} class="inline-block focus-ring rounded-md">
         <Logo variant="light" />
       </a>
       <p class="mt-4 text-body-sm text-canvas-soft/70 max-w-xs">
-        The privacy-first way to rearrange, rotate and organize PDF pages. Everything happens in
-        your browser — your files are never uploaded.
+        {t.footer.tagline}
       </p>
     </div>
 
     {
       columns.map((column) => (
-        <nav aria-label={column.title}>
+        <nav aria-label={column.ariaLabel}>
           <h2 class="text-body-sm-strong text-primary mb-3">{column.title}</h2>
           <ul class="space-y-2.5 text-body-sm">
             {column.links.map((link) => (
@@ -61,14 +71,16 @@ const columns = [
         </nav>
       ))
     }
+
+    <LanguagePicker locale={locale} variant="footer" />
   </div>
 
   <div class="border-t border-canvas-soft/15">
     <div
       class="container-page py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-caption text-canvas-soft/60"
     >
-      <p>© {year} rearrangepdf.com. All rights reserved.</p>
-      <p>No ads. No trackers. No uploads.</p>
+      <p>{t.footer.copyright(year)}</p>
+      <p>{t.footer.noAds}</p>
     </div>
   </div>
 </footer>

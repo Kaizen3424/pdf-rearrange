@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FileText, LoaderCircle, ShieldCheck, Upload } from 'lucide-react';
+import { useToolI18n } from './i18n';
 
 interface DropZoneProps {
   loading: boolean;
@@ -8,6 +9,7 @@ interface DropZoneProps {
 }
 
 export default function DropZone({ loading, loadLabel, onBrowse }: DropZoneProps) {
+  const { t } = useToolI18n();
   const [dragOver, setDragOver] = useState(false);
 
   return (
@@ -35,26 +37,24 @@ export default function DropZone({ loading, loadLabel, onBrowse }: DropZoneProps
       {loading ? (
         <div className="flex flex-col items-center gap-4 py-8">
           <LoaderCircle className="size-10 animate-spin text-ink" strokeWidth={1.5} />
-          <p className="text-body-md-strong">{loadLabel || 'Reading your PDF…'}</p>
-          <p className="text-body-sm text-mute">Processing locally — nothing is uploaded.</p>
+          <p className="text-body-md-strong">{loadLabel || t.dropZone.reading}</p>
+          <p className="text-body-sm text-mute">{t.dropZone.processingLocally}</p>
         </div>
       ) : (
         <>
           <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-canvas-soft">
             <Upload className="size-7 text-ink" strokeWidth={1.75} />
           </span>
-          <h2 className="mt-6 text-display-xs font-semibold">Drop your PDF here</h2>
-          <p className="mt-2 text-body-md text-body">or</p>
+          <h2 className="mt-6 text-display-xs font-semibold">{t.dropZone.heading}</h2>
+          <p className="mt-2 text-body-md text-body">{t.dropZone.or}</p>
           <button type="button" className="btn btn-primary mt-3" onClick={onBrowse}>
             <FileText size={18} />
-            Select PDF file
+            {t.dropZone.selectFile}
           </button>
-          <p className="mt-4 text-body-sm text-mute">
-            Add multiple files to merge them · paste with Ctrl+V · unlimited size and pages
-          </p>
+          <p className="mt-4 text-body-sm text-mute">{t.dropZone.hint}</p>
           <p className="mt-6 inline-flex items-center gap-2 text-body-sm-strong text-positive-deep">
             <ShieldCheck size={16} />
-            Your file never leaves this browser
+            {t.dropZone.privacy}
           </p>
         </>
       )}

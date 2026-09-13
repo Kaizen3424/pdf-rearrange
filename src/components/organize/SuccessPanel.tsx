@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { ArrowLeft, Check, Download, FileText, LoaderCircle, Plus } from 'lucide-react';
 import { formatBytes } from './types';
+import { useToolI18n } from './i18n';
 import StarRating from './StarRating';
 
 interface SuccessPanelProps {
@@ -22,6 +23,7 @@ export default function SuccessPanel({
   onStartNew,
   onBackToEditing,
 }: SuccessPanelProps) {
+  const { locale, t } = useToolI18n();
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,13 +38,12 @@ export default function SuccessPanel({
         </span>
 
         <h2 className="animate-rise-in mt-6 text-display-xs font-semibold [animation-delay:80ms]">
-          Your PDF is ready
+          {t.success.heading}
         </h2>
         <p
           className="animate-rise-in mx-auto mt-2 max-w-md text-body-md text-body [animation-delay:140ms]"
         >
-          Your rearranged PDF has been downloaded to your device. Nothing was uploaded — everything
-          happened right in your browser.
+          {t.success.body}
         </p>
 
         <div className="animate-rise-in mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-lg bg-canvas-soft px-4 py-3 [animation-delay:200ms]">
@@ -54,7 +55,7 @@ export default function SuccessPanel({
             ·
           </span>
           <p className="text-body-sm text-mute">
-            {pageCount} page{pageCount === 1 ? '' : 's'} · {formatBytes(fileSize)}
+            {t.success.pages(pageCount)} · {formatBytes(fileSize, locale)}
           </p>
         </div>
 
@@ -70,11 +71,11 @@ export default function SuccessPanel({
             ) : (
               <Download className="size-4" />
             )}
-            {downloading ? 'Building…' : 'Download again'}
+            {downloading ? t.success.building : t.success.downloadAgain}
           </button>
           <button type="button" className="btn btn-secondary px-6" onClick={onStartNew}>
             <Plus className="size-4" />
-            Start new
+            {t.success.startNew}
           </button>
         </div>
 
@@ -84,7 +85,7 @@ export default function SuccessPanel({
           onClick={onBackToEditing}
         >
           <ArrowLeft className="size-4" />
-          Back to editing
+          {t.success.backToEditing}
         </button>
 
         <div className="animate-rise-in mt-8 border-t border-ink/10 pt-8 [animation-delay:380ms]">

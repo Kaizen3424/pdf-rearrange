@@ -1,5 +1,16 @@
 ---
 import Icon from './Icon.astro';
+import RichText from '../RichText.astro';
+import { defaultLocale, getDictionary, localePath, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = defaultLocale } = Astro.props;
+const t = getDictionary(locale);
+
+const bulletIcons = ['cloud-off', 'ban', 'eye'];
 ---
 
 <section id="privacy" class="scroll-mt-24 bg-canvas">
@@ -8,59 +19,34 @@ import Icon from './Icon.astro';
       <div class="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
         <div>
           <h2 class="font-black text-display-sm md:text-display-md text-canvas">
-            Your PDF never leaves your browser.
+            {t.privacySection.h2}
           </h2>
           <p class="mt-4 text-body-lg text-canvas-soft/85 max-w-xl">
-            Most online PDF tools upload your file to a server, process it there, and ask you to
-            trust their deletion policy. We flipped the model: rearranging pages happens
-            <strong class="text-canvas">entirely on your device</strong>, using the same rendering
-            engine your browser already has.
+            <RichText text={t.privacySection.p1} locale={locale} />
           </p>
           <p class="mt-4 text-body-md text-canvas-soft/70 max-w-xl">
-            No server ever receives your document. There is nothing to leak, breach, or subpoena.
-            That makes it safe for contracts, medical records, financial statements and anything
-            else you wouldn\u2019t hand to a stranger.
+            <RichText text={t.privacySection.p2} locale={locale} />
           </p>
           <div class="mt-7 flex flex-wrap gap-3">
-            <a href="/privacy" class="btn btn-primary">Read our privacy promise</a>
-            <a href="/#rearrange" class="btn btn-secondary">Try it now</a>
+            <a href={localePath('/privacy', locale)} class="btn btn-primary">{t.privacySection.readPromise}</a>
+            <a href={localePath('/#rearrange', locale)} class="btn btn-secondary">{t.privacySection.tryNow}</a>
           </div>
         </div>
 
         <ul class="space-y-5 self-center">
-          <li class="flex gap-4">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-ink">
-              <Icon name="cloud-off" size={20} />
-            </span>
-            <div>
-              <h3 class="text-body-md-strong text-canvas">Zero uploads</h3>
-              <p class="text-body-sm text-canvas-soft/70">
-                Your file content is never transmitted anywhere.
-              </p>
-            </div>
-          </li>
-          <li class="flex gap-4">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-ink">
-              <Icon name="ban" size={20} />
-            </span>
-            <div>
-              <h3 class="text-body-md-strong text-canvas">No accounts, no ads, no trackers</h3>
-              <p class="text-body-sm text-canvas-soft/70">
-                We don\u2019t need your email, and we don\u2019t follow you around the web.
-              </p>
-            </div>
-          </li>
-          <li class="flex gap-4">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-ink">
-              <Icon name="eye" size={20} />
-            </span>
-            <div>
-              <h3 class="text-body-md-strong text-canvas">Verifiable, not just a promise</h3>
-              <p class="text-body-sm text-canvas-soft/70">
-                Open DevTools → Network while you work. You\u2019ll see zero file requests.
-              </p>
-            </div>
-          </li>
+          {
+            t.privacySection.bullets.map((bullet, index) => (
+              <li class="flex gap-4">
+                <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-ink">
+                  <Icon name={bulletIcons[index] ?? 'check'} size={20} />
+                </span>
+                <div>
+                  <h3 class="text-body-md-strong text-canvas">{bullet.title}</h3>
+                  <p class="text-body-sm text-canvas-soft/70">{bullet.text}</p>
+                </div>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>

@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/site/Nav.astro';
+import Footer from '../components/site/Footer.astro';
+import Icon from '../components/site/Icon.astro';
+import RichText from '../components/RichText.astro';
+import { getDictionary, localePath, type Locale } from '../i18n/utils';
+import { webPageSchemas } from '../i18n/schema';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const site = Astro.site ?? new URL('https://rearrangepdf.com');
+const jsonLd = webPageSchemas(t, locale, site, {
+  type: 'AboutPage',
+  logicalPath: '/about',
+  name: t.pages.about.h1,
+  description: t.pages.about.meta.description,
+  breadcrumb: t.pages.about.breadcrumb,
+});
+---
+
+<Layout
+  title={t.pages.about.meta.title}
+  description={t.pages.about.meta.description}
+  canonicalPath="/about"
+  locale={locale}
+  jsonLd={jsonLd}
+>
+  <Nav locale={locale} />
+  <main id="main">
+    <article class="bg-canvas-soft">
+      <div class="container-page py-12 md:py-16 max-w-3xl">
+        <nav aria-label={t.breadcrumbAriaLabel} class="text-body-sm text-mute">
+          <a href={localePath('/', locale)} class="hover:text-ink transition-colors">{t.breadcrumbHome}</a>
+          <span aria-hidden="true"> / </span>
+          <span aria-current="page" class="text-body">{t.pages.about.breadcrumb}</span>
+        </nav>
+
+        <h1 class="mt-4 font-black text-display-sm md:text-display-md">
+          {t.pages.about.h1}
+        </h1>
+
+        <p class="mt-5 text-body-lg text-body">
+          <RichText text={t.pages.about.p1} locale={locale} />
+        </p>
+
+        <p class="mt-4 text-body-lg text-body">
+          <RichText text={t.pages.about.p2} locale={locale} />
+        </p>
+
+        <h2 class="mt-10 text-display-xs font-semibold">{t.pages.about.howItWorksH2}</h2>
+        <p class="mt-2 text-body-md text-body">
+          <RichText text={t.pages.about.howItWorksP} locale={locale} />
+        </p>
+
+        <h2 class="mt-8 text-display-xs font-semibold">{t.pages.about.getInTouchH2}</h2>
+        <p class="mt-2 text-body-md text-body">
+          <RichText
+            text={t.pages.about.getInTouchP}
+            locale={locale}
+            linkClass="font-semibold underline underline-offset-2"
+          />
+        </p>
+
+        <div class="mt-12 rounded-xl bg-ink p-8 text-center">
+          <h2 class="font-black text-display-sm text-canvas">{t.pages.about.ctaH2}</h2>
+          <p class="mt-2 text-body-md text-canvas-soft/80">
+            {t.pages.about.ctaP}
+          </p>
+          <a href={localePath('/#rearrange', locale)} class="btn btn-primary mt-6">
+            {t.pages.about.ctaButton}
+            <Icon name="arrow-right" size={18} />
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+  <Footer locale={locale} />
+</Layout>

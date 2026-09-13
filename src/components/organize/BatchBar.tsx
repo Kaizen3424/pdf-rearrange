@@ -1,4 +1,5 @@
 import { Check, Copy, RotateCw, Trash2, X } from 'lucide-react';
+import { useToolI18n } from './i18n';
 
 interface BatchBarProps {
   count: number;
@@ -17,15 +18,15 @@ export default function BatchBar({
   onSelectAll,
   onClear,
 }: BatchBarProps) {
+  const { t } = useToolI18n();
+
   return (
     <div
       className="fixed inset-x-0 bottom-4 z-40 mx-auto flex w-fit max-w-[calc(100vw-2rem)] flex-wrap items-center justify-center gap-x-1 gap-y-2 rounded-xl bg-ink px-3 py-2 text-canvas shadow-lg"
       role="toolbar"
-      aria-label="Actions for selected pages"
+      aria-label={t.batch.label}
     >
-      <span className="px-2 text-body-sm-strong">
-        {count} page{count === 1 ? '' : 's'} selected
-      </span>
+      <span className="px-2 text-body-sm-strong">{t.batch.selected(count)}</span>
       <span className="h-5 w-px bg-canvas-soft/25" aria-hidden="true" />
       <button
         type="button"
@@ -33,7 +34,7 @@ export default function BatchBar({
         onClick={onRotate}
       >
         <RotateCw className="size-4" />
-        Rotate
+        {t.batch.rotate}
       </button>
       <button
         type="button"
@@ -41,7 +42,7 @@ export default function BatchBar({
         onClick={onDuplicate}
       >
         <Copy className="size-4" />
-        Duplicate
+        {t.batch.duplicate}
       </button>
       <button
         type="button"
@@ -49,7 +50,7 @@ export default function BatchBar({
         onClick={onDelete}
       >
         <Trash2 className="size-4" />
-        Delete
+        {t.batch.delete}
       </button>
       <span className="h-5 w-px bg-canvas-soft/25" aria-hidden="true" />
       <button
@@ -58,7 +59,7 @@ export default function BatchBar({
         onClick={onSelectAll}
       >
         <Check className="size-4" />
-        All
+        {t.batch.all}
       </button>
       <button
         type="button"
@@ -66,7 +67,7 @@ export default function BatchBar({
         onClick={onClear}
       >
         <X className="size-4" />
-        Clear
+        {t.batch.clear}
       </button>
     </div>
   );

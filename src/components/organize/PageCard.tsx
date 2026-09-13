@@ -7,6 +7,7 @@ import { blankPageRatio, A4_RATIO } from './types';
 import type { ThumbnailsApi } from './hooks/useThumbnails';
 import { useInView } from './hooks/useThumbnails';
 import { renderBlankThumbnail, renderThumbnail } from './lib/pdfService';
+import { useToolI18n } from './i18n';
 
 interface PageCardProps {
   item: PageItem;
@@ -72,6 +73,7 @@ export default function PageCard({
   onDelete,
   onPreview,
 }: PageCardProps) {
+  const { t } = useToolI18n();
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: item.id,
   });
@@ -83,11 +85,12 @@ export default function PageCard({
     thumbnails.getRatio(key) ?? (source.blank ? blankPageRatio(item.rotation) : A4_RATIO);
   const failed = thumbnails.isFailed(key);
 
+  const displayName = source.name.replace(/\.pdf$/i, '');
   const sourceLabel = source.blank
-    ? 'blank page'
-    : `${source.name.replace(/\.pdf$/i, '')}, original page ${item.sourcePageIndex + 1}`;
-  const rotationLabel = item.rotation ? `, rotated ${item.rotation} degrees` : '';
-  const ariaLabel = `Page ${index + 1} of ${total}: ${sourceLabel}${rotationLabel}`;
+    ? t.pageCard.blankPage
+    : t.pageCard.sourcePage(displayName, item.sourcePageIndex + 1);
+  const rotationLabel = item.rotation ? t.pageCard.rotated(item.rotation) : '';
+  const ariaLabel = `${t.pageCard.pageOf(index + 1, total)}: ${sourceLabel}${rotationLabel}`;
 
   useEffect(() => {
     if (!inView) return;
@@ -134,14 +137,14 @@ export default function PageCard({
           ) : failed ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 px-2 text-mute">
               <TriangleAlert className="size-5" />
-              <span className="text-center text-caption">Couldn&rsquo;t render this page</span>
+              <span className="text-center text-caption">{t.pageCard.renderFailed}</span>
             </div>
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
               <LoaderCircle
                 className="size-5 animate-spin text-mute/70"
                 strokeWidth={1.75}
-                aria-label="Loading page thumbnail"
+                aria-label={t.pageCard.loadingThumbnail}
               />
             </div>
           )}
@@ -166,7 +169,7 @@ export default function PageCard({
           {multipleSources && (
             <span
               className="flex min-w-0 items-center gap-1 text-caption text-mute"
-              title={`${source.name} — original page ${item.sourcePageIndex + 1}`}
+              title={t.pageCard.sourceTitle(source.name, item.sourcePageIndex + 1)}
             >
               <span
                 className="size-1.5 shrink-0 rounded-full"
@@ -174,12 +177,12 @@ export default function PageCard({
                 aria-hidden="true"
               />
               <span className="truncate">
-                {source.blank ? 'blank' : source.name.replace(/\.pdf$/i, '')}
+                {source.blank ? t.pageCard.blank : source.name.replace(/\.pdf$/i, '')}
               </span>
             </span>
           )}
           {item.rotation !== 0 && (
-            <span className="text-caption text-mute" title={`Rotated ${item.rotation}°`}>
+            <span className="text-caption text-mute" title={t.pageCard.rotatedTitle(item.rotation)}>
               {item.rotation}°
             </span>
           )}
@@ -191,16 +194,16 @@ export default function PageCard({
             selected ? 'opacity-100' : 'opacity-0',
           ].join(' ')}
         >
-          <CardAction label="Preview page" onClick={() => onPreview(index)}>
+          <CardAction label={t.pageCard.preview} onClick={() => onPreview(index)}>
             <Eye className="size-3.5" />
           </CardAction>
-          <CardAction label="Rotate clockwise" onClick={() => onRotate(item.id)}>
+          <CardAction label={t.pageCard.rotate} onClick={() => onRotate(item.id)}>
             <RotateCw className="size-3.5" />
           </CardAction>
-          <CardAction label="Duplicate page" onClick={() => onDuplicate(item.id)}>
+          <CardAction label={t.pageCard.duplicate} onClick={() => onDuplicate(item.id)}>
             <Copy className="size-3.5" />
           </CardAction>
-          <CardAction label="Delete page" danger onClick={() => onDelete(item.id)}>
+          <CardAction label={t.pageCard.delete} danger onClick={() => onDelete(item.id)}>
             <Trash2 className="size-3.5" />
           </CardAction>
         </div>

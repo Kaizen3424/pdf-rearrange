@@ -111,6 +111,14 @@
     text-rendering: optimizeLegibility;
   }
 
+  :lang(ja) body {
+    font-family: "Noto Sans JP Variable", var(--font-sans);
+  }
+
+  :lang(ko) body {
+    font-family: "Noto Sans KR Variable", var(--font-sans);
+  }
+
   ::selection {
     background-color: var(--color-primary);
     color: var(--color-on-primary);

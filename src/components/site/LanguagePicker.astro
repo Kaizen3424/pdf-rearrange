@@ -1,0 +1,121 @@
+---
+import Icon from './Icon.astro';
+import {
+  defaultLocale,
+  getDictionary,
+  getLogicalPathFromUrl,
+  localePath,
+  localeMeta,
+  locales,
+  type Locale,
+} from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+  variant?: 'nav' | 'footer';
+}
+
+const { locale = defaultLocale, variant = 'footer' } = Astro.props;
+const t = getDictionary(locale);
+const logicalPath = getLogicalPathFromUrl(Astro.url);
+
+const entries = locales.map((code) => ({
+  code,
+  label: localeMeta[code].nativeLabel,
+  href: localePath(logicalPath, code),
+  current: code === locale,
+}));
+---
+
+{
+  variant === 'footer' ? (
+    <nav aria-label={t.footer.colLanguage}>
+      <h2 class="text-body-sm-strong text-primary mb-3">{t.footer.colLanguage}</h2>
+      <ul class="grid grid-cols-2 gap-x-3 gap-y-2.5 text-body-sm">
+        {entries.map((entry) => (
+          <li>
+            <a
+              href={entry.href}
+              hreflang={localeMeta[entry.code].hreflang}
+              aria-current={entry.current ? 'page' : undefined}
+              class:list={[
+                'text-canvas-soft/80 hover:text-primary transition-colors focus-ring rounded-sm',
+                entry.current ? 'text-primary' : '',
+              ]}
+            >
+              {entry.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  ) : (
+    <div class="relative" data-lang-switcher>
+      <button
+        type="button"
+        class="btn-icon"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-label={t.langSwitcher.ariaLabel}
+        data-lang-toggle
+      >
+        <Icon name="globe" size={20} />
+      </button>
+      <div
+        hidden
+        data-lang-menu
+        class="absolute end-0 top-full z-50 mt-2 w-48 rounded-xl border border-ink/10 bg-canvas p-1.5 shadow-lg"
+      >
+        <ul class="list-none space-y-0.5 p-0">
+          {entries.map((entry) => (
+            <li>
+              <a
+                href={entry.href}
+                hreflang={localeMeta[entry.code].hreflang}
+                aria-current={entry.current ? 'page' : undefined}
+                class:list={[
+                  'flex items-center justify-between gap-2 rounded-md px-3 py-2 text-body-sm transition-colors',
+                  entry.current
+                    ? 'bg-primary-pale font-semibold text-ink'
+                    : 'text-body hover:bg-canvas-soft',
+                ]}
+              >
+                {entry.label}
+                {entry.current && <Icon name="check" size={16} class="text-positive" />}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  const switcher = document.querySelector('[data-lang-switcher]');
+  const toggle = switcher?.querySelector('[data-lang-toggle]');
+  const menu = switcher?.querySelector<HTMLElement>('[data-lang-menu]');
+
+  const setMenu = (open: boolean) => {
+    if (!menu || !toggle) return;
+    menu.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+
+  toggle?.addEventListener('click', () => {
+    setMenu(!!menu?.hidden);
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!switcher || !menu || menu.hidden) return;
+    if (!switcher.contains(event.target as Node)) setMenu(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setMenu(false);
+  });
+
+  menu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => setMenu(false));
+  });
+</script>

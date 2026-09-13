@@ -7,6 +7,7 @@ import { usePages } from './hooks/usePages';
 import { useThumbnails } from './hooks/useThumbnails';
 import { isPdfEncrypted, openPdf } from './lib/pdfService';
 import { exportRearrangedPdf, triggerDownload } from './lib/exportService';
+import { ToolI18nProvider, useToolI18n } from './i18n';
 import DropZone from './DropZone';
 import Toolbar from './Toolbar';
 import PageGrid from './PageGrid';
@@ -23,7 +24,16 @@ interface PasswordRequest {
   reject: () => void;
 }
 
-export default function OrganizeTool() {
+export default function OrganizeTool({ locale = 'en' }: { locale?: string }) {
+  return (
+    <ToolI18nProvider locale={locale}>
+      <OrganizeToolInner />
+    </ToolI18nProvider>
+  );
+}
+
+function OrganizeToolInner() {
+  const { t } = useToolI18n();
   const [status, setStatus] = useState<Status>('empty');
   const [docs, setDocs] = useState<SourceDoc[]>([]);
   const docsRef = useRef<SourceDoc[]>([]);
@@ -91,10 +101,7 @@ export default function OrganizeTool() {
       );
       const skipped = list.length - pdfs.length;
       if (skipped > 0) {
-        toast(
-          'error',
-          `${skipped} file${skipped > 1 ? 's were' : ' was'} skipped — only PDF files are supported.`,
-        );
+        toast('error', t.tool.filesSkippedPdf(skipped));
       }
       if (pdfs.length === 0) return;
 
@@ -108,15 +115,15 @@ export default function OrganizeTool() {
         const file = pdfs[i]!;
         setLoadLabel(
           pdfs.length > 1
-            ? `Reading ${file.name} (${i + 1} of ${pdfs.length})…`
-            : `Reading ${file.name}…`,
+            ? t.tool.readingFileOf(file.name, i + 1, pdfs.length)
+            : t.tool.readingFile(file.name),
         );
 
         let bytes: Uint8Array;
         try {
           bytes = new Uint8Array(await file.arrayBuffer());
         } catch {
-          toast('error', `Couldn't read ${file.name}.`);
+          toast('error', t.tool.readFailed(file.name));
           continue;
         }
 
@@ -138,10 +145,7 @@ export default function OrganizeTool() {
             cancelledCount += 1;
             continue;
           }
-          toast(
-            'error',
-            `Couldn't open ${file.name} — it may be damaged or not a valid PDF.`,
-          );
+          toast('error', t.tool.openFailed(file.name));
           continue;
         }
         if (!pdfDoc) continue;
@@ -172,27 +176,19 @@ export default function OrganizeTool() {
         lastSelectedRef.current = null;
         setDownloadResult(null);
         setStatus('ready');
-        announce(
-          `${newItems.length} page${newItems.length === 1 ? '' : 's'} ready to rearrange.`,
-        );
+        announce(t.tool.pagesReady(newItems.length));
       } else {
         setStatus(docsRef.current.length > 0 ? 'ready' : 'empty');
       }
 
       if (cancelledCount > 0) {
-        toast(
-          'info',
-          `${cancelledCount} file${cancelledCount > 1 ? 's were' : ' was'} skipped — the password wasn't entered.`,
-        );
+        toast('info', t.tool.filesSkippedPassword(cancelledCount));
       }
       if (encryptedCount > 0) {
-        toast(
-          'info',
-          'This PDF is encrypted. You can rearrange it here, but encrypted files can\'t be rebuilt for download — the download button will explain how to fix that.',
-        );
+        toast('info', t.tool.encryptedInfo);
       }
     },
-    [commit, promptForPassword, toast, announce],
+    [commit, promptForPassword, toast, announce, t],
   );
 
   const openPicker = useCallback(() => {
@@ -233,8 +229,8 @@ export default function OrganizeTool() {
     const next = new Set(pages.map((page) => page.id));
     selectedRef.current = next;
     setSelected(next);
-    announce('All pages selected.');
-  }, [pages, announce]);
+    announce(t.tool.allSelected);
+  }, [pages, announce, t]);
 
   const clearSelection = useCallback(() => {
     selectedRef.current = new Set();
@@ -257,9 +253,9 @@ export default function OrganizeTool() {
             : page,
         ),
       );
-      announce(`Rotated ${ids.length} page${ids.length === 1 ? '' : 's'}.`);
+      announce(t.tool.rotated(ids.length));
     },
-    [scopeIds, commit, markDirty, announce],
+    [scopeIds, commit, markDirty, announce, t],
   );
 
   const duplicatePages = useCallback(
@@ -274,9 +270,9 @@ export default function OrganizeTool() {
         }
         return next;
       });
-      announce(`Duplicated ${ids.size} page${ids.size === 1 ? '' : 's'}.`);
+      announce(t.tool.duplicated(ids.size));
     },
-    [scopeIds, commit, markDirty, announce],
+    [scopeIds, commit, markDirty, announce, t],
   );
 
   const deletePages = useCallback(
@@ -290,9 +286,9 @@ export default function OrganizeTool() {
         selectedRef.current = next;
         return next;
       });
-      announce(`Deleted ${ids.size} page${ids.size === 1 ? '' : 's'}.`);
+      announce(t.tool.deleted(ids.size));
     },
-    [scopeIds, commit, markDirty, announce],
+    [scopeIds, commit, markDirty, announce, t],
   );
 
   const deleteSelected = useCallback(() => {
@@ -302,14 +298,14 @@ export default function OrganizeTool() {
     commit((prev) => prev.filter((page) => !ids.has(page.id)));
     selectedRef.current = new Set();
     setSelected(new Set());
-    announce(`Deleted ${ids.size} page${ids.size === 1 ? '' : 's'}.`);
-  }, [commit, markDirty, announce]);
+    announce(t.tool.deleted(ids.size));
+  }, [commit, markDirty, announce, t]);
 
   const reversePages = useCallback(() => {
     markDirty();
     commit((prev) => [...prev].reverse());
-    announce('Page order reversed.');
-  }, [commit, markDirty, announce]);
+    announce(t.tool.reversed);
+  }, [commit, markDirty, announce, t]);
 
   const reorderPages = useCallback(
     (from: number, to: number) => {
@@ -330,14 +326,14 @@ export default function OrganizeTool() {
     commit(() => items);
     selectedRef.current = new Set();
     setSelected(new Set());
-    announce('Restored the original page order.');
-  }, [commit, markDirty, announce]);
+    announce(t.tool.restored);
+  }, [commit, markDirty, announce, t]);
 
   const addBlankPage = useCallback(() => {
     const docId = uid();
     const newDoc: SourceDoc = {
       id: docId,
-      name: 'Blank page',
+      name: t.tool.blankDocName,
       bytes: new Uint8Array(0),
       doc: null,
       pageCount: 1,
@@ -352,8 +348,8 @@ export default function OrganizeTool() {
       ...prev,
       { id: uid(), sourceId: docId, sourcePageIndex: 0, rotation: 0 },
     ]);
-    toast('info', 'Blank page added at the end — drag it anywhere.');
-  }, [commit, markDirty, toast]);
+    toast('info', t.tool.blankAdded);
+  }, [commit, markDirty, toast, t]);
 
   const startOver = useCallback(() => {
     docsRef.current = [];
@@ -372,10 +368,7 @@ export default function OrganizeTool() {
   const handleDownload = useCallback(async () => {
     if (pages.length === 0) return;
     if (docsRef.current.some((doc) => doc.encrypted)) {
-      toast(
-        'error',
-        'This file is encrypted, so it can\'t be rebuilt locally. Remove its password (open it, choose Print → Save as PDF, or use your PDF app\'s "remove security" option), then add the copy here and download.',
-      );
+      toast('error', t.tool.encryptedDownloadToast);
       return;
     }
     setStatus('exporting');
@@ -386,16 +379,13 @@ export default function OrganizeTool() {
       setStatus('done');
       selectedRef.current = new Set();
       setSelected(new Set());
-      announce(`Downloaded ${result.fileName}.`);
+      announce(t.tool.downloaded(result.fileName));
     } catch (error) {
       console.error('Export failed:', error);
       setStatus('ready');
-      toast(
-        'error',
-        'This PDF couldn\'t be rebuilt on your device. It may use encryption or a structure we can\'t copy. Try a PDF without a password, or export it again from your PDF app first.',
-      );
+      toast('error', t.tool.exportFailed);
     }
-  }, [pages, toast, announce]);
+  }, [pages, toast, announce, t]);
 
   const downloadAgain = useCallback(async () => {
     if (reexporting || pages.length === 0) return;
@@ -405,17 +395,14 @@ export default function OrganizeTool() {
       const result = await exportRearrangedPdf(docsRef.current, pages);
       triggerDownload(result.blob, result.fileName);
       setDownloadResult({ name: result.fileName, size: result.blob.size });
-      announce(`Downloaded ${result.fileName}.`);
+      announce(t.tool.downloaded(result.fileName));
     } catch (error) {
       console.error('Export failed:', error);
-      toast(
-        'error',
-        'This PDF couldn\'t be rebuilt on your device. It may use encryption or a structure we can\'t copy. Try a PDF without a password, or export it again from your PDF app first.',
-      );
+      toast('error', t.tool.exportFailed);
     } finally {
       setReexporting(false);
     }
-  }, [pages, reexporting, toast, announce]);
+  }, [pages, reexporting, toast, announce, t]);
 
   const backToEditing = useCallback(() => {
     setStatus('ready');
@@ -433,13 +420,13 @@ export default function OrganizeTool() {
       if (mod && key === 'z') {
         event.preventDefault();
         if (event.shiftKey) {
-          if (redo()) announce('Redone.');
+          if (redo()) announce(t.tool.redone);
         } else if (undo()) {
-          announce('Undone.');
+          announce(t.tool.undone);
         }
       } else if (mod && key === 'y') {
         event.preventDefault();
-        if (redo()) announce('Redone.');
+        if (redo()) announce(t.tool.redone);
       } else if (mod && key === 'a') {
         event.preventDefault();
         selectAll();
@@ -462,6 +449,7 @@ export default function OrganizeTool() {
     deleteSelected,
     clearSelection,
     announce,
+    t,
   ]);
 
   useEffect(() => {
@@ -552,14 +540,11 @@ export default function OrganizeTool() {
             >
               <TriangleAlert className="mt-0.5 size-5 shrink-0 text-ink" />
               <div className="min-w-0">
-                <p className="text-body-md-strong text-ink">
-                  This PDF is encrypted, so it can&apos;t be downloaded.
-                </p>
+                <p className="text-body-md-strong text-ink">{t.tool.encryptedTitle}</p>
                 <p className="mt-1 text-body-sm text-body">
-                  You can rearrange, rotate and preview the pages, but an encrypted file
-                  can&apos;t be rebuilt on your device. Remove its password first (open it and
-                  use <span className="font-semibold">Print → Save as PDF</span>, or your PDF
-                  app&apos;s &quot;remove security&quot; option), then add the unlocked copy here.
+                  {t.tool.encryptedBody1}
+                  <span className="font-semibold">{t.tool.encryptedStrong}</span>
+                  {t.tool.encryptedBody2}
                 </p>
               </div>
             </div>
@@ -586,10 +571,8 @@ export default function OrganizeTool() {
           {pages.length === 0 ? (
             <div className="rounded-xl border-2 border-dashed border-ink/15 bg-canvas/60 p-10 text-center">
               <FileText className="mx-auto size-10 text-mute" strokeWidth={1.5} />
-              <p className="mt-3 text-body-lg font-semibold text-ink">No pages left</p>
-              <p className="mt-1 text-body-md text-body">
-                Undo the deletion, add more PDFs, or start new.
-              </p>
+              <p className="mt-3 text-body-lg font-semibold text-ink">{t.tool.noPagesLeft}</p>
+              <p className="mt-1 text-body-md text-body">{t.tool.noPagesHint}</p>
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 <button
                   type="button"
@@ -597,10 +580,10 @@ export default function OrganizeTool() {
                   onClick={undo}
                   disabled={!canUndo}
                 >
-                  Undo
+                  {t.tool.undo}
                 </button>
                 <button type="button" className="btn btn-secondary" onClick={openPicker}>
-                  Add PDFs
+                  {t.tool.addPdfs}
                 </button>
               </div>
             </div>
@@ -668,7 +651,7 @@ export default function OrganizeTool() {
           <div className="rounded-xl border-2 border-dashed border-primary bg-ink/90 px-10 py-8 text-center">
             <Upload className="mx-auto size-10 text-primary" />
             <p className="mt-3 text-body-lg font-semibold text-canvas">
-              Drop PDFs to add their pages
+              {t.tool.dropOverlay}
             </p>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { CircleAlert, CircleCheck, Info, X } from 'lucide-react';
 import type { ToastMessage } from './types';
+import { useToolI18n } from './i18n';
 
 interface ToastsProps {
   toasts: ToastMessage[];
@@ -13,6 +14,7 @@ const icons = {
 };
 
 export default function Toasts({ toasts, onDismiss }: ToastsProps) {
+  const { t } = useToolI18n();
   if (toasts.length === 0) return null;
 
   return (
@@ -29,7 +31,7 @@ export default function Toasts({ toasts, onDismiss }: ToastsProps) {
             type="button"
             className="rounded-sm text-mute transition-colors hover:text-ink"
             onClick={() => onDismiss(toast.id)}
-            aria-label="Dismiss notification"
+            aria-label={t.toasts.dismiss}
           >
             <X className="size-4" />
           </button>

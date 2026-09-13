@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/site/Nav.astro';
+import Hero from '../components/site/Hero.astro';
+import HowItWorks from '../components/site/HowItWorks.astro';
+import Features from '../components/site/Features.astro';
+import PrivacySection from '../components/site/PrivacySection.astro';
+import Faq from '../components/site/Faq.astro';
+import SeoContent from '../components/site/SeoContent.astro';
+import CtaSection from '../components/site/CtaSection.astro';
+import Footer from '../components/site/Footer.astro';
+import OrganizeTool from '../components/organize/OrganizeTool';
+import { getDictionary, type Locale } from '../i18n/utils';
+import { homeSchemas } from '../i18n/schema';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+const site = Astro.site ?? new URL('https://rearrangepdf.com');
+const jsonLd = homeSchemas(t, locale, site);
+---
+
+<Layout
+  title={t.pages.home.meta.title}
+  description={t.pages.home.meta.description}
+  keywords={t.pages.home.meta.keywords}
+  canonicalPath="/"
+  locale={locale}
+  jsonLd={jsonLd}
+>
+  <Nav locale={locale} />
+  <main id="main">
+    <Hero locale={locale}>
+      <OrganizeTool client:load locale={locale} />
+    </Hero>
+    <HowItWorks locale={locale} />
+    <Features locale={locale} />
+    <PrivacySection locale={locale} />
+    <Faq locale={locale} />
+    <SeoContent locale={locale} />
+    <CtaSection locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Layout>

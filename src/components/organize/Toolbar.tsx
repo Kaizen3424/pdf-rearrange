@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import type { SourceDoc, Status, Zoom } from './types';
 import { SOURCE_COLORS } from './types';
+import { useToolI18n } from './i18n';
 
 interface ToolbarProps {
   docs: SourceDoc[];
@@ -74,6 +75,7 @@ export default function Toolbar({
   onDownload,
   status,
 }: ToolbarProps) {
+  const { t } = useToolI18n();
   const [confirmReset, setConfirmReset] = useState(false);
   const confirmTimer = useRef<number | null>(null);
 
@@ -107,12 +109,10 @@ export default function Toolbar({
             {docs.length === 1
               ? docs[0]!.name
               : docs.length === 0
-                ? 'No file'
-                : `${docs.length} files`}
+                ? t.toolbar.noFile
+                : t.toolbar.files(docs.length)}
           </p>
-          <p className="text-caption text-mute">
-            {pageCount} page{pageCount === 1 ? '' : 's'}
-          </p>
+          <p className="text-caption text-mute">{t.toolbar.pages(pageCount)}</p>
         </div>
       </div>
 
@@ -132,28 +132,28 @@ export default function Toolbar({
       <div className="mx-1 hidden h-6 w-px bg-ink/10 sm:block" />
 
       <div className="flex items-center gap-0.5">
-        <ToolButton label="Undo (Ctrl+Z)" onClick={onUndo} disabled={!canUndo}>
+        <ToolButton label={t.toolbar.undo} onClick={onUndo} disabled={!canUndo}>
           <Undo2 className="size-4" />
         </ToolButton>
-        <ToolButton label="Redo (Ctrl+Shift+Z)" onClick={onRedo} disabled={!canRedo}>
+        <ToolButton label={t.toolbar.redo} onClick={onRedo} disabled={!canRedo}>
           <Redo2 className="size-4" />
         </ToolButton>
-        <ToolButton label="Reverse page order" onClick={onReverse} disabled={pageCount < 2}>
+        <ToolButton label={t.toolbar.reverse} onClick={onReverse} disabled={pageCount < 2}>
           <ArrowDownUp className="size-4" />
         </ToolButton>
         <button
           type="button"
-          title="Reset to original order"
-          aria-label="Reset to original order"
+          title={t.toolbar.resetLabel}
+          aria-label={t.toolbar.resetLabel}
           onClick={onReset}
           disabled={pageCount === 0}
           className="h-9 rounded-md px-2.5 text-body-sm font-semibold text-ink transition-colors hover:bg-canvas-soft disabled:opacity-35 disabled:hover:bg-transparent"
         >
-          Reset
+          {t.toolbar.reset}
         </button>
       </div>
 
-      <div className="flex items-center rounded-md bg-canvas-soft p-0.5" role="group" aria-label="Thumbnail size">
+      <div className="flex items-center rounded-md bg-canvas-soft p-0.5" role="group" aria-label={t.toolbar.thumbnailSize}>
         {zoomOptions.map((option) => (
           <button
             key={option}
@@ -162,10 +162,10 @@ export default function Toolbar({
             aria-pressed={zoom === option}
             aria-label={
               option === 'sm'
-                ? 'Small thumbnails'
+                ? t.toolbar.zoomSm
                 : option === 'md'
-                  ? 'Medium thumbnails'
-                  : 'Large thumbnails'
+                  ? t.toolbar.zoomMd
+                  : t.toolbar.zoomLg
             }
             className={[
               'rounded-sm px-2.5 py-1 text-caption font-semibold uppercase transition-colors',
@@ -182,9 +182,9 @@ export default function Toolbar({
       <div className="flex items-center gap-2">
         <button type="button" className="btn btn-secondary px-4 py-2 text-body-sm" onClick={onAddFiles}>
           <FilePlus className="size-4" />
-          <span className="hidden sm:inline">Add PDFs</span>
+          <span className="hidden sm:inline">{t.toolbar.addPdfs}</span>
         </button>
-        <ToolButton label="Add a blank page" onClick={onAddBlank}>
+        <ToolButton label={t.toolbar.addBlank} onClick={onAddBlank}>
           <Plus className="size-4" />
         </ToolButton>
       </div>
@@ -195,7 +195,7 @@ export default function Toolbar({
           className="btn btn-secondary px-4 py-2 text-body-sm"
           onClick={handleStartOver}
         >
-          {confirmReset ? 'Confirm?' : 'Start new'}
+          {confirmReset ? t.toolbar.confirm : t.toolbar.startNew}
         </button>
         <button
           type="button"
@@ -204,7 +204,7 @@ export default function Toolbar({
           disabled={pageCount === 0 || exporting}
         >
           {exporting ? <LoaderCircle className="size-4 animate-spin" /> : <Download className="size-4" />}
-          {exporting ? 'Building…' : 'Download PDF'}
+          {exporting ? t.toolbar.building : t.toolbar.download}
         </button>
       </div>
     </div>

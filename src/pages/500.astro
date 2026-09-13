@@ -3,23 +3,25 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/site/Nav.astro';
 import Footer from '../components/site/Footer.astro';
 import ErrorPage from '../components/site/ErrorPage.astro';
+import { getDictionary } from '../i18n/utils';
 
 interface Props {
   error?: unknown;
 }
 
-const title = 'Something went wrong — Rearrange PDF';
-const description = 'An unexpected error occurred. Reload to try again, or head back to the tool.';
+const t = getDictionary('en');
 ---
 
-<Layout title={title} description={description} canonicalPath="/500" noindex>
+<Layout title={t.errors.serverError.title} description={t.errors.serverError.description} canonicalPath="/500" noindex>
   <Nav />
   <main id="main">
     <ErrorPage
       code="500"
-      heading="Something broke on our end."
-      message="An unexpected error occurred. Reload to try again, or head back to the tool — your files never left your browser."
+      heading={t.errors.serverError.heading}
+      message={t.errors.serverError.message}
       reload
+      tryAgainLabel={t.errors.tryAgain}
+      backToToolLabel={t.errors.backToTool}
     />
   </main>
   <Footer />

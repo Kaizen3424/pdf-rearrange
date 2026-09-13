@@ -6,9 +6,18 @@ interface Props {
   heading: string;
   message: string;
   reload?: boolean;
+  tryAgainLabel?: string;
+  backToToolLabel?: string;
 }
 
-const { code, heading, message, reload = false } = Astro.props;
+const {
+  code,
+  heading,
+  message,
+  reload = false,
+  tryAgainLabel = 'Try again',
+  backToToolLabel = 'Back to the tool',
+} = Astro.props;
 ---
 
 <section class="bg-canvas-soft">
@@ -19,7 +28,7 @@ const { code, heading, message, reload = false } = Astro.props;
     <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
       {reload && (
         <button type="button" class="btn btn-primary" data-error-reload>
-          Try again
+          {tryAgainLabel}
           <Icon name="refresh-cw" size={18} />
         </button>
       )}
@@ -27,7 +36,7 @@ const { code, heading, message, reload = false } = Astro.props;
         href="/"
         class:list={reload ? ['btn', 'btn-secondary'] : ['btn', 'btn-primary']}
       >
-        Back to the tool
+        {backToToolLabel}
         <Icon name="arrow-right" size={18} />
       </a>
     </div>

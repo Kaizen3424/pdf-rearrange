@@ -55,8 +55,13 @@ export function uid(): string {
     : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-export function formatBytes(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+export function formatBytes(bytes: number, locale = 'en'): string {
+  const format = (value: number, unit: string, maximumFractionDigits = 0) =>
+    `${new Intl.NumberFormat(locale, {
+      useGrouping: false,
+      maximumFractionDigits,
+    }).format(value)} ${unit}`;
+  if (bytes < 1024) return format(bytes, 'B');
+  if (bytes < 1024 * 1024) return format(bytes / 1024, 'KB');
+  return format(bytes / (1024 * 1024), 'MB', 1);
 }

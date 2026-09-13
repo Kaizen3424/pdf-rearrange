@@ -1,17 +1,26 @@
 ---
 import Logo from './Logo.astro';
+import LanguagePicker from './LanguagePicker.astro';
+import { defaultLocale, getDictionary, localePath, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = defaultLocale } = Astro.props;
+const t = getDictionary(locale);
 
 const links = [
-  { href: '/#how-it-works', label: 'How it works' },
-  { href: '/#features', label: 'Features' },
-  { href: '/#privacy', label: 'Privacy' },
-  { href: '/#faq', label: 'FAQ' },
+  { href: localePath('/#how-it-works', locale), label: t.nav.howItWorks },
+  { href: localePath('/#features', locale), label: t.nav.features },
+  { href: localePath('/#privacy', locale), label: t.nav.privacy },
+  { href: localePath('/#faq', locale), label: t.nav.faq },
 ];
 ---
 
 <header class="sticky top-0 z-40 bg-canvas/90 backdrop-blur-md border-b border-ink/10">
-  <nav class="container-page flex h-16 items-center justify-between gap-4" aria-label="Main navigation">
-    <a href="/" class="focus-ring rounded-md shrink-0">
+  <nav class="container-page flex h-16 items-center justify-between gap-4" aria-label={t.nav.ariaLabel}>
+    <a href={localePath('/', locale)} class="focus-ring rounded-md shrink-0">
       <Logo />
     </a>
 
@@ -30,8 +39,9 @@ const links = [
       }
     </ul>
 
-    <div class="flex items-center gap-3">
-      <a href="/#rearrange" class="btn btn-primary hidden sm:inline-flex">Rearrange a PDF</a>
+    <div class="flex items-center gap-2 sm:gap-3">
+      <LanguagePicker locale={locale} variant="nav" />
+      <a href={localePath('/#rearrange', locale)} class="btn btn-primary hidden sm:inline-flex">{t.nav.cta}</a>
       <button
         type="button"
         class="btn-icon md:hidden"
@@ -39,7 +49,7 @@ const links = [
         aria-controls="mobile-menu"
         data-nav-toggle
       >
-        <span class="sr-only">Toggle menu</span>
+        <span class="sr-only">{t.nav.toggleMenu}</span>
         <svg
           data-icon-open
           xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +100,7 @@ const links = [
         ))
       }
       <li class="pt-2">
-        <a href="/#rearrange" class="btn btn-primary w-full">Rearrange a PDF</a>
+        <a href={localePath('/#rearrange', locale)} class="btn btn-primary w-full">{t.nav.cta}</a>
       </li>
     </ul>
   </div>
@@ -110,7 +120,7 @@ const links = [
     iconClose?.classList.toggle('hidden', !open);
   };
 
-  toggle?.addEventListener('click', () => setMenu(!menu?.hidden));
+  toggle?.addEventListener('click', () => setMenu(!!menu?.hidden));
   menu?.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => setMenu(false));
   });

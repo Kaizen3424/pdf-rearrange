@@ -1,130 +1,85 @@
 ---
+import RichText from '../RichText.astro';
+import { defaultLocale, getDictionary, type Locale } from '../../i18n/utils';
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = defaultLocale } = Astro.props;
+const t = getDictionary(locale);
 ---
 
 <section id="about" class="scroll-mt-24 bg-canvas">
   <div class="container-page py-16 md:py-24">
     <div class="max-w-3xl mx-auto">
-      <h2 class="text-display-sm font-semibold">Rearrange PDF pages online — free and unlimited</h2>
+      <h2 class="text-display-sm font-semibold">{t.seoContent.h2}</h2>
       <p class="mt-4 text-body-lg text-body">
-        Rearrange PDF is a free online tool built for one job: helping you rearrange PDF pages
-        quickly, privately and without friction. Whether you need to fix a back-to-front scan,
-        move an appendix to the end, or pull a chaotic export into a sensible order, you get a
-        full visual editor with drag-and-drop page thumbnails — right in your browser. Nothing to
-        install, no account to create, no watermark on the output. And because everything runs
-        locally on your device, you can rearrange PDF pages online free of the uploads, queues and
-        daily limits most other tools impose.
+        <RichText text={t.seoContent.p1} locale={locale} />
       </p>
       <p class="mt-4 text-body-md text-body">
-        The editor behaves like a small desktop application. Every page of your document appears
-        as a thumbnail you can grab and drop into a new position, while the remaining pages shift
-        automatically to make room. Beyond reordering, you can rotate sideways scans, duplicate
-        pages that repeat, insert blank sheets and select several pages at once for batch actions.
-        A full undo history means you can experiment freely — nothing is final until you download.
+        <RichText text={t.seoContent.p2} locale={locale} />
       </p>
 
-      <h3 class="mt-10 text-display-xs font-semibold">Merge and rearrange PDF pages in one place</h3>
+      <h3 class="mt-10 text-display-xs font-semibold">{t.seoContent.h3Merge}</h3>
       <p class="mt-3 text-body-md text-body">
-        Real documents rarely live in a single file: the report is one PDF, the appendix another,
-        the new cover page a third. Rearrange PDF lets you merge and rearrange PDF pages without
-        switching between apps. Drop in as many files as you like — all at once, or by adding more
-        mid-edit — and every page lands in one grid, tagged with a colored badge showing which
-        document it came from. From there you can combine and rearrange PDF pages from every
-        source into a single continuous file: interleave chapters, move the new cover to the
-        front, or slot extra material into the middle. One click produces one cleanly merged PDF.
+        <RichText text={t.seoContent.pMerge} locale={locale} />
       </p>
 
-      <h3 class="mt-10 text-display-xs font-semibold">Delete and rearrange PDF pages</h3>
+      <h3 class="mt-10 text-display-xs font-semibold">{t.seoContent.h3Delete}</h3>
       <p class="mt-3 text-body-md text-body">
-        Cleanup and ordering usually go together. When you delete and rearrange PDF pages in the
-        same pass, you avoid exporting twice — and re-exporting elsewhere is exactly where
-        quality loss and watermarks sneak in. Select any page and remove it with one click, or
-        tap several thumbnails and delete them as a batch. Deleted pages stay in your undo
-        history, so an overzealous cut is never permanent. Combined with duplicate, rotate and
-        insert-blank actions, this makes the tool a lightweight page editor: trim what you don't
-        need, order what remains, export once.
+        <RichText text={t.seoContent.pDelete} locale={locale} />
       </p>
 
-      <h3 class="mt-10 text-display-xs font-semibold">How to rearrange PDF pages in three steps</h3>
+      <h3 class="mt-10 text-display-xs font-semibold">{t.seoContent.h3Steps}</h3>
       <p class="mt-3 text-body-md text-body">
-        If you're wondering how to rearrange PDF pages without reading a manual, the entire
-        workflow is three moves:
+        <RichText text={t.seoContent.pSteps} locale={locale} />
       </p>
       <div class="mt-5 rounded-xl bg-primary-pale p-6">
         <ol class="space-y-3 text-body-md text-body">
-          <li class="flex gap-3">
-            <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-bold text-primary">1</span>
-            <span><strong>Add your PDF.</strong> Drag the file onto the tool at the top of this page, click to browse, or paste it from the clipboard. Add more files if you want to merge them.</span>
-          </li>
-          <li class="flex gap-3">
-            <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-bold text-primary">2</span>
-            <span><strong>Drag pages into order.</strong> Move any thumbnail to a new position, then rotate, duplicate or delete pages until the sequence is right. Multi-select and undo keep big edits fast.</span>
-          </li>
-          <li class="flex gap-3">
-            <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-bold text-primary">3</span>
-            <span><strong>Download instantly.</strong> The rebuilt PDF is generated on your device and saved immediately — no watermark, no email required.</span>
-          </li>
+          {
+            t.seoContent.steps.map((step, index) => (
+              <li class="flex gap-3">
+                <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-bold text-primary">
+                  {index + 1}
+                </span>
+                <span>
+                  <RichText text={step} locale={locale} />
+                </span>
+              </li>
+            ))
+          }
         </ol>
       </div>
       <p class="mt-4 text-body-md text-body">
-        That's genuinely all there is to it — the fastest way to rearrange PDF pages online free
-        of sign-ups and uploads. For a deeper walkthrough, including reversing page order and
-        replacing individual pages, see the
-        <a href="/how-to-organize-pdf-pages" class="underline underline-offset-2 hover:text-ink transition-colors">full guide to organizing PDF pages</a>.
+        <RichText text={t.seoContent.pStepsOutro} locale={locale} />
       </p>
 
-      <h3 class="mt-10 text-display-xs font-semibold">Rearrange PDF pages on iPhone, iPad and Android</h3>
+      <h3 class="mt-10 text-display-xs font-semibold">{t.seoContent.h3Mobile}</h3>
       <p class="mt-3 text-body-md text-body">
-        Mobile is where many online PDF tools fall apart: tiny buttons, broken drag targets,
-        pop-ups smothering the page grid. This editor is built touch-first, so figuring out how
-        to rearrange PDF pages on iPhone or iPad takes seconds — press and hold a thumbnail to
-        lift it, drag it where it belongs, release. Rotate, duplicate and delete buttons are
-        large and sit within thumb's reach, and tapping pages selects them for batch actions. On
-        iOS you can open a PDF from Files or Mail, share it to Safari, reorder it, and save the
-        result straight back. The same flow works on Android phones and tablets.
+        <RichText text={t.seoContent.pMobile} locale={locale} />
       </p>
 
-      <h3 class="mt-10 text-display-xs font-semibold">What are the best ways to rearrange PDF pages?</h3>
+      <h3 class="mt-10 text-display-xs font-semibold">{t.seoContent.h3Best}</h3>
       <p class="mt-3 text-body-md text-body">
-        Search for the best ways to rearrange PDF pages and you'll find three realistic options.
-        Here's how they stack up for everyday document work:
+        <RichText text={t.seoContent.pBest} locale={locale} />
       </p>
       <ul class="mt-4 space-y-4 text-body-md text-body">
-        <li>
-          <strong>A browser-based tool — best for most people.</strong> It lets you rearrange PDF
-          online in seconds: nothing to install, nothing to update, works identically on Windows,
-          Mac, Linux and phones. The usual catch is that your file gets uploaded to a server.
-          This tool removes that catch — pages are processed on your device, never transmitted.
-        </li>
-        <li>
-          <strong>Desktop software — for heavy, repeated editing.</strong> Editors like Adobe
-          Acrobat pack deep PDF toolkits, but they cost a subscription, must be installed and
-          kept updated, and are overkill when you just need pages 12 and 13 swapped.
-        </li>
-        <li>
-          <strong>Mobile apps — convenient, with caveats.</strong> Dedicated apps work offline,
-          but they add storage permissions, ads and privacy policies to read. For a one-off fix,
-          a browser tool you already trust is the lighter option.
-        </li>
+        {
+          t.seoContent.bestList.map((item) => (
+            <li>
+              <RichText text={item} locale={locale} />
+            </li>
+          ))
+        }
       </ul>
       <p class="mt-4 text-body-md text-body">
-        For most people, most of the time, the first option wins: open the
-        <a href="/#rearrange" class="underline underline-offset-2 hover:text-ink transition-colors">tool at the top of this page</a>,
-        rearrange PDF free of uploads and watermarks, and be finished inside a minute.
+        <RichText text={t.seoContent.pBestOutro} locale={locale} />
       </p>
 
-      <h3 class="mt-10 text-display-xs font-semibold">Why free doesn't mean risky</h3>
+      <h3 class="mt-10 text-display-xs font-semibold">{t.seoContent.h3Why}</h3>
       <p class="mt-3 text-body-md text-body">
-        Free online tools earn their reputation honestly: many monetize by mining the documents
-        you upload, or by stamping watermarks until you pay. This tool takes the opposite route.
-        Your PDF is read, displayed and rewritten entirely inside your browser, so no copy of
-        your file ever exists on a server — nothing to leak, nothing to sell, nothing retained
-        after you close the tab. You don't have to take that on faith: open your browser's
-        developer tools, watch the network tab while you work, and you'll see zero file traffic.
-        That's what makes it safe for contracts, medical records, financial statements and
-        anything else confidential. Read the full
-        <a href="/privacy" class="underline underline-offset-2 hover:text-ink transition-colors">privacy promise</a>
-        for details.
+        <RichText text={t.seoContent.pWhy} locale={locale} />
       </p>
     </div>
   </div>

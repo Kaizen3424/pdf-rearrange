@@ -20,6 +20,7 @@ import type { PageItem, SourceDoc } from './types';
 import { SOURCE_COLORS } from './types';
 import PageCard from './PageCard';
 import type { ThumbnailsApi } from './hooks/useThumbnails';
+import { useToolI18n } from './i18n';
 
 interface PageGridProps {
   pages: PageItem[];
@@ -48,6 +49,7 @@ export default function PageGrid({
   onDelete,
   onPreview,
 }: PageGridProps) {
+  const { t } = useToolI18n();
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const sensors = useSensors(
@@ -68,14 +70,14 @@ export default function PageGrid({
 
   const announcements: Announcements = {
     onDragStart: ({ active }) =>
-      `Picked up page ${indexOfId(String(active.id)) + 1}. Use the arrow keys to move it, Space to drop, Escape to cancel.`,
+      t.pageGrid.dragStart(indexOfId(String(active.id)) + 1),
     onDragOver: ({ over }) =>
       over
-        ? `Page is now over position ${indexOfId(String(over.id)) + 1}.`
-        : 'Page is no longer over a drop target.',
+        ? t.pageGrid.dragOver(indexOfId(String(over.id)) + 1)
+        : t.pageGrid.dragOut,
     onDragEnd: ({ over }) =>
-      over ? `Moved to position ${indexOfId(String(over.id)) + 1}.` : 'Move cancelled.',
-    onDragCancel: () => 'Move cancelled.',
+      over ? t.pageGrid.dragEnd(indexOfId(String(over.id)) + 1) : t.pageGrid.dragCancel,
+    onDragCancel: () => t.pageGrid.dragCancel,
   };
 
   return (

@@ -1,0 +1,36 @@
+---
+import { parseRich } from '../i18n/rich';
+import { defaultLocale, localePath, type Locale } from '../i18n/utils';
+
+interface Props {
+  text: string;
+  locale?: Locale;
+  linkClass?: string;
+}
+
+const {
+  text,
+  locale = defaultLocale,
+  linkClass = 'underline underline-offset-2 hover:text-ink transition-colors',
+} = Astro.props;
+
+const segments = parseRich(text);
+// Only internal absolute paths are locale-prefixed; `mailto:` and `#fragment`
+// links are left untouched.
+const localizeHref = (href: string) =>
+  href.startsWith('/') ? localePath(href, locale) : href;
+---
+
+{
+  segments.map((segment) =>
+    segment.kind === 'strong' ? (
+      <strong>{segment.text}</strong>
+    ) : segment.kind === 'link' ? (
+      <a href={localizeHref(segment.href)} class={linkClass}>
+        {segment.text}
+      </a>
+    ) : (
+      segment.text
+    )
+  )
+}

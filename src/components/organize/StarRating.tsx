@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Star } from 'lucide-react';
+import { useToolI18n } from './i18n';
 
 const STORAGE_KEY = 'rearrangepdf:rating';
 const MAX_RATING = 5;
@@ -14,11 +15,8 @@ function loadStoredRating(): number | null {
   }
 }
 
-interface StarRatingProps {
-  label?: string;
-}
-
-export default function StarRating({ label = 'Rate this tool out of 5 stars' }: StarRatingProps) {
+export default function StarRating() {
+  const { t } = useToolI18n();
   const [rating, setRating] = useState<number | null>(() => loadStoredRating());
   const [preview, setPreview] = useState(0);
   const [announced, setAnnounced] = useState('');
@@ -26,7 +24,7 @@ export default function StarRating({ label = 'Rate this tool out of 5 stars' }: 
 
   const commit = (value: number) => {
     setRating(value);
-    setAnnounced(`You rated ${value} out of 5 stars. Thanks for your feedback!`);
+    setAnnounced(t.rating.announced(value));
     try {
       window.localStorage.setItem(STORAGE_KEY, String(value));
     } catch {
@@ -58,7 +56,7 @@ export default function StarRating({ label = 'Rate this tool out of 5 stars' }: 
     <div>
       <div
         role="radiogroup"
-        aria-label={label}
+        aria-label={t.rating.label}
         className="flex items-center justify-center gap-1"
         onKeyDown={onKeyDown}
       >
@@ -73,7 +71,7 @@ export default function StarRating({ label = 'Rate this tool out of 5 stars' }: 
               type="button"
               role="radio"
               aria-checked={rating === value}
-              aria-label={`${value} star${value > 1 ? 's' : ''}`}
+              aria-label={t.rating.star(value)}
               tabIndex={rating === value || (rating === null && value === 1) ? 0 : -1}
               className="focus-ring rounded-md p-1 text-gold transition-transform duration-150 hover:scale-110"
               onMouseEnter={() => setPreview(value)}
@@ -95,7 +93,7 @@ export default function StarRating({ label = 'Rate this tool out of 5 stars' }: 
         {announced}
       </p>
       <p className="mt-3 text-body-sm-strong text-ink">
-        {rating ? 'Thanks for your feedback!' : 'How did we do?'}
+        {rating ? t.rating.thanks : t.rating.prompt}
       </p>
     </div>
   );

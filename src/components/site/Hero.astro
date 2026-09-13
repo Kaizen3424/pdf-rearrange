@@ -1,5 +1,13 @@
 ---
 import Icon from './Icon.astro';
+import { defaultLocale, getDictionary, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = defaultLocale } = Astro.props;
+const t = getDictionary(locale);
 ---
 
 <section id="rearrange" class="scroll-mt-24 relative" data-hero>
@@ -10,30 +18,24 @@ import Icon from './Icon.astro';
       <div data-hero-copy>
         <p class="chip">
           <Icon name="shield-check" size={16} />
-          100% private — files never leave your browser
+          {t.hero.chip}
         </p>
         <h1 class="mt-5 font-black text-display-md sm:text-display-md xl:text-display-xl">
-          Rearrange PDF pages, right in your browser.
+          {t.hero.h1}
         </h1>
         <p class="mt-5 text-body-lg text-body max-w-xl mx-auto lg:mx-0">
-          Drag and drop to reorder pages, rotate, duplicate or delete them — then download
-          instantly. Free, unlimited and completely private.
+          {t.hero.sub}
         </p>
         <ul
           class="mt-6 flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-body-sm text-body"
         >
-          <li class="inline-flex items-center gap-1.5">
-            <Icon name="check" size={16} class="text-positive" /> No sign-up
-          </li>
-          <li class="inline-flex items-center gap-1.5">
-            <Icon name="check" size={16} class="text-positive" /> No page limits
-          </li>
-          <li class="inline-flex items-center gap-1.5">
-            <Icon name="check" size={16} class="text-positive" /> No watermark
-          </li>
-          <li class="inline-flex items-center gap-1.5">
-            <Icon name="check" size={16} class="text-positive" /> No file size caps
-          </li>
+          {
+            t.hero.bullets.map((bullet) => (
+              <li class="inline-flex items-center gap-1.5">
+                <Icon name="check" size={16} class="text-positive" /> {bullet}
+              </li>
+            ))
+          }
         </ul>
       </div>
 
