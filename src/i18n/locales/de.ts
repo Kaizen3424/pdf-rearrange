@@ -45,7 +45,7 @@ const de = {
     privacyPolicy: 'Datenschutzerklärung',
     termsOfService: 'Nutzungsbedingungen',
     copyright: (year: number) => `© ${year} rearrangepdf.com. Alle Rechte vorbehalten.`,
-    noAds: 'Keine Werbung. Keine Tracker. Keine Uploads.',
+    noAds: 'Keine Werbung. Kein Datei-Tracking. Keine Uploads.',
   },
 
   hero: {
@@ -80,7 +80,7 @@ const de = {
     items: [
       {
         title: 'Von Grund auf privat',
-        text: 'Ihre PDF wird vollständig in Ihrem Browser verarbeitet. Keine Uploads, keine Server, kein Tracking — öffnen Sie den Netzwerk-Tab Ihres Browsers und überzeugen Sie sich selbst.',
+        text: 'Ihre PDF wird vollständig in Ihrem Browser verarbeitet. Keine Uploads, keine Server, kein Datei-Tracking — öffnen Sie den Netzwerk-Tab Ihres Browsers und überzeugen Sie sich selbst.',
       },
       {
         title: 'Ohne Limits, immer',
@@ -117,8 +117,8 @@ const de = {
         text: 'Ihre Dateiinhalte werden nirgendwo übertragen.',
       },
       {
-        title: 'Keine Konten, keine Werbung, keine Tracker',
-        text: 'Wir brauchen weder Ihre E-Mail noch verfolgen wir Sie durch das Web.',
+        title: 'Keine Konten, keine Werbung, kein Datei-Tracking',
+        text: 'Wir brauchen weder Ihre E-Mail noch sehen wir jemals Ihre Dokumente.',
       },
       {
         title: 'Überprüfbar, nicht nur ein Versprechen',
@@ -415,7 +415,7 @@ const de = {
         },
       ],
       dataH2: 'Über Ihre Daten',
-      dataP: 'Da wir keine personenbezogenen Daten erheben, gibt es normalerweise nichts, worüber wir Sie informieren können — aber wenn Sie eine Datenschutzfrage haben, beantworten wir sie gerne. Lesen Sie unsere <a href="/privacy">Datenschutzerklärung</a> und <a href="/terms">Nutzungsbedingungen</a> für alle Details.',
+      dataP: 'Da wir keine Konto- oder auf Sie beziehbare Dokumentdaten speichern, gibt es normalerweise nichts, worüber wir Sie informieren können — aber wenn Sie eine Datenschutzfrage haben, beantworten wir sie gerne. Lesen Sie unsere <a href="/privacy">Datenschutzerklärung</a> und <a href="/terms">Nutzungsbedingungen</a> für alle Details.',
       ctaH2: 'Müssen Sie jetzt eine PDF korrigieren?',
       ctaP: 'Das Tool ist kostenlos, unbegrenzt — und nichts verlässt jemals Ihren Browser.',
       ctaButton: 'PDF neu anordnen',
@@ -430,7 +430,7 @@ const de = {
     privacy: {
       meta: {
         title: 'Datenschutzerklärung — Rearrange PDF',
-        description: 'Unser Datenschutzversprechen: Ihre PDFs verlassen niemals Ihren Browser, wir schalten keine Werbung und keine Tracker und erheben keine personenbezogenen Daten. Lesen Sie die vollständige Richtlinie.',
+        description: 'Unser Datenschutzversprechen: Ihre PDFs verlassen niemals Ihren Browser, wir schalten keine Werbung und Ihre Dokumente werden niemals hochgeladen oder von uns gelesen. Lesen Sie die vollständige Richtlinie.',
       },
       breadcrumb: 'Datenschutzerklärung',
       h1: 'Datenschutzerklärung',
@@ -438,9 +438,9 @@ const de = {
       shortH2: 'Die Kurzfassung',
       shortItems: [
         'Ihre PDF-Dateien verlassen niemals Ihr Gerät. Die gesamte Verarbeitung findet in Ihrem Browser statt.',
-        'Wir haben keine Benutzerkonten und erheben keine personenbezogenen Daten.',
-        'Wir schalten keine Werbung und betten keine Tracker von Drittanbietern ein.',
-        'Die einzige Messung, die wir verwenden, ist cookielose, aggregierte Analytik (siehe unten).',
+        'Wir haben keine Benutzerkonten und schalten keine Werbung.',
+        'Ihre Dateien werden niemals hochgeladen, gespeichert, ausgewertet oder profiliert — weder von uns noch von sonst jemandem.',
+        'Wir verwenden zwei Analysedienste, um Besuche zu zählen: cookieloses Cloudflare Web Analytics und Google Analytics, das Cookies setzt (siehe unten).',
       ],
       sections: [
         {
@@ -452,15 +452,15 @@ const de = {
           bullets: [
             'Die Inhalte, Namen oder Metadaten Ihrer PDF-Dateien',
             'Irgendwelche Kontoinformationen — das Tool erfordert keine Anmeldung',
-            'Werbungs- oder seitenübergreifende Tracking-Cookies jeglicher Art',
+            'Werbe-IDs oder Profile, die aus dem Inhalt Ihrer Dokumente erstellt werden',
           ],
         },
         {
           title: '3. Was erhoben wird',
           subsections: [
             {
-              title: 'Cookielose Analytik',
-              text: 'Wir verwenden Cloudflare Web Analytics, um die aggregierte Nutzung der Website zu verstehen (zum Beispiel, wie viele Personen das Tool besuchen und aus welchem Land). Dieser Dienst verwendet keine Cookies und identifiziert keine einzelnen Besucher. Er verfolgt Sie nicht über andere Websites hinweg.',
+              title: 'Analytik und Cookies',
+              text: 'Wir verwenden zwei Dienste, um die aggregierte Nutzung der Website zu verstehen (zum Beispiel, wie viele Personen das Tool besuchen und aus welchem Land). Cloudflare Web Analytics verwendet keine Cookies und identifiziert keine einzelnen Besucher und verfolgt Sie nicht über andere Websites hinweg. Google Analytics verwendet First-Party-Cookies, um einen wiederkehrenden Browser zu erkennen, und sendet Seitenaufrufdaten an Google; wir nutzen es ausschließlich zur aggregierten Messung. Keiner der beiden Dienste erhält jemals Ihre Dokumente — Dateien werden lokal verarbeitet und niemals hochgeladen. Sie können diese Cookies in Ihrem Browser blockieren oder löschen, ohne dass das Tool dadurch beeinträchtigt wird.',
             },
             {
               title: 'Standard-Serverprotokolle',
@@ -474,7 +474,7 @@ const de = {
         },
         {
           title: '5. Ihre Rechte',
-          text: 'Da wir keine personenbezogenen Daten über die oben beschriebenen anonymen, aggregierten Statistiken hinaus verarbeiten, gibt es im Allgemeinen keine personenbezogenen Daten von Ihnen, auf die wir zugreifen, die wir korrigieren oder löschen könnten. Wenn Sie glauben, dass dies nicht der Fall ist, und uns kontaktieren möchten, sehen Sie unten.',
+          text: 'Wir erheben keine personenbezogenen Daten von Ihnen, und Ihre Dokumente erreichen uns nie. Die einzigen Informationen, die wir haben, sind die oben beschriebenen aggregierten und pseudonymen Analysedaten. Sie können Google Analytics jederzeit deaktivieren, indem Sie dessen Cookies blockieren oder das Opt-out-Browser-Add-on von Google verwenden. Da wir Analysedaten nicht auf eine Person zurückführen können, gibt es in der Regel nichts weiter, was wir für Sie abrufen, korrigieren oder löschen könnten. Wenn Sie eine Datenschutzfrage haben oder ein Recht ausüben möchten, kontaktieren Sie uns über die unten stehenden Angaben.',
         },
         {
           title: '6. Änderungen dieser Richtlinie',

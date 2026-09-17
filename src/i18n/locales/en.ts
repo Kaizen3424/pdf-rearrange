@@ -53,7 +53,7 @@ const en = {
     privacyPolicy: 'Privacy policy',
     termsOfService: 'Terms of service',
     copyright: (year: number) => `© ${year} rearrangepdf.com. All rights reserved.`,
-    noAds: 'No ads. No trackers. No uploads.',
+    noAds: 'No ads. No file tracking. No uploads.',
   },
 
   hero: {
@@ -88,7 +88,7 @@ const en = {
     items: [
       {
         title: 'Private by design',
-        text: 'Your PDF is processed entirely inside your browser. No uploads, no servers, no tracking — open your browser’s network tab and verify it yourself.',
+        text: 'Your PDF is processed entirely inside your browser. No uploads, no servers, no file tracking — open your browser’s network tab and verify it yourself.',
       },
       {
         title: 'No limits, ever',
@@ -125,8 +125,8 @@ const en = {
         text: 'Your file content is never transmitted anywhere.',
       },
       {
-        title: 'No accounts, no ads, no trackers',
-        text: 'We don’t need your email, and we don’t follow you around the web.',
+        title: 'No accounts, no ads, no file tracking',
+        text: 'We don’t need your email, and we never see your documents.',
       },
       {
         title: 'Verifiable, not just a promise',
@@ -423,7 +423,7 @@ const en = {
         },
       ],
       dataH2: 'About your data',
-      dataP: 'Because we do not collect personal data, there is usually nothing for us to look up on your behalf — but if you have a privacy question, we are happy to answer it. See our <a href="/privacy">privacy policy</a> and <a href="/terms">terms of service</a> for the full details.',
+      dataP: 'Because we hold no account or document data linked to you, there is usually nothing for us to look up on your behalf — but if you have a privacy question, we are happy to answer it. See our <a href="/privacy">privacy policy</a> and <a href="/terms">terms of service</a> for the full details.',
       ctaH2: 'Need to fix a PDF right now?',
       ctaP: 'The tool is free, unlimited — and nothing ever leaves your browser.',
       ctaButton: 'Rearrange a PDF',
@@ -438,7 +438,7 @@ const en = {
     privacy: {
       meta: {
         title: 'Privacy Policy — Rearrange PDF',
-        description: 'Our privacy promise: your PDFs never leave your browser, we run no ads and no trackers, and we collect no personal data. Read the full policy.',
+        description: 'Our privacy promise: your PDFs never leave your browser, we run no ads, and your documents are never uploaded or read by us. Read the full policy.',
       },
       breadcrumb: 'Privacy policy',
       h1: 'Privacy policy',
@@ -446,9 +446,9 @@ const en = {
       shortH2: 'The short version',
       shortItems: [
         'Your PDF files never leave your device. All processing happens in your browser.',
-        'We have no user accounts and collect no personal data.',
-        'We run no ads and embed no third-party trackers.',
-        'The only measurement we use is cookieless, aggregated analytics (see below).',
+        'We have no user accounts and run no advertising.',
+        'Your files are never uploaded, stored, mined or profiled — by us or anyone else.',
+        'We use two analytics services to count visits: cookieless Cloudflare Web Analytics, and Google Analytics, which sets cookies (see below).',
       ],
       sections: [
         {
@@ -460,15 +460,15 @@ const en = {
           bullets: [
             'The contents, names or metadata of your PDF files',
             'Any account information — the tool requires no sign-up',
-            'Advertising or cross-site tracking cookies of any kind',
+            'Advertising identifiers, or profiles built from the contents of your documents',
           ],
         },
         {
           title: '3. What is collected',
           subsections: [
             {
-              title: 'Cookieless analytics',
-              text: 'We use Cloudflare Web Analytics to understand aggregate usage of the site (for example, how many people visit the tool and from which country). This service does not use cookies and does not identify individual visitors. It does not follow you across other websites.',
+              title: 'Analytics and cookies',
+              text: 'We use two services to understand aggregate usage of the site (for example, how many people visit the tool and from which country). Cloudflare Web Analytics is cookieless and does not identify individual visitors or follow you across other websites. Google Analytics uses first-party cookies to recognise a returning browser and sends page-view data to Google; we use it for aggregate measurement only. Neither service ever receives your documents — files are processed locally and are never uploaded. You can block or delete these cookies in your browser without affecting the tool.',
             },
             {
               title: 'Standard server logs',
@@ -482,7 +482,7 @@ const en = {
         },
         {
           title: '5. Your rights',
-          text: 'Because we process no personal data beyond the anonymous, aggregated statistics described above, there is generally no personal data of yours for us to access, correct or erase. If you believe otherwise and would like to contact us, see below.',
+          text: 'We do not collect personal data from you, and your documents never reach us. The only information we hold is the aggregated and pseudonymous analytics described above. You can opt out of Google Analytics at any time by blocking its cookies or using Google\'s opt-out browser add-on. Because analytics data cannot be linked back to a person by us, there is usually nothing else for us to retrieve, correct or erase on your behalf. If you have a privacy question or wish to exercise a right, contact us using the details below.',
         },
         {
           title: '6. Changes to this policy',

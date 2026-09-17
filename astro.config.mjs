@@ -16,8 +16,16 @@ const { PUBLIC_CF_BEACON_TOKEN } = loadEnv(
 );
 const cfBeaconEnabled = Boolean(PUBLIC_CF_BEACON_TOKEN);
 
-const connectSrc = ["'self'", 'blob:', 'data:'];
+// Google Analytics (GA4) is always enabled; the measurement ID is hardcoded in
+// src/layouts/Layout.astro. Its origins must be allowed here or the CSP blocks
+// the loader and drops the measurement beacons.
+const GA_SCRIPT_ORIGINS = ['https://www.googletagmanager.com'];
+const GA_COLLECT_ORIGINS = ['https://*.google-analytics.com', 'https://www.googletagmanager.com'];
+
+const connectSrc = ["'self'", 'blob:', 'data:', ...GA_COLLECT_ORIGINS];
 if (cfBeaconEnabled) connectSrc.push('https://cloudflareinsights.com');
+
+const imgSrc = ["'self'", 'blob:', 'data:', ...GA_COLLECT_ORIGINS];
 
 const SITE = 'https://rearrangepdf.com';
 
@@ -42,20 +50,22 @@ export default defineConfig({
   security: {
     csp: {
       // Setting `resources` replaces Astro's defaults, so `'self'` must be kept
-      // for our own scripts. Astro still appends SHA-256 hashes for inline scripts.
-      ...(cfBeaconEnabled
-        ? {
-            scriptDirective: {
-              resources: ["'self'", 'https://static.cloudflareinsights.com']
-            }
-          }
-        : {}),
+      // for our own scripts. Astro still appends SHA-256 hashes for inline
+      // scripts. Google Tag Manager is always allowlisted; Cloudflare only when
+      // its beacon token is configured.
+      scriptDirective: {
+        resources: [
+          "'self'",
+          ...GA_SCRIPT_ORIGINS,
+          ...(cfBeaconEnabled ? ['https://static.cloudflareinsights.com'] : [])
+        ]
+      },
       styleDirective: {
         resources: ["'self'", "'unsafe-inline'"]
       },
       directives: [
         "default-src 'self'",
-        "img-src 'self' blob: data:",
+        `img-src ${imgSrc.join(' ')}`,
         "font-src 'self'",
         `connect-src ${connectSrc.join(' ')}`,
         "worker-src 'self' blob:",

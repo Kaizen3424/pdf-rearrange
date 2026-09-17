@@ -48,7 +48,7 @@ const it = {
     privacyPolicy: 'Informativa sulla privacy',
     termsOfService: 'Termini di servizio',
     copyright: (year: number) => `© ${year} rearrangepdf.com. Tutti i diritti riservati.`,
-    noAds: 'Nessuna pubblicità. Nessun tracker. Nessun caricamento.',
+    noAds: 'Nessuna pubblicità. Nessun tracciamento dei file. Nessun caricamento.',
   },
 
   hero: {
@@ -83,7 +83,7 @@ const it = {
     items: [
       {
         title: 'Privato per progettazione',
-        text: 'Il tuo PDF viene elaborato interamente nel tuo browser. Nessun caricamento, nessun server, nessun tracciamento — apri la scheda di rete del tuo browser e verifica tu stesso.',
+        text: 'Il tuo PDF viene elaborato interamente nel tuo browser. Nessun caricamento, nessun server, nessun tracciamento dei file — apri la scheda di rete del tuo browser e verifica tu stesso.',
       },
       {
         title: 'Nessun limite, mai',
@@ -120,8 +120,8 @@ const it = {
         text: 'Il contenuto del tuo file non viene mai trasmesso da nessuna parte.',
       },
       {
-        title: 'Nessun account, nessuna pubblicità, nessun tracker',
-        text: 'Non abbiamo bisogno della tua email, e non ti seguiamo sul web.',
+        title: 'Nessun account, nessuna pubblicità, nessun tracciamento dei file',
+        text: 'Non abbiamo bisogno della tua email, e non vediamo mai i tuoi documenti.',
       },
       {
         title: 'Verificabile, non solo una promessa',
@@ -418,7 +418,7 @@ const it = {
         },
       ],
       dataH2: 'Sui tuoi dati',
-      dataP: 'Poiché non raccogliamo dati personali, di solito non c\'è nulla per cui possiamo cercare per te — ma se hai una domanda sulla privacy, siamo felici di rispondere. Vedi la nostra <a href="/privacy">informativa sulla privacy</a> e i <a href="/terms">termini di servizio</a> per i dettagli completi.',
+      dataP: 'Poiché non conserviamo dati di account o documenti riconducibili a te, di solito non c\'è nulla per cui possiamo cercare per te — ma se hai una domanda sulla privacy, siamo felici di rispondere. Vedi la nostra <a href="/privacy">informativa sulla privacy</a> e i <a href="/terms">termini di servizio</a> per i dettagli completi.',
       ctaH2: 'Hai bisogno di sistemare un PDF adesso?',
       ctaP: 'Lo strumento è gratuito, illimitato — e nulla esce mai dal tuo browser.',
       ctaButton: 'Riordina un PDF',
@@ -433,7 +433,7 @@ const it = {
     privacy: {
       meta: {
         title: 'Informativa sulla privacy — Rearrange PDF',
-        description: 'La nostra promessa sulla privacy: i tuoi PDF non lasciano mai il browser, nessuna pubblicità e nessun tracker, e non raccogliamo dati personali. Leggi l\'informativa completa.',
+        description: 'La nostra promessa sulla privacy: i tuoi PDF non lasciano mai il browser, non mostriamo pubblicità e i tuoi documenti non vengono mai caricati né letti da noi. Leggi l\'informativa completa.',
       },
       breadcrumb: 'Informativa sulla privacy',
       h1: 'Informativa sulla privacy',
@@ -441,9 +441,9 @@ const it = {
       shortH2: 'La versione breve',
       shortItems: [
         'I tuoi file PDF non lasciano mai il tuo dispositivo. Tutta l\'elaborazione avviene nel tuo browser.',
-        'Non abbiamo account utente e non raccogliamo dati personali.',
-        'Non mostriamo pubblicità e non embeddiamo tracker di terze parti.',
-        'L\'unica misurazione che usiamo è analytics aggregati e senza cookie (vedi sotto).',
+        'Non abbiamo account utente e non mostriamo pubblicità.',
+        'I tuoi file non vengono mai caricati, archiviati, analizzati o profilati — né da noi né da nessun altro.',
+        'Usiamo due servizi di analytics per contare le visite: Cloudflare Web Analytics, senza cookie, e Google Analytics, che usa cookie (vedi sotto).',
       ],
       sections: [
         {
@@ -455,15 +455,15 @@ const it = {
           bullets: [
             'I contenuti, nomi o metadati dei tuoi file PDF',
             'Informazioni sull\'account — lo strumento non richiede registrazione',
-            'Cookie di pubblicità o tracciamento cross-site di qualsiasi tipo',
+            'Identificatori pubblicitari, o profili creati dal contenuto dei tuoi documenti',
           ],
         },
         {
           title: '3. Ciò che viene raccolto',
           subsections: [
             {
-              title: 'Analytics senza cookie',
-              text: 'Usiamo Cloudflare Web Analytics per capire l\'uso aggregato del sito (per esempio, quante persone visitano lo strumento e da quale paese). Questo servizio non usa cookie e non identifica visitatori individuali. Non ti segue su altri siti web.',
+              title: 'Analytics e cookie',
+              text: 'Usiamo due servizi per capire l\'uso aggregato del sito (per esempio, quante persone visitano lo strumento e da quale paese). Cloudflare Web Analytics non usa cookie, non identifica visitatori individuali e non ti segue su altri siti web. Google Analytics usa cookie proprietari per riconoscere un browser di ritorno e invia a Google i dati sulle pagine visualizzate; noi lo usiamo solo per misurazioni aggregate. Nessuno dei due servizi riceve mai i tuoi documenti — i file vengono elaborati localmente e non vengono mai caricati. Puoi bloccare o eliminare questi cookie nel tuo browser senza che ciò comprometta lo strumento.',
             },
             {
               title: 'Log standard del server',
@@ -477,7 +477,7 @@ const it = {
         },
         {
           title: '5. I tuoi diritti',
-          text: 'Poiché non elaboriamo dati personali oltre le statistiche anonime e aggregate descritte sopra, generalmente non ci sono dati personali tuoi a cui noi possa accedere, correggere o cancellare. Se credi altrimenti e vorresti contattarci, vedi sotto.',
+          text: 'Non raccogliamo dati personali su di te e i tuoi documenti non ci raggiungono mai. Le uniche informazioni che conserviamo sono gli analytics aggregati e pseudonimi descritti sopra. Puoi disattivare Google Analytics in qualsiasi momento bloccando i suoi cookie o usando il componente aggiuntivo di opt-out di Google. Poiché non possiamo collegare i dati analitici a una persona, di solito non c\'è nient\'altro che possiamo recuperare, correggere o cancellare per tuo conto. Se hai una domanda sulla privacy o desideri esercitare un diritto, contattaci usando i dettagli qui sotto.',
         },
         {
           title: '6. Modifiche a questa informativa',

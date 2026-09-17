@@ -45,7 +45,7 @@ const fr = {
     privacyPolicy: "Politique de confidentialité",
     termsOfService: "Conditions d'utilisation",
     copyright: (year: number) => `© ${year} rearrangepdf.com. Tous droits réservés.`,
-    noAds: "Pas de pub. Pas de traceurs. Pas de téléchargement.",
+    noAds: "Pas de pub. Pas de pistage de fichiers. Pas de téléchargement.",
   },
 
   hero: {
@@ -80,7 +80,7 @@ const fr = {
     items: [
       {
         title: "Conçu pour la confidentialité",
-        text: "Votre PDF est traité entièrement dans votre navigateur. Aucun téléchargement, aucun serveur, aucun pistage — ouvrez l'onglet réseau de votre navigateur et vérifiez vous-même.",
+        text: "Votre PDF est traité entièrement dans votre navigateur. Aucun téléchargement, aucun serveur, aucun pistage de fichiers — ouvrez l'onglet réseau de votre navigateur et vérifiez vous-même.",
       },
       {
         title: "Aucune limite, jamais",
@@ -117,8 +117,8 @@ const fr = {
         text: "Le contenu de votre fichier n'est jamais transmis nulle part.",
       },
       {
-        title: "Pas de compte, pas de pub, pas de traceurs",
-        text: "Nous n'avons pas besoin de votre e-mail, et nous ne vous suivons pas sur le web.",
+        title: "Pas de compte, pas de pub, pas de pistage de fichiers",
+        text: "Nous n'avons pas besoin de votre e-mail, et nous ne voyons jamais vos documents.",
       },
       {
         title: "Vérifiable, pas seulement une promesse",
@@ -415,7 +415,7 @@ const fr = {
         },
       ],
       dataH2: "Concernant vos données",
-      dataP: "Comme nous ne collectons pas de données personnelles, il n'y a généralement rien pour nous de rechercher en votre nom — mais si vous avez une question sur la confidentialité, nous sommes heureux d'y répondre. Consultez notre <a href=\"/privacy\">politique de confidentialité</a> et nos <a href=\"/terms\">conditions d'utilisation</a> pour tous les détails.",
+      dataP: "Comme nous ne conservons aucune donnée de compte ni de document liée à vous, il n'y a généralement rien pour nous de rechercher en votre nom — mais si vous avez une question sur la confidentialité, nous sommes heureux d'y répondre. Consultez notre <a href=\"/privacy\">politique de confidentialité</a> et nos <a href=\"/terms\">conditions d'utilisation</a> pour tous les détails.",
       ctaH2: "Besoin de corriger un PDF maintenant ?",
       ctaP: "L'outil est gratuit, illimité — et rien ne quitte jamais votre navigateur.",
       ctaButton: "Réorganiser un PDF",
@@ -430,7 +430,7 @@ const fr = {
     privacy: {
       meta: {
         title: "Politique de Confidentialité — Rearrange PDF",
-        description: "Notre promesse de confidentialité : vos PDF ne quittent jamais votre navigateur, nous ne diffusons pas de pubs et n'utilisons pas de traceurs, et nous ne collectons pas de données personnelles. Lisez la politique complète.",
+        description: "Notre promesse de confidentialité : vos PDF ne quittent jamais votre navigateur, nous ne diffusons pas de pubs et vos documents ne sont jamais téléchargés ni lus par nous. Lisez la politique complète.",
       },
       breadcrumb: "Politique de confidentialité",
       h1: "Politique de confidentialité",
@@ -438,9 +438,9 @@ const fr = {
       shortH2: "La version courte",
       shortItems: [
         "Vos fichiers PDF ne quittent jamais votre appareil. Tout le traitement se fait dans votre navigateur.",
-        "Nous n'avons pas de compte utilisateur et ne collectons aucune donnée personnelle.",
-        "Nous ne diffusons pas de pubs et n'intégrons aucun tracker tiers.",
-        "La seule mesure que nous utilisons est analytique agrégée sans cookie (voir ci-dessous).",
+        "Nous n'avons pas de compte utilisateur et ne diffusons pas de publicité.",
+        "Vos fichiers ne sont jamais téléchargés, stockés, exploités ni profilés — ni par nous ni par quiconque.",
+        "Nous utilisons deux services de mesure pour compter les visites : Cloudflare Web Analytics, sans cookie, et Google Analytics, qui utilise des cookies (voir ci-dessous).",
       ],
       sections: [
         {
@@ -452,15 +452,15 @@ const fr = {
           bullets: [
             "Le contenu, les noms ou les métadonnées de vos fichiers PDF",
             "Toute information de compte — l'outil ne nécessite pas d'inscription",
-            "Les cookies publicitaires ou de pistage inter-sites de quelque nature que ce soit",
+            "Les identifiants publicitaires, ou les profils créés à partir du contenu de vos documents",
           ],
         },
         {
           title: "3. Ce qui est collecté",
           subsections: [
             {
-              title: "Analytique sans cookie",
-              text: "Nous utilisons Cloudflare Web Analytics pour comprendre l'utilisation agrégée du site (par exemple, combien de personnes visitent l'outil et depuis quel pays). Ce service n'utilise pas de cookies et n'identifie pas les visiteurs individuels. Il ne vous suit pas sur d'autres sites web.",
+              title: "Analytique et cookies",
+              text: "Nous utilisons deux services pour comprendre l'utilisation agrégée du site (par exemple, combien de personnes visitent l'outil et depuis quel pays). Cloudflare Web Analytics est sans cookie, n'identifie pas les visiteurs individuels et ne vous suit pas sur d'autres sites web. Google Analytics utilise des cookies propriétaires pour reconnaître un navigateur de retour et envoie les données de pages vues à Google ; nous l'utilisons uniquement pour des mesures agrégées. Aucun des deux services ne reçoit jamais vos documents — les fichiers sont traités localement et ne sont jamais téléchargés. Vous pouvez bloquer ou supprimer ces cookies dans votre navigateur sans que cela affecte l'outil.",
             },
             {
               title: "Journaux serveur standard",
@@ -474,7 +474,7 @@ const fr = {
         },
         {
           title: "5. Vos droits",
-          text: "Parce que nous ne traitons pas de données personnelles au-delà des statistiques anonymes agrégées décrites ci-dessus, il n'y a généralement pas de données personnelles vous concernant auxquelles nous pourrions accéder, corriger ou effacer. Si vous pensez le contraire et souhaitez nous contacter, voir ci-dessous.",
+          text: "Nous ne collectons pas de données personnelles vous concernant, et vos documents ne nous parviennent jamais. Les seules informations que nous détenons sont les données analytiques agrégées et pseudonymes décrites ci-dessus. Vous pouvez vous opposer à Google Analytics à tout moment en bloquant ses cookies ou en utilisant le module complémentaire de désactivation de Google. Comme nous ne pouvons pas relier les données analytiques à une personne, il n'y a généralement rien d'autre que nous puissions récupérer, corriger ou effacer en votre nom. Si vous avez une question sur la confidentialité ou souhaitez exercer un droit, contactez-nous avec les coordonnées ci-dessous.",
         },
         {
           title: "6. Modifications de cette politique",
