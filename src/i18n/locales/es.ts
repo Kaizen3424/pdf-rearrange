@@ -246,8 +246,8 @@ const es = {
   pages: {
     home: {
       meta: {
-        title: 'Reorganiza Páginas PDF Online Gratis — Fusionar, Reordenar y Eliminar Páginas | Rearrange PDF',
-        description: 'Reorganiza páginas PDF online gratis. Arrastra y suelta para reordenar, fusionar, combinar o eliminar páginas — 100% privado, sin subidas, sin límites, sin registro, sin marca de agua.',
+        title: 'Reorganiza Páginas PDF Online Gratis — Fusionar y Reordenar',
+        description: 'Reorganiza páginas PDF online gratis. Arrastra para reordenar, fusionar o eliminar — 100% privado, sin subidas, sin registro, sin marca de agua.',
         keywords: [
           'reorganizar pdf',
           'reorganizar páginas pdf',
@@ -305,8 +305,8 @@ const es = {
 
     howto: {
       meta: {
-        title: 'Cómo Organizar Páginas PDF Online Gratis (Sin Subidas) — Guía Paso a Paso',
-        description: 'Aprende a reorganizar, reordenar y organizar páginas PDF en cualquier navegador — gratis y sin subidas. Cubre escritorio y móvil, fusionar archivos, invertir orden, reemplazar páginas y más.',
+        title: 'Cómo Organizar Páginas PDF Gratis Online (Sin Subidas)',
+        description: 'Aprende a reorganizar páginas PDF en cualquier navegador — gratis y sin subidas. Cubre escritorio y móvil, fusionar archivos y más.',
       },
       breadcrumb: 'Cómo organizar páginas PDF',
       h1: 'Cómo organizar páginas PDF online gratis',
@@ -385,7 +385,7 @@ const es = {
     contact: {
       meta: {
         title: 'Contacto — Rearrange PDF',
-        description: 'Ponerse en contacto con el equipo detrás de Rearrange PDF. Reporta un archivo que no funciona, sugiere una función, o haz una pregunta sobre el organizador de páginas PDF basado en navegador.',
+        description: 'Contacta con el equipo de Rearrange PDF. Reporta un archivo que no funciona, sugiere una función o haz una pregunta sobre el organizador de páginas PDF.',
       },
       breadcrumb: 'Contacto',
       h1: 'Contáctanos',
@@ -430,7 +430,7 @@ const es = {
     privacy: {
       meta: {
         title: 'Política de Privacidad — Rearrange PDF',
-        description: 'Nuestra promesa de privacidad: tus PDFs nunca salen de tu navegador, no mostramos anuncios y tus documentos nunca se suben ni los leemos. Lee la política completa.',
+        description: 'Nuestra promesa de privacidad: tus PDFs nunca salen de tu navegador, sin anuncios y tus documentos nunca se suben. Lee la política completa.',
       },
       breadcrumb: 'Política de privacidad',
       h1: 'Política de privacidad',

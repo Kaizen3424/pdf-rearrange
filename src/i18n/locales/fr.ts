@@ -246,8 +246,8 @@ const fr = {
   pages: {
     home: {
       meta: {
-        title: "Réorganisez les Pages PDF en Ligne Gratuitement — Fusionnez, Réordonnez et Supprimez des Pages | Rearrange PDF",
-        description: "Réorganisez les pages PDF en ligne gratuitement. Glissez-déposez pour réordonner, fusionner, combiner ou supprimer des pages — 100 % privé, pas de téléchargement, pas de limite, pas d'inscription, pas de filigrane.",
+        title: "Réorganiser les Pages PDF Gratuitement en Ligne — Fusionner",
+        description: "Réorganisez les pages PDF gratuitement en ligne. Glissez-déposez pour réordonner ou fusionner — 100 % privé, sans téléchargement, sans filigrane, sans limite.",
         keywords: [
           "réorganiser pdf",
           "réorganiser pages pdf",
@@ -305,8 +305,8 @@ const fr = {
 
     howto: {
       meta: {
-        title: "Comment Organiser les Pages PDF en Ligne Gratuitement (Sans Téléchargement) — Guide Étape par Étape",
-        description: "Apprenez à réorganiser, réordonner et organiser les pages PDF dans n'importe quel navigateur — gratuitement et sans téléchargement. Couvre le bureau et le mobile, la fusion de fichiers, l'inversion de l'ordre, le remplacement de pages et plus encore.",
+        title: "Comment Organiser les Pages PDF Gratuitement en Ligne",
+        description: "Apprenez à réorganiser les pages PDF dans n'importe quel navigateur — gratuit et sans téléchargement, sur ordinateur et mobile.",
       },
       breadcrumb: "Comment organiser les pages PDF",
       h1: "Comment organiser les pages PDF en ligne gratuitement",
@@ -385,7 +385,7 @@ const fr = {
     contact: {
       meta: {
         title: "Contact — Rearrange PDF",
-        description: "Contactez l'équipe derrière Rearrange PDF. Signalez un fichier qui ne fonctionne pas, suggérer une fonctionnalité, ou posez une question sur l'outil de réorganisation de pages PDF basé sur le navigateur.",
+        description: "Contactez l'équipe de Rearrange PDF. Signalez un problème, suggérez une fonctionnalité ou posez une question sur notre outil de pages PDF.",
       },
       breadcrumb: "Contact",
       h1: "Contactez-nous",
@@ -430,7 +430,7 @@ const fr = {
     privacy: {
       meta: {
         title: "Politique de Confidentialité — Rearrange PDF",
-        description: "Notre promesse de confidentialité : vos PDF ne quittent jamais votre navigateur, nous ne diffusons pas de pubs et vos documents ne sont jamais téléchargés ni lus par nous. Lisez la politique complète.",
+        description: "Notre promesse : vos PDF ne quittent jamais votre navigateur, pas de pubs, pas de téléchargement de documents. Lisez la politique complète.",
       },
       breadcrumb: "Politique de confidentialité",
       h1: "Politique de confidentialité",

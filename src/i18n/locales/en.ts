@@ -254,7 +254,7 @@ const en = {
   pages: {
     home: {
       meta: {
-        title: 'Rearrange PDF Pages Online Free — Merge, Reorder & Delete Pages | Rearrange PDF',
+        title: 'Rearrange PDF Pages Online Free — Merge, Reorder, Delete',
         description: 'Rearrange PDF pages online free. Drag and drop to reorder, merge, combine or delete pages — 100% private, no uploads, no limits, no sign-up, no watermark.',
         keywords: [
           'rearrange pdf',
@@ -313,8 +313,8 @@ const en = {
 
     howto: {
       meta: {
-        title: 'How to Organize PDF Pages Online for Free (No Uploads) — Step-by-Step Guide',
-        description: 'Learn how to rearrange, reorder and organize PDF pages in any browser — free and with no uploads. Covers desktop and mobile, merging files, reversing order, replacing pages and more.',
+        title: 'How to Organize PDF Pages Online Free (No Uploads)',
+        description: 'Learn to rearrange PDF pages in any browser — free, no uploads. Covers desktop and mobile, merging files, reversing order, replacing pages.',
       },
       breadcrumb: 'How to organize PDF pages',
       h1: 'How to organize PDF pages online for free',
@@ -393,7 +393,7 @@ const en = {
     contact: {
       meta: {
         title: 'Contact — Rearrange PDF',
-        description: 'Get in touch with the team behind Rearrange PDF. Report a file that does not work, suggest a feature, or ask a question about the browser-based PDF page organizer.',
+        description: 'Get in touch with the team behind Rearrange PDF. Report a file issue, suggest a feature, or ask about the browser-based PDF page organizer.',
       },
       breadcrumb: 'Contact',
       h1: 'Contact us',

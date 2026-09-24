@@ -246,8 +246,8 @@ const ptBr = {
   pages: {
     home: {
       meta: {
-        title: 'Reorganize Páginas de PDF Online Gratuito — Mesclar, Reordenar e Excluir Páginas | Rearrange PDF',
-        description: 'Reorganize páginas de PDF online gratuito. Arraste e solte para reordenar, mesclar, combinar ou excluir páginas — 100% privado, sem envios, sem limites, sem cadastro, sem marca d’água.',
+        title: 'Reorganizar Páginas PDF Online Grátis — Mesclar e Reordenar',
+        description: 'Reorganize páginas de PDF online grátis. Arraste e solte para reordenar ou mesclar — 100% privado, sem envios, sem cadastro, sem marca d’água.',
         keywords: [
           'reorganizar pdf',
           'reorganizar páginas pdf',
@@ -305,8 +305,8 @@ const ptBr = {
 
     howto: {
       meta: {
-        title: 'Como Organizar Páginas de PDF Online de Graça (Sem Envios) — Guia Passo a Passo',
-        description: 'Aprenda como reorganizar, reordenar e organizar páginas de PDF em qualquer navegador — de graça e sem envios. Cobre desktop e mobile, mesclar arquivos, inverter ordem, substituir páginas e mais.',
+        title: 'Como Organizar Páginas de PDF Online Grátis (Sem Envios)',
+        description: 'Aprenda a reorganizar páginas PDF em qualquer navegador — de graça e sem envios. Cobre desktop e mobile, mesclar e inverter a ordem.',
       },
       breadcrumb: 'Como organizar páginas de PDF',
       h1: 'Como organizar páginas de PDF online de graça',
@@ -385,7 +385,7 @@ const ptBr = {
     contact: {
       meta: {
         title: 'Contato — Rearrange PDF',
-        description: 'Entre em contato com a equipe por trás do Rearrange PDF. Informe um arquivo que não funciona, sugira um recurso ou faça uma pergunta sobre o organizador de páginas de PDF baseado em navegador.',
+        description: 'Contate a equipe do Rearrange PDF. Informe um arquivo que não funciona, sugira um recurso ou faça uma pergunta sobre o organizador de páginas PDF.',
       },
       breadcrumb: 'Contato',
       h1: 'Fale conosco',
@@ -430,7 +430,7 @@ const ptBr = {
     privacy: {
       meta: {
         title: 'Política de Privacidade — Rearrange PDF',
-        description: 'Nossa promessa de privacidade: seus PDFs nunca saem do seu navegador, não rodamos anúncios e seus documentos nunca são enviados nem lidos por nós. Leia a política completa.',
+        description: 'Nossa promessa de privacidade: seus PDFs nunca saem do seu navegador, sem anúncios e sem envio de documentos. Leia a política completa.',
       },
       breadcrumb: 'Política de privacidade',
       h1: 'Política de privacidade',

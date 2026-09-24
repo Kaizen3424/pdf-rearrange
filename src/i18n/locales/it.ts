@@ -249,8 +249,8 @@ const it = {
   pages: {
     home: {
       meta: {
-        title: 'Riordina le Pagine PDF Online Gratis — Unisci, Riorganizza ed Elimina Pagine | Rearrange PDF',
-        description: 'Riordina le pagine PDF online gratis. Trascina per riorganizzare, unire, combinare o eliminare pagine — 100% privato, nessun caricamento, nessun limite, nessuna registrazione, nessuna filigrana.',
+        title: 'Riordinare Pagine PDF Online Gratis — Unire e Riorganizzare',
+        description: 'Riordina le pagine PDF online gratis. Trascina per riorganizzare o unire — 100% privato, nessun caricamento, nessuna registrazione, nessuna filigrana.',
         keywords: [
           'riordinare pdf',
           'riordinare pagine pdf',
@@ -308,8 +308,8 @@ const it = {
 
     howto: {
       meta: {
-        title: 'Come Organizzare le Pagine PDF Online — Guida Passo Passo (Senza Caricamenti)',
-        description: 'Impara come riordinare, riorganizzare e organizzare le pagine PDF in qualsiasi browser — gratis e senza caricamenti. Copre desktop e mobile, unione di file, inversione dell\'ordine, sostituzione di pagine e altro.',
+        title: 'Come Organizzare le Pagine PDF — Guida Online Gratuita',
+        description: 'Impara a riordinare le pagine PDF in qualsiasi browser — gratis e senza caricamenti. Copre desktop e mobile, unione dei file e inversione dell\'ordine.',
       },
       breadcrumb: 'Come organizzare le pagine PDF',
       h1: 'Come organizzare le pagine PDF online gratis',
@@ -388,7 +388,7 @@ const it = {
     contact: {
       meta: {
         title: 'Contattaci — Rearrange PDF',
-        description: 'Mettiti in contatto con il team di Rearrange PDF. Segnala un file che non funziona, suggerisci una funzionalità, o fai una domanda sull\'organizzatore di pagine PDF basato sul browser.',
+        description: 'Contatta il team di Rearrange PDF. Segnala un file che non funziona, suggerisci una funzionalità o fai una domanda sul nostro organizzatore di pagine PDF.',
       },
       breadcrumb: 'Contatti',
       h1: 'Contattaci',
@@ -433,7 +433,7 @@ const it = {
     privacy: {
       meta: {
         title: 'Informativa sulla privacy — Rearrange PDF',
-        description: 'La nostra promessa sulla privacy: i tuoi PDF non lasciano mai il browser, non mostriamo pubblicità e i tuoi documenti non vengono mai caricati né letti da noi. Leggi l\'informativa completa.',
+        description: 'La nostra promessa: i tuoi PDF non lasciano mai il browser, nessuna pubblicità né caricamento dei tuoi documenti. Leggi l\'informativa completa.',
       },
       breadcrumb: 'Informativa sulla privacy',
       h1: 'Informativa sulla privacy',

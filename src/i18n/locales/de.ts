@@ -246,8 +246,8 @@ const de = {
   pages: {
     home: {
       meta: {
-        title: 'PDF-Seiten online kostenlos neu anordnen — Seiten zusammenführen, sortieren & löschen | Rearrange PDF',
-        description: 'PDF-Seiten online kostenlos neu anordnen. Ziehen und ablegen zum Sortieren, Zusammenführen, Kombinieren oder Löschen von Seiten — 100 % privat, keine Uploads, keine Limits, keine Anmeldung, kein Wasserzeichen.',
+        title: 'PDF-Seiten online kostenlos neu anordnen — zusammenführen',
+        description: 'PDF-Seiten online kostenlos neu anordnen. Ziehen und ablegen zum Sortieren oder Zusammenführen — 100 % privat, ohne Upload, ohne Anmeldung, ohne Wasserzeichen.',
         keywords: [
           'pdf seiten neu anordnen',
           'pdf seiten sortieren',
@@ -305,8 +305,8 @@ const de = {
 
     howto: {
       meta: {
-        title: 'PDF-Seiten online kostenlos organisieren (ohne Uploads) — Schritt-für-Schritt-Anleitung',
-        description: 'Erfahren Sie, wie Sie PDF-Seiten in jedem Browser neu anordnen, sortieren und organisieren können — kostenlos und ohne Uploads. Deckt Desktop und Mobilgeräte, Dateien zusammenführen, Reihenfolge umkehren, Seiten ersetzen und mehr ab.',
+        title: 'PDF-Seiten online kostenlos organisieren (Ohne Uploads)',
+        description: 'Lernen Sie, PDF-Seiten in jedem Browser neu anordnen — kostenlos und ohne Uploads. Desktop und Mobilgeräte, Dateien zusammenführen, Reihenfolge umkehren.',
       },
       breadcrumb: 'PDF-Seiten organisieren',
       h1: 'PDF-Seiten online kostenlos organisieren',
@@ -367,7 +367,7 @@ const de = {
     about: {
       meta: {
         title: 'Über uns — Rearrange PDF',
-        description: 'Warum wir ein PDF-Seiten-Organisations-Tool gebaut haben, das Ihre Dateien niemals hochlädt, wie es unter der Haube funktioniert und wie Sie Kontakt aufnehmen können.',
+        description: 'Warum wir ein PDF-Tool gebaut haben, das Ihre Dateien nie hochlädt, wie es funktioniert und wie Sie uns kontaktieren.',
       },
       breadcrumb: 'Über uns',
       h1: 'Ein Tool, richtig gemacht.',
@@ -385,7 +385,7 @@ const de = {
     contact: {
       meta: {
         title: 'Kontakt — Rearrange PDF',
-        description: 'Kontaktieren Sie das Team hinter Rearrange PDF. Melden Sie eine Datei, die nicht funktioniert, schlagen Sie eine Funktion vor oder stellen Sie eine Frage zum browserbasierten PDF-Seiten-Organizer.',
+        description: 'Kontaktieren Sie das Team von Rearrange PDF. Melden Sie ein Dateiproblem, schlagen Sie eine Funktion vor oder fragen Sie unser PDF-Tool.',
       },
       breadcrumb: 'Kontakt',
       h1: 'Kontaktieren Sie uns',
@@ -430,7 +430,7 @@ const de = {
     privacy: {
       meta: {
         title: 'Datenschutzerklärung — Rearrange PDF',
-        description: 'Unser Datenschutzversprechen: Ihre PDFs verlassen niemals Ihren Browser, wir schalten keine Werbung und Ihre Dokumente werden niemals hochgeladen oder von uns gelesen. Lesen Sie die vollständige Richtlinie.',
+        description: 'Unser Datenschutzversprechen: Ihre PDFs verlassen nie den Browser, keine Werbung, keine Uploads Ihrer Dokumente. Lesen Sie die vollständige Richtlinie.',
       },
       breadcrumb: 'Datenschutzerklärung',
       h1: 'Datenschutzerklärung',
