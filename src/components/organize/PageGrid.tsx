@@ -16,7 +16,7 @@ import {
   rectSortingStrategy,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
-import type { PageItem, SourceDoc } from './types';
+import type { PageItem, SourceDoc, ToolFocus } from './types';
 import { SOURCE_COLORS } from './types';
 import PageCard from './PageCard';
 import type { ThumbnailsApi } from './hooks/useThumbnails';
@@ -28,6 +28,7 @@ interface PageGridProps {
   thumbnails: ThumbnailsApi;
   zoomWidth: number;
   selected: Set<string>;
+  focus?: ToolFocus;
   onReorder: (from: number, to: number) => void;
   onToggleSelect: (id: string, shiftKey: boolean) => void;
   onRotate: (id: string) => void;
@@ -42,6 +43,7 @@ export default function PageGrid({
   thumbnails,
   zoomWidth,
   selected,
+  focus,
   onReorder,
   onToggleSelect,
   onRotate,
@@ -119,6 +121,7 @@ export default function PageGrid({
                 zoomWidth={zoomWidth}
                 selected={selected.has(item.id)}
                 multipleSources={docs.length > 1}
+                focus={focus}
                 onToggleSelect={onToggleSelect}
                 onRotate={onRotate}
                 onDuplicate={onDuplicate}

@@ -13,9 +13,25 @@ function walk(dir, out = []) {
   return out;
 }
 
+/**
+ * Decodes the entities Astro emits into attribute values. Without this a title
+ * containing an apostrophe is measured as `&#39;` and reads 4 characters long,
+ * which produced false length warnings on perfectly good titles.
+ */
+const decodeEntities = (value) =>
+  value
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)))
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&');
+
 const grab = (html, re) => {
   const m = html.match(re);
-  return m ? (m[2] ?? m[1] ?? '').trim() : null;
+  return m ? decodeEntities((m[2] ?? m[1] ?? '').trim()) : null;
 };
 
 // Title/description targets are character proxies for the SERP pixel limits;

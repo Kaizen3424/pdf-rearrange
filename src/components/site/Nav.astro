@@ -12,6 +12,7 @@ const { locale = defaultLocale } = Astro.props;
 const t = getDictionary(locale);
 
 const links = [
+  { href: localePath('/tools', locale), label: t.nav.tools },
   { href: localePath('/#how-it-works', locale), label: t.nav.howItWorks },
   { href: localePath('/#features', locale), label: t.nav.features },
   { href: localePath('/#privacy', locale), label: t.nav.privacy },

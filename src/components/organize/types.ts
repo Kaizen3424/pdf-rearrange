@@ -22,6 +22,24 @@ export type Zoom = 'sm' | 'md' | 'lg';
 
 export type Status = 'empty' | 'loading' | 'ready' | 'exporting' | 'done';
 
+/**
+ * The single page operation a tool page foregrounds.
+ *
+ * The engine already implements every one of these, so a tool page is the same
+ * editor with a different control brought to the foreground: `PageCard` keeps
+ * the matching action permanently visible instead of hover-revealed, and
+ * `Toolbar`/`BatchBar` ring the matching control. This is what lets seven tool
+ * pages share one component instead of shipping near-duplicates.
+ */
+export type ToolFocus =
+  | 'merge'
+  | 'delete'
+  | 'rotate'
+  | 'reverse'
+  | 'insert'
+  | 'duplicate'
+  | 'blank';
+
 export interface ToastMessage {
   id: string;
   kind: 'success' | 'error' | 'info';

@@ -86,7 +86,7 @@ const ja = {
     label: 'このツールを5段階で評価',
     star: (n: number) => `${n}つ星`,
     announced: (value: number) =>
-      `${value}つ星中${value}つ星と評価しました。フィードバックありがとうございます！`,
+      `5つ星中${value}つ星と評価しました。フィードバックありがとうございます！`,
     thanks: 'フィードバックありがとうございます！',
     prompt: 'どうでしたか？',
   },
@@ -142,6 +142,89 @@ const ja = {
     downloaded: (name: string) => `${name}をダウンロードしました。`,
     undone: '取り消しました。',
     redone: 'やり直しました。',
+  },
+  shared: {
+    memoryNote:
+      '何もアップロードされないため、サイズの上限はありません — ただし待ち行列もありません。非常に大きな文書や高解像度のスキャンは、再構築されている間だけこのデバイットのメモリを更多信息使います。数百ページなら問題なく、1000ページのスキャンは古いスマートフォンでは遅く感じるかもしれません。',
+    byteForByte:
+      'ページは元ファイルからそのまま複製され、再描画も再圧縮も行われないため、画質は元のままです。',
+    selectAllPages: 'すべてのページを選択',
+    clearSelection: '選択解除',
+    selectedCount: (n: number) => `${n}ページを選択済み`,
+    nothingSelected: 'ページが選択されていません。',
+  },
+  split: {
+    modeLabel: '分割モード',
+    modeRange: '範囲を指定',
+    modeEvery: 'すべて',
+    rangeLabel: 'ページ範囲',
+    rangePlaceholder: '1-4, 9, 15-20',
+    rangeHelp: '範囲ごとに1つのファイルを作成し、入力した順に出力します。',
+    rangeAppend: '下のページをクリックして範囲に追加してください。',
+    orderLocked:
+      'ページ番号は常に元の文書の順序に従います — 分割してもファイルは変更されません。',
+    pageControlsDisabled:
+      '回転、複製、削除はエディターの対象で、ここでは何も起きません — 分割してもファイルは変更されません。どのページを含めるかを変えるには「PDFから必要なページを抽出する」ツールを使ってください。',
+    errorEmpty: 'ページ範囲を1つ以上入力するか、「すべて」に切り替えてください。',
+    errorZero: 'ページ番号は1から始まります。',
+    errorSyntax: (part: string) =>
+      `${part}はページ番号ではありません。数はカンマとハイフンで区切ってください — 例えば1-4, 9, 15-20のように入力します。`,
+    errorUnfinished: (part: string) => `${part}にはページ番号が指定されていません。`,
+    errorTrailing:
+      '余分なカンマを削除するか、最後の範囲をページ番号で終えてください。',
+    errorReversed: (part: string) => `${part}の順番が逆です。3-7のように書いてください。`,
+    errorOutOfBounds: (max: number) =>
+      `その範囲は最後のページを超えています。この文書は${max}ページです。`,
+    planLabel: '作成されるファイル',
+    planEmpty: '範囲を入力すると、作成されるファイルが表示されます。',
+    planItem: (part: number, label: string, pages: number) => `${label} — ${pages}ページ`,
+    planCount: (n: number) => `${n}件のファイルが作成されます`,
+    action: '分割してダウンロード',
+    working: '分割中…',
+    progress: (done: number, total: number) => `${total}件中${done}件を作成しました。`,
+    confirmTitle: (n: number) => `${n}件の別ファイルが作成されます。`,
+    confirmBody:
+      'ブラウザが一度に複数のファイルをダウンロードする許可を求めることがあります。作成には少し時間がかかります。続けますか？',
+    confirmAction: (n: number) => `${n}件のファイルをダウンロード`,
+    cancel: 'キャンセル',
+    resultsHeading: (n: number) => `${n}件のファイルを作成しました`,
+    resultsHeadingNone: '何も作成されませんでした',
+    resultsBody:
+      '各ドキュメントはデバイス上で再構築され、個別に保存されました。何もアップロードされておらず、ページが再描画されたこともありません — 画質は元のままです。',
+    resultsFailed: (n: number) => `${n}件のファイルを作成できませんでした`,
+    resultPending: '未作成',
+    partialFailure: (done: number, failed: number) =>
+      `${done}件のファイルを作成し、${failed}件は失敗しました。残りはすでにダウンロード済みです。`,
+    allFailed: 'どのファイルも作成できませんでした。元のファイルは変更されていません。',
+    exportFailedOne: (name: string) => `${name}を作成できませんでした。`,
+  },
+  extract: {
+    keepLabel: '残すページ',
+    keepHelp:
+      '残したいページをクリックします。最初のページをクリックして最後のページをShiftクリックすると範囲をまとめて選べます。すべて選んでから、不要なページの選択を外すこともできます。',
+    orderLabel: '抽出したページの順序',
+    orderHelp:
+      'ここへページをドラッグすると、新しいドキュメントでの順序を変更できます。元のファイルが書き換わることはありません。',
+    orderEmpty: 'まだページが選択されていません — 上のページをクリックすると残せます。',
+    orderInTray:
+      '抽出したページの順序を変えるには、下のリストでページをドラッグしてください。',
+    orderMoved: (from: number, to: number) =>
+      `新しいドキュメントの${from}番目の位置から${to}番目の位置に移動しました。`,
+    moveUp: '新しいドキュメントでこのページを前へ移す',
+    moveDown: '新しいドキュメントでこのページを後ろへ移す',
+    remove: 'このページを新しいドキュメントから外す',
+    pickerLabel: 'ページ番号で選択',
+    pickerHint: 'キーボードや小さい画面でも選びやすいよう、すべてのページをタップ対象にしています。',
+    pickerPage: (n: number, total: number) => `${n} / ${total}ページ`,
+    pickerOn: (n: number) => `${n}ページ、残す`,
+    pickerOff: (n: number) => `${n}ページ、残さない`,
+    deselectMeansLeaveOut:
+      'このツールがファイルからページを削除することはありません — 単に新しいドキュメントに含まれないだけです。',
+    action: '抽出したPDFをダウンロード',
+    zeroSelected: '抽出するページを1つ以上選んでください。',
+    resultsHeading: (n: number) => `${n}ページを抽出しました`,
+    resultsBody:
+      '新しいドキュメントは、選んだページだけを表示どおりの順序でデバイス上に再構築されました。元のファイルは変更されていません。',
   },
 } satisfies ToolStrings;
 

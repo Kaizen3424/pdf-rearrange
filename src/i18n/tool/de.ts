@@ -105,7 +105,7 @@ const de = {
   tool: {
     pagesReady: (n: number) => `${n} Seite${n === 1 ? '' : 'n'} bereit zum Neuordnen.`,
     filesSkippedPdf: (n: number) =>
-      `${n} Datei${n === 1 ? ' wurde' : 'n wurden'} übersprungen — nur PDF-Dateien werden unterstützt.`,
+      `${n} ${n === 1 ? 'Datei wurde' : 'Dateien wurden'} übersprungen — nur PDF-Dateien werden unterstützt.`,
     readFailed: (name: string) => `${name} konnte nicht gelesen werden.`,
     openFailed: (name: string) =>
       `${name} konnte nicht geöffnet werden — sie ist möglicherweise beschädigt oder keine gültige PDF.`,
@@ -113,7 +113,7 @@ const de = {
     readingFileOf: (name: string, i: number, total: number) =>
       `${name} wird gelesen (${i} von ${total})…`,
     filesSkippedPassword: (n: number) =>
-      `${n} Datei${n === 1 ? ' wurde' : 'n wurden'} übersprungen — das Passwort wurde nicht eingegeben.`,
+      `${n} ${n === 1 ? 'Datei wurde' : 'Dateien wurden'} übersprungen — das Passwort wurde nicht eingegeben.`,
     encryptedInfo:
       'Diese PDF ist verschlüsselt. Sie können sie hier neu anordnen, aber verschlüsselte Dateien können nicht für den Download neu erstellt werden — die Download-Schaltfläche erklärt, wie Sie das beheben.',
     allSelected: 'Alle Seiten ausgewählt.',
@@ -134,14 +134,104 @@ const de = {
       'Sie können die Seiten neu anordnen, drehen und eine Vorschau davon anzeigen, aber eine verschlüsselte Datei kann auf Ihrem Gerät nicht neu erstellt werden. Entfernen Sie zuerst ihr Passwort (öffnen Sie sie und verwenden Sie ',
     encryptedStrong: 'Drucken → Als PDF speichern',
     encryptedBody2:
-      ', oder die Option „Sicherheit entfernen" Ihrer PDF-App), dann fügen Sie die entsperrte Kopie hier hinzu.',
+      ', oder die Option „Sicherheit entfernen“ Ihrer PDF-App), dann fügen Sie die entsperrte Kopie hier hinzu.',
     encryptedDownloadToast:
-      'Diese Datei ist verschlüsselt und kann nicht lokal neu erstellt werden. Entfernen Sie ihr Passwort (öffnen Sie sie, wählen Sie Drucken → Als PDF speichern, oder verwenden Sie die Option „Sicherheit entfernen" Ihrer PDF-App), dann fügen Sie die Kopie hier hinzu und laden Sie herunter.',
+      'Diese Datei ist verschlüsselt und kann nicht lokal neu erstellt werden. Entfernen Sie ihr Passwort (öffnen Sie sie, wählen Sie Drucken → Als PDF speichern, oder verwenden Sie die Option „Sicherheit entfernen“ Ihrer PDF-App), dann fügen Sie die Kopie hier hinzu und laden Sie herunter.',
     exportFailed:
       'Diese PDF konnte auf Ihrem Gerät nicht neu erstellt werden. Sie verwendet möglicherweise eine Verschlüsselung oder eine Struktur, die wir nicht kopieren können. Versuchen Sie eine PDF ohne Passwort oder exportieren Sie sie zuerst erneut aus Ihrer PDF-App.',
     downloaded: (name: string) => `${name} heruntergeladen.`,
     undone: 'Rückgängig gemacht.',
     redone: 'Wiederholt.',
+  },
+  shared: {
+    memoryNote:
+      'Nichts wird hochgeladen, daher gibt es keine Größenbegrenzung — aber auch keine Warteschlange: Sehr große oder hochauflösende Dokumente belegen während der Neuerstellung mehr Gerätespeicher. Ein paar hundert Seiten sind unproblematisch, ein Scan mit tausend Seiten kann auf einem älteren Telefon langsam sein.',
+    byteForByte:
+      'Seiten werden Byte für Byte direkt aus Ihrer Originaldatei kopiert, nie neu gerendert und nie neu komprimiert, sodass die Qualität der Quelle entspricht.',
+    selectAllPages: 'Alle Seiten auswählen',
+    clearSelection: 'Auswahl aufheben',
+    selectedCount: (n: number) => `${n} Seite${n === 1 ? '' : 'n'} ausgewählt`,
+    nothingSelected: 'Keine Seiten ausgewählt.',
+  },
+  split: {
+    modeLabel: 'Teilungsmodus',
+    modeRange: 'Nach Seitenbereich',
+    modeEvery: 'Jede Seite',
+    rangeLabel: 'Seitenbereiche',
+    rangePlaceholder: '1-4, 9, 15-20',
+    rangeHelp: 'Eine Datei pro Bereich, in der Reihenfolge, in der Sie sie angeben.',
+    rangeAppend: 'Klicken Sie unten auf eine Seite, um sie zu den Bereichen hinzuzufügen.',
+    orderLocked:
+      'Seitenzahlen folgen immer der Reihenfolge Ihres Originaldokuments — Teilen ändert Ihre Datei niemals.',
+    pageControlsDisabled:
+      'Drehen, Duplizieren und Löschen gehören zum Editor und tun hier nichts — Teilen ändert Ihre Datei niemals. Verwenden Sie das Tool „PDF-Seiten extrahieren“, um zu ändern, welche Seiten hineinkommen.',
+    errorEmpty: 'Geben Sie mindestens einen Seitenbereich ein, oder wechseln Sie zu „Jede Seite“.',
+    errorZero: 'Seitenzahlen beginnen bei 1.',
+    errorSyntax: (part: string) =>
+      `${part} ist keine Seitenzahl. Verwenden Sie Zahlen, getrennt durch Kommas und Bindestriche — zum Beispiel 1-4, 9, 15-20.`,
+    errorUnfinished: (part: string) => `${part} fehlt eine Seitenzahl.`,
+    errorTrailing:
+      'Entfernen Sie das zusätzliche Komma, oder beenden Sie den letzten Bereich mit einer Seitenzahl.',
+    errorReversed: (part: string) =>
+      `${part} läuft rückwärts. Schreiben Sie es umgekehrt, etwa 3-7.`,
+    errorOutOfBounds: (max: number) =>
+      `Dieser Bereich geht über die letzte Seite hinaus. Dieses Dokument hat ${max} Seite${max === 1 ? '' : 'n'}.`,
+    planLabel: 'Zu erstellende Dateien',
+    planEmpty: 'Geben Sie einen Bereich ein, um die Dateien zu sehen, die Sie erhalten.',
+    planItem: (part: number, label: string, pages: number) =>
+      `${label} — ${pages} Seite${pages === 1 ? '' : 'n'}`,
+    planCount: (n: number) => `${n} Datei${n === 1 ? ' wird' : 'n werden'} erstellt`,
+    action: 'Teilen und herunterladen',
+    working: 'Wird geteilt…',
+    progress: (done: number, total: number) =>
+      `${done} von ${total} Datei${total === 1 ? '' : 'en'} erstellt.`,
+    confirmTitle: (n: number) =>
+      `Dies erstellt ${n} einzelne Datei${n === 1 ? '' : 'en'}.`,
+    confirmBody:
+      'Ihr Browser fragt möglicherweise um Erlaubnis, mehrere Dateien auf einmal herunterzuladen, und das Erstellen dauert einen Moment. Fortfahren?',
+    confirmAction: (n: number) => `${n} Datei${n === 1 ? '' : 'en'} herunterladen`,
+    cancel: 'Abbrechen',
+    resultsHeading: (n: number) => `${n} Datei${n === 1 ? '' : 'en'} erstellt`,
+    resultsHeadingNone: 'Nichts wurde erstellt',
+    resultsBody:
+      'Jedes Dokument wurde auf Ihrem Gerät neu erstellt und separat gespeichert. Nichts wurde hochgeladen, und keine Seite wurde neu gerendert — die Qualität entspricht Ihrem Original.',
+    resultsFailed: (n: number) =>
+      `${n} Datei${n === 1 ? '' : 'en'} konnte${n === 1 ? '' : 'n'} nicht erstellt werden`,
+    resultPending: 'Nicht erstellt',
+    partialFailure: (done: number, failed: number) =>
+      `${done} Datei${done === 1 ? '' : 'en'} erstellt, ${failed} fehlgeschlagen. Der Rest befindet sich bereits in Ihren Downloads.`,
+    allFailed:
+      'Es konnte keine Datei erstellt werden. Ihre Originaldatei bleibt unverändert.',
+    exportFailedOne: (name: string) => `${name} konnte nicht erstellt werden.`,
+  },
+  extract: {
+    keepLabel: 'Beizubehaltende Seiten',
+    keepHelp:
+      'Klicken Sie eine Seite an, um sie zu behalten. Erste Seite anklicken und die letzte mit Umschalt markiert einen ganzen Bereich, oder wählen Sie alle Seiten aus und nehmen anschließend wieder heraus, was Sie nicht brauchen.',
+    orderLabel: 'Reihenfolge der extrahierten Seiten',
+    orderHelp:
+      'Ziehen Sie eine Seite hierher, um ihre Reihenfolge im neuen Dokument zu ändern. Ihre Originaldatei wird nie verändert.',
+    orderEmpty:
+      'Noch keine Seiten ausgewählt — klicken Sie oben auf eine Seite, um sie zu behalten.',
+    orderInTray:
+      'Um die Reihenfolge der extrahierten Seiten zu ändern, ziehen Sie sie in der Liste unten.',
+    orderMoved: (from: number, to: number) =>
+      `Von Position ${from} auf Position ${to} im neuen Dokument verschoben.`,
+    moveUp: 'Diese Seite im neuen Dokument weiter nach vorne verschieben',
+    moveDown: 'Diese Seite im neuen Dokument weiter nach hinten verschieben',
+    remove: 'Diese Seite aus dem neuen Dokument weglassen',
+    pickerLabel: 'Seiten nach Nummer auswählen',
+    pickerHint: 'Jede Seite als Klickziel, für Tastatur und kleine Bildschirme.',
+    pickerPage: (n: number, total: number) => `Seite ${n} von ${total}`,
+    pickerOn: (n: number) => `Seite ${n}, behalten`,
+    pickerOff: (n: number) => `Seite ${n}, nicht behalten`,
+    deselectMeansLeaveOut:
+      'Dieses Tool löscht niemals Seiten aus Ihrer Datei — die Seite bleibt lediglich im neuen Dokument weg.',
+    action: 'Extrahierte PDF herunterladen',
+    zeroSelected: 'Wählen Sie mindestens eine Seite zum Extrahieren aus.',
+    resultsHeading: (n: number) => `${n} Seite${n === 1 ? '' : 'n'} extrahiert`,
+    resultsBody:
+      'Das neue Dokument wurde auf Ihrem Gerät aus den von Ihnen ausgewählten Seiten neu erstellt, in der angezeigten Reihenfolge. Ihre Originaldatei wurde nicht verändert.',
   },
 } satisfies ToolStrings;
 

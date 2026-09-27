@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Check, Copy, Eye, LoaderCircle, RotateCw, Trash2, TriangleAlert } from 'lucide-react';
-import type { PageItem, SourceDoc } from './types';
+import type { PageItem, SourceDoc, ToolFocus } from './types';
 import { blankPageRatio, A4_RATIO } from './types';
 import type { ThumbnailsApi } from './hooks/useThumbnails';
 import { useInView } from './hooks/useThumbnails';
@@ -19,6 +19,8 @@ interface PageCardProps {
   zoomWidth: number;
   selected: boolean;
   multipleSources: boolean;
+  /** When set, the matching action stays visible instead of hover-revealed. */
+  focus?: ToolFocus;
   onToggleSelect: (id: string, shiftKey: boolean) => void;
   onRotate: (id: string) => void;
   onDuplicate: (id: string) => void;
@@ -30,11 +32,13 @@ function CardAction({
   label,
   onClick,
   danger = false,
+  emphasis = false,
   children,
 }: {
   label: string;
   onClick: () => void;
   danger?: boolean;
+  emphasis?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -45,6 +49,11 @@ function CardAction({
       className={[
         'flex size-8 items-center justify-center rounded-md bg-scrim/75 text-on-solid elev-1 backdrop-blur transition-[background-color,transform] duration-150 ease-standard hover:bg-scrim active:scale-90',
         danger ? 'hover:bg-negative' : '',
+        // The action a focused tool page is about gets a persistent outline so
+        // it reads as the primary control. Outline rather than `ring`, because
+        // `elev-1` already claims `box-shadow` on this element and a ring would
+        // be silently overridden by it.
+        emphasis ? 'outline-2 outline-primary outline-offset-1' : '',
       ].join(' ')}
       onPointerDown={(event) => event.stopPropagation()}
       onClick={(event) => {
@@ -67,6 +76,7 @@ export default function PageCard({
   zoomWidth,
   selected,
   multipleSources,
+  focus,
   onToggleSelect,
   onRotate,
   onDuplicate,
@@ -191,19 +201,35 @@ export default function PageCard({
         <div
           className={[
             'absolute end-1.5 top-1.5 flex flex-col gap-1.5 transition-opacity duration-150 focus-within:opacity-100 group-hover:opacity-100',
-            selected ? 'opacity-100' : 'opacity-0',
+            // A focused tool page keeps its primary action on screen at all
+            // times, so the control the page is about is never hidden behind a
+            // hover (and stays reachable on touch, where there is no hover).
+            selected || focus ? 'opacity-100' : 'opacity-0',
           ].join(' ')}
         >
           <CardAction label={t.pageCard.preview} onClick={() => onPreview(index)}>
             <Eye className="size-3.5" />
           </CardAction>
-          <CardAction label={t.pageCard.rotate} onClick={() => onRotate(item.id)}>
+          <CardAction
+            label={t.pageCard.rotate}
+            onClick={() => onRotate(item.id)}
+            emphasis={focus === 'rotate'}
+          >
             <RotateCw className="size-3.5" />
           </CardAction>
-          <CardAction label={t.pageCard.duplicate} onClick={() => onDuplicate(item.id)}>
+          <CardAction
+            label={t.pageCard.duplicate}
+            onClick={() => onDuplicate(item.id)}
+            emphasis={focus === 'duplicate'}
+          >
             <Copy className="size-3.5" />
           </CardAction>
-          <CardAction label={t.pageCard.delete} danger onClick={() => onDelete(item.id)}>
+          <CardAction
+            label={t.pageCard.delete}
+            danger
+            onClick={() => onDelete(item.id)}
+            emphasis={focus === 'delete'}
+          >
             <Trash2 className="size-3.5" />
           </CardAction>
         </div>

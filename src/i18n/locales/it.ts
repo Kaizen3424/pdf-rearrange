@@ -28,8 +28,31 @@ const it = {
     features: 'Funzionalità',
     privacy: 'Privacy',
     faq: 'Domande frequenti',
+    tools: 'Strumenti',
     cta: 'Riordina un PDF',
     toggleMenu: 'Apri/chiudi menu',
+  },
+
+  tools: {
+    breadcrumb: 'Strumenti',
+    meta: {
+      title: 'Strumenti PDF gratuiti — Unire, dividere e riordinare',
+      description:
+        'Tutti gli strumenti PDF gratuiti nel browser: unire, dividere, ruotare, estrarre e molto altro. Nessun caricamento, nessuna registrazione, nessun limite.',
+    },
+    h1: 'Strumenti PDF gratuiti che non caricano mai il tuo file',
+    intro:
+      'Scegli uno strumento e funziona interamente nella scheda del tuo browser. Nulla viene caricato su un server, non c\'è alcun account da creare e nessun file riceve una filigrana.',
+    privateBadge: 'Funziona nel tuo browser',
+    benefitsHeading: 'Perché questi strumenti sono diversi',
+    benefitsSub:
+      'La maggior parte degli strumenti PDF online carica il tuo file su un server e ti chiede di fidarti della loro policy di eliminazione. Questi fanno il lavoro sul tuo dispositivo, quindi non c\'è nulla da violare, compromettere o sottoporre a subpoena.',
+    relatedHeading: 'Strumenti correlati',
+    cardCta: 'Apri strumento',
+    allInOneTitle: 'Preferisci fare tutto in un unico posto?',
+    allInOneBody:
+      'L\'editor completo nella home page unisce, riordina, ruota, duplica ed elimina tutte le pagine in una volta sola — l\'intera gamma di strumenti per le pagine in un\'unica griglia.',
+    allInOneCta: 'Apri l\'editor completo',
   },
 
   footer: {
@@ -284,26 +307,7 @@ const it = {
             'Anteprima delle pagine',
             'Elaborazione 100% lato client — i file non escono mai dal browser',
           ],
-        },
-        howTo: {
-          name: 'Come riordinare le pagine in un PDF',
-          description: 'Riordina le pagine di qualsiasi PDF in tre passaggi, interamente nel browser senza caricamenti.',
-          steps: [
-            {
-              name: 'Aggiungi il tuo PDF',
-              text: 'Trascina un file PDF sullo strumento, clicca per sfogliare, o incollalo. Puoi aggiungere diversi PDF tutti insieme per unirli.',
-            },
-            {
-              name: 'Disponi le pagine',
-              text: 'Trascina le miniature nell\'ordine che desideri. Ruota, duplica o elimina le pagine secondo necessità — tutto può essere annullato.',
-            },
-            {
-              name: 'Scarica all\'istante',
-              text: 'Clicca Scarica PDF. Il tuo file riordinato viene ricostruito sul tuo dispositivo e salvato senza filigrana.',
-            },
-          ],
-        },
-      },
+        },      },
     },
 
     howto: {
@@ -345,26 +349,6 @@ const it = {
       ctaP: 'Gratuito, illimitato, nessuna registrazione — e il tuo file non esce mai dal browser.',
       ctaButton: 'Riordina un PDF adesso',
       faqOutro: 'Cerchi altre risposte? Vedi la <a href="/#faq">pagina delle FAQ completa</a>.',
-      jsonLd: {
-        howTo: {
-          name: 'Come organizzare le pagine PDF online gratis',
-          description: 'Una guida passo passo per riordinare le pagine PDF nel browser senza caricare il file da nessuna parte.',
-          steps: [
-            {
-              name: 'Apri lo strumento e aggiungi il tuo PDF',
-              text: 'Vai su rearrangepdf.com e trascina il tuo PDF sullo strumento, clicca "Seleziona file PDF", o incolla il file con Ctrl+V.',
-            },
-            {
-              name: 'Trascina le pagine nel nuovo ordine',
-              text: 'Trascina qualsiasi miniatura in una nuova posizione. Usa i pulsanti al passaggio del mouse o la barra di selezione per ruotare, duplicare o eliminare le pagine.',
-            },
-            {
-              name: 'Scarica il PDF organizzato',
-              text: 'Clicca "Scarica PDF" — il file viene ricostruito sul tuo dispositivo e salvato immediatamente, senza filigrana.',
-            },
-          ],
-        },
-      },
     },
 
     about: {

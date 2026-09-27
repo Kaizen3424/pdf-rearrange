@@ -1,5 +1,7 @@
 import { localeMeta, localePath, type Locale } from './utils';
 import type { SiteDictionary } from './locales';
+import type { ResolvedTool, ToolContent } from '../content/tools';
+import type { ToolEntry } from '../content/tools/manifest';
 
 type JsonLd = Record<string, unknown>;
 
@@ -13,11 +15,21 @@ function homeUrl(locale: Locale, site: URL): string {
   return new URL(localePath('/', locale), site).href;
 }
 
-/** JSON-LD for the home page: WebApplication, HowTo, FAQPage, Organization, WebSite. */
+/**
+ * FAQPage and HowTo markup are deliberately absent.
+ *
+ * Google removed the How-to rich result in June 2024 and then ended FAQ rich
+ * results for every site — including the government and health sites that had
+ * retained them — on 7 May 2026, dropping the Search Console report in June
+ * and the API in August. The visible FAQ content still earns its place as
+ * on-page copy and as citation surface for AI answers, but marking it up buys
+ * nothing and only creates markup that can drift out of sync with the page.
+ */
+
+/** JSON-LD for the home page: WebApplication, Organization, WebSite. */
 export function homeSchemas(dict: SiteDictionary, locale: Locale, site: URL): JsonLd[] {
   const url = homeUrl(locale, site);
   const webApp = dict.pages.home.jsonLd.webApplication;
-  const howTo = dict.pages.home.jsonLd.howTo;
 
   return [
     {
@@ -41,33 +53,6 @@ export function homeSchemas(dict: SiteDictionary, locale: Locale, site: URL): Js
     },
     {
       '@context': 'https://schema.org',
-      '@type': 'HowTo',
-      name: howTo.name,
-      description: howTo.description,
-      inLanguage: langOf(locale),
-      totalTime: 'PT1M',
-      step: howTo.steps.map((step, index) => ({
-        '@type': 'HowToStep',
-        position: index + 1,
-        name: step.name,
-        text: step.text,
-      })),
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      inLanguage: langOf(locale),
-      mainEntity: dict.faq.items.map((faq) => ({
-        '@type': 'Question',
-        name: faq.q,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: faq.a,
-        },
-      })),
-    },
-    {
-      '@context': 'https://schema.org',
       '@type': 'Organization',
       name: dict.siteName,
       url: new URL('/', site).href,
@@ -84,27 +69,89 @@ export function homeSchemas(dict: SiteDictionary, locale: Locale, site: URL): Js
   ];
 }
 
-/** JSON-LD for the how-to guide page: HowTo + BreadcrumbList. */
-export function howToSchemas(dict: SiteDictionary, locale: Locale, site: URL): JsonLd[] {
-  const howTo = dict.pages.howto.jsonLd.howTo;
+/**
+ * JSON-LD for a standalone tool page.
+ *
+ * `SoftwareApplication` is co-typed with `WebApplication` so the page is
+ * eligible for Google's Software App treatment while still declaring itself a
+ * web app. No `aggregateRating` is emitted: the only rating the UI collects is a
+ * single self-selected value kept in the visitor's own localStorage, with no
+ * aggregate and no count, and marking up a rating that is not genuinely shown
+ * on the page is a manual-action risk. When real, aggregated, on-page reviews
+ * exist, that is the moment to add it.
+ */
+export function toolSchemas(
+  tool: ToolEntry,
+  content: ToolContent,
+  labels: { siteName: string; tools: string },
+  locale: Locale,
+  site: URL,
+): JsonLd[] {
+  const url = new URL(localePath(`/${tool.slug}`, locale), site).href;
+  const { siteName, tools: toolsCrumb } = labels;
   return [
     {
       '@context': 'https://schema.org',
-      '@type': 'HowTo',
-      name: howTo.name,
-      description: howTo.description,
+      '@type': ['SoftwareApplication', 'WebApplication'],
+      name: content.h1,
+      description: content.meta.description,
+      url,
       inLanguage: langOf(locale),
-      totalTime: 'PT2M',
-      step: howTo.steps.map((step, index) => ({
-        '@type': 'HowToStep',
-        position: index + 1,
-        name: step.name,
-        text: step.text,
-      })),
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'Any (web browser)',
+      browserRequirements: 'Requires JavaScript. Works in all modern browsers.',
+      isAccessibleForFree: true,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
     },
-    breadcrumbSchema(dict, locale, site, dict.pages.howto.breadcrumb, '/how-to-organize-pdf-pages'),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: content.h1,
+      description: content.meta.description,
+      url,
+      inLanguage: langOf(locale),
+      primaryImageOfPage: new URL('/og-image.png', site).href,
+    },
+    breadcrumbSchema(locale, site, [
+      { name: siteName, path: '/' },
+      { name: toolsCrumb, path: '/tools' },
+      { name: content.breadcrumb, path: `/${tool.slug}` },
+    ]),
   ];
 }
+
+/** JSON-LD for the tool hub: an ItemList of every tool published in this locale. */
+export function toolsHubSchemas(tools: ResolvedTool[], locale: Locale, site: URL): JsonLd[] {
+  const url = new URL(localePath('/tools', locale), site).href;
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: tools[0]?.content.meta.title ?? 'Tools',
+      description: tools[0]?.content.meta.description ?? '',
+      url,
+      inLanguage: langOf(locale),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'PDF tools',
+      inLanguage: langOf(locale),
+      numberOfItems: tools.length,
+      itemListElement: tools.map(({ tool, content }, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: content.h1,
+        url: new URL(localePath(`/${tool.slug}`, locale), site).href,
+      })),
+    },
+  ];
+}
+
 
 /** JSON-LD for the contact page: ContactPage + BreadcrumbList. */
 export function contactSchemas(dict: SiteDictionary, locale: Locale, site: URL): JsonLd[] {
@@ -118,7 +165,10 @@ export function contactSchemas(dict: SiteDictionary, locale: Locale, site: URL):
       url: new URL(localePath('/contact', locale), site).href,
       inLanguage: langOf(locale),
     },
-    breadcrumbSchema(dict, locale, site, dict.pages.contact.breadcrumb, '/contact'),
+    breadcrumbSchema(locale, site, [
+      { name: dict.siteName, path: '/' },
+      { name: dict.pages.contact.breadcrumb, path: '/contact' },
+    ]),
   ];
 }
 
@@ -144,34 +194,32 @@ export function webPageSchemas(
       url: new URL(localePath(options.logicalPath, locale), site).href,
       inLanguage: langOf(locale),
     },
-    breadcrumbSchema(dict, locale, site, options.breadcrumb, options.logicalPath),
+    breadcrumbSchema(locale, site, [
+      { name: dict.siteName, path: '/' },
+      { name: options.breadcrumb, path: options.logicalPath },
+    ]),
   ];
 }
 
+/**
+ * `trail` runs from the site root to the current page, and its length decides
+ * how deep the BreadcrumbList goes — two levels for a normal page, three for a
+ * tool page sitting under the hub.
+ */
 function breadcrumbSchema(
-  dict: SiteDictionary,
   locale: Locale,
   site: URL,
-  pageName: string,
-  logicalPath: string,
+  trail: { name: string; path: string }[],
 ): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     inLanguage: langOf(locale),
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: dict.siteName,
-        item: homeUrl(locale, site),
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: pageName,
-        item: new URL(localePath(logicalPath, locale), site).href,
-      },
-    ],
+    itemListElement: trail.map((entry, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: entry.name,
+      item: new URL(localePath(entry.path, locale), site).href,
+    })),
   };
 }

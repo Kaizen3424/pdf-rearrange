@@ -149,6 +149,95 @@ const enTool = {
     undone: 'Undone.',
     redone: 'Redone.',
   },
+  /**
+   * Copy the split and extract engines share. Both rebuild documents on the
+   * device, so both owe the user the same two honest caveats: no upload, and
+   * memory grows with the document.
+   */
+  shared: {
+    memoryNote:
+      'Nothing is uploaded, so there is no size limit — but there is no queue either: a very large or high-resolution document uses more of this device’s memory while it is being rebuilt. A few hundred pages is comfortable; a thousand-page scan can be slow on an older phone.',
+    byteForByte:
+      'Pages are copied straight out of your original file, never re-rendered or re-compressed, so quality is identical to the source.',
+    selectAllPages: 'Select all pages',
+    clearSelection: 'Clear selection',
+    selectedCount: (n: number) => `${n} page${n === 1 ? '' : 's'} selected`,
+    nothingSelected: 'No pages selected.',
+  },
+  split: {
+    modeLabel: 'Split mode',
+    modeRange: 'By page range',
+    modeEvery: 'Every page',
+    rangeLabel: 'Page ranges',
+    rangePlaceholder: '1-4, 9, 15-20',
+    rangeHelp: 'One file per range, in the order you list them.',
+    rangeAppend: 'Click a page below to add it to the ranges.',
+    orderLocked:
+      'Page numbers always follow the order of your original document — splitting never changes your file.',
+    pageControlsDisabled:
+      'Rotating, duplicating and deleting belong to the editor and do nothing here — splitting never changes your file. Use the Extract PDF pages tool to change which pages go in.',
+    errorEmpty: 'Enter at least one page range, or switch to “Every page”.',
+    errorZero: 'Page numbers start at 1.',
+    errorSyntax: (part: string) =>
+      `${part} is not a page number. Use numbers separated by commas and dashes — for example 1-4, 9, 15-20.`,
+    errorUnfinished: (part: string) => `${part} is missing a page number.`,
+    errorTrailing: 'Remove the extra comma, or finish the last range with a page number.',
+    errorReversed: (part: string) =>
+      `${part} runs backwards. Write it the other way round, like 3-7.`,
+    errorOutOfBounds: (max: number) =>
+      `That range goes past the last page. This document has ${max} page${max === 1 ? '' : 's'}.`,
+    planLabel: 'Files to be created',
+    planEmpty: 'Enter a range to see the files you will get.',
+    planItem: (part: number, label: string, pages: number) =>
+      `${label} — ${pages} page${pages === 1 ? '' : 's'}`,
+    planCount: (n: number) => `${n} file${n === 1 ? '' : 's'} will be created`,
+    action: 'Split and download',
+    working: 'Splitting…',
+    progress: (done: number, total: number) =>
+      `Built ${done} of ${total} file${total === 1 ? '' : 's'}.`,
+    confirmTitle: (n: number) => `This will create ${n} separate files.`,
+    confirmBody:
+      'Your browser may ask permission to download several files at once, and building them takes a moment. Continue?',
+    confirmAction: (n: number) => `Download ${n} file${n === 1 ? '' : 's'}`,
+    cancel: 'Cancel',
+    resultsHeading: (n: number) => `${n} file${n === 1 ? '' : 's'} created`,
+    resultsHeadingNone: 'Nothing was built',
+    resultsBody:
+      'Each document was rebuilt on your device and saved separately. Nothing was uploaded, and no page was re-rendered — quality is identical to your original.',
+    resultsFailed: (n: number) => `${n} file${n === 1 ? '' : 's'} could not be built`,
+    resultPending: 'Not built',
+    partialFailure: (done: number, failed: number) =>
+      `${done} file${done === 1 ? '' : 's'} created, ${failed} failed. The rest are already in your downloads.`,
+    allFailed: 'No files could be built. Your original file is untouched.',
+    exportFailedOne: (name: string) => `${name} could not be built.`,
+  },
+  extract: {
+    keepLabel: 'Pages to keep',
+    keepHelp:
+      'Click a page to keep it. Click the first page and Shift-click the last for a whole range, or select all and then deselect what you do not need.',
+    orderLabel: 'Order of the extracted pages',
+    orderHelp:
+      'Drag a page here to change the order it appears in the new document. Your original file is never modified.',
+    orderEmpty: 'No pages selected yet — click a page above to keep it.',
+    orderInTray: 'To change the order of the extracted pages, drag them in the list below.',
+    orderMoved: (from: number, to: number) =>
+      `Moved from position ${from} to position ${to} of the new document.`,
+    moveUp: 'Move this page earlier in the new document',
+    moveDown: 'Move this page later in the new document',
+    remove: 'Leave this page out of the new document',
+    pickerLabel: 'Select pages by number',
+    pickerHint: 'Every page as a tap target, for keyboard and small screens.',
+    pickerPage: (n: number, total: number) => `Page ${n} of ${total}`,
+    pickerOn: (n: number) => `Page ${n}, kept`,
+    pickerOff: (n: number) => `Page ${n}, not kept`,
+    deselectMeansLeaveOut:
+      'This tool never deletes pages from your file — the page is simply left out of the new document.',
+    action: 'Download extracted PDF',
+    zeroSelected: 'Select at least one page to extract.',
+    resultsHeading: (n: number) => `${n} page${n === 1 ? '' : 's'} extracted`,
+    resultsBody:
+      'The new document was rebuilt on your device from the pages you selected, in the order shown. Your original file was not modified.',
+  },
 };
 
 export type ToolStrings = typeof enTool;

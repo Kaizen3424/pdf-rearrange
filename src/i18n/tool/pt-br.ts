@@ -143,6 +143,100 @@ const ptBr = {
     undone: 'Desfeito.',
     redone: 'Refeito.',
   },
+  shared: {
+    memoryNote:
+      'Nada é enviado, então não existe limite de tamanho — mas também não existe fila: um documento muito grande ou de alta resolução usa mais memória do seu dispositivo enquanto é reconstruído. Algumas centenas de páginas passam tranquilo, mas uma digitalização de mil páginas pode demorar em um celular mais antigo.',
+    byteForByte:
+      'As páginas são copiadas direto do seu arquivo original, sem serem redesenhadas nem recomprimidas, então a qualidade é idêntica à da fonte.',
+    selectAllPages: 'Selecionar todas as páginas',
+    clearSelection: 'Limpar a seleção',
+    selectedCount: (n: number) => `${n} página${n === 1 ? '' : 's'} selecionada${n === 1 ? '' : 's'}`,
+    nothingSelected: 'Nenhuma página selecionada.',
+  },
+  split: {
+    modeLabel: 'Modo de divisão',
+    modeRange: 'Por intervalo de páginas',
+    modeEvery: 'Todas as páginas',
+    rangeLabel: 'Intervalos de páginas',
+    rangePlaceholder: '1-4, 9, 15-20',
+    rangeHelp: 'Um arquivo por intervalo, na ordem em que você os digitar.',
+    rangeAppend: 'Clique em uma página abaixo para adicioná-la aos intervalos.',
+    orderLocked:
+      'Os números de página sempre seguem a ordem do seu documento original — dividir nunca altera o seu arquivo.',
+    pageControlsDisabled:
+      'Girar, duplicar e excluir pertencem ao editor e não fazem nada aqui — dividir nunca altera o seu arquivo. Use a ferramenta "Extrair páginas de um PDF" para mudar quais páginas entram.',
+    errorEmpty:
+      'Digite pelo menos um intervalo de páginas ou mude para "Todas as páginas".',
+    errorZero: 'Os números de página começam em 1.',
+    errorSyntax: (part: string) =>
+      `${part} não é um número de página. Use números separados por vírgulas e hifens — por exemplo 1-4, 9, 15-20.`,
+    errorUnfinished: (part: string) => `Falta um número de página em ${part}.`,
+    errorTrailing:
+      'Remova a vírgula extra ou termine o último intervalo com um número de página.',
+    errorReversed: (part: string) =>
+      `${part} está ao contrário. Escreva na outra ordem, como 3-7.`,
+    errorOutOfBounds: (max: number) =>
+      `Esse intervalo passa da última página. Este documento tem ${max} página${max === 1 ? '' : 's'}.`,
+    planLabel: 'Arquivos que serão criados',
+    planEmpty: 'Digite um intervalo para ver os arquivos que você receberá.',
+    planItem: (part: number, label: string, pages: number) =>
+      `${label} — ${pages} página${pages === 1 ? '' : 's'}`,
+    planCount: (n: number) => `${n} arquivo${n === 1 ? ' será criado' : 's serão criados'}`,
+    action: 'Dividir e baixar',
+    working: 'Dividindo…',
+    progress: (done: number, total: number) =>
+      `${done} de ${total} arquivo${total === 1 ? '' : 's'} criad${total === 1 ? 'o' : 'os'}.`,
+    confirmTitle: (n: number) =>
+      `Isso criará ${n} arquivo${n === 1 ? '' : 's'} separad${n === 1 ? 'o' : 'os'}.`,
+    confirmBody:
+      'Seu navegador pode pedir permissão para baixar vários arquivos de uma vez, e criá-los leva um momento. Continuar?',
+    confirmAction: (n: number) => `Baixar ${n} arquivo${n === 1 ? '' : 's'}`,
+    cancel: 'Cancelar',
+    resultsHeading: (n: number) =>
+      `${n} arquivo${n === 1 ? '' : 's'} criad${n === 1 ? 'o' : 'os'}`,
+    resultsHeadingNone: 'Nada foi criado',
+    resultsBody:
+      'Cada documento foi reconstruído no seu dispositivo e salvo separadamente. Nada foi enviado, e nenhuma página foi redesenhada — a qualidade é idêntica à do seu original.',
+    resultsFailed: (n: number) =>
+      `Não foi possível criar ${n} arquivo${n === 1 ? '' : 's'}`,
+    resultPending: 'Não criado',
+    partialFailure: (done: number, failed: number) =>
+      `${done} arquivo${done === 1 ? '' : 's'} criad${done === 1 ? 'o' : 'os'}, ${failed} com falha. O resto já está nos seus downloads.`,
+    allFailed:
+      'Nenhum arquivo pôde ser criado. Seu arquivo original não foi modificado.',
+    exportFailedOne: (name: string) => `Não foi possível criar ${name}.`,
+  },
+  extract: {
+    keepLabel: 'Páginas a manter',
+    keepHelp:
+      'Clique em uma página para mantê-la. Clique na primeira e use Shift+clique na última para pegar um intervalo inteiro, ou selecione todas as páginas e depois desmarque o que não precisa.',
+    orderLabel: 'Ordem das páginas extraídas',
+    orderHelp:
+      'Arraste uma página para cá para mudar a ordem em que ela aparece no novo documento. Seu arquivo original nunca é modificado.',
+    orderEmpty:
+      'Nenhuma página selecionada ainda — clique em uma página acima para mantê-la.',
+    orderInTray:
+      'Para mudar a ordem das páginas extraídas, arraste-as na lista abaixo.',
+    orderMoved: (from: number, to: number) =>
+      `Movida da posição ${from} para a posição ${to} do novo documento.`,
+    moveUp: 'Mover esta página para antes no novo documento',
+    moveDown: 'Mover esta página para depois no novo documento',
+    remove: 'Deixar esta página fora do novo documento',
+    pickerLabel: 'Selecionar páginas por número',
+    pickerHint:
+      'Todas as páginas como alvo de toque, para teclado e telas pequenas.',
+    pickerPage: (n: number, total: number) => `Página ${n} de ${total}`,
+    pickerOn: (n: number) => `Página ${n}, mantida`,
+    pickerOff: (n: number) => `Página ${n}, não mantida`,
+    deselectMeansLeaveOut:
+      'Esta ferramenta nunca exclui páginas do seu arquivo — a página é simplesmente deixada fora do novo documento.',
+    action: 'Baixar o PDF extraído',
+    zeroSelected: 'Selecione pelo menos uma página para extrair.',
+    resultsHeading: (n: number) =>
+      `${n} página${n === 1 ? '' : 's'} extraíd${n === 1 ? 'a' : 'as'}`,
+    resultsBody:
+      'O novo documento foi reconstruído no seu dispositivo a partir das páginas que você selecionou, na ordem mostrada. Seu arquivo original não foi modificado.',
+  },
 } satisfies ToolStrings;
 
 export default ptBr;

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
 import { FileText, TriangleAlert, Upload } from 'lucide-react';
-import type { PageItem, SourceDoc, Status, ToastMessage, Zoom } from './types';
+import type { PageItem, SourceDoc, Status, ToastMessage, ToolFocus, Zoom } from './types';
 import { uid, ZOOM_WIDTHS } from './types';
 import { usePages } from './hooks/usePages';
 import { useThumbnails } from './hooks/useThumbnails';
@@ -24,15 +24,29 @@ interface PasswordRequest {
   reject: () => void;
 }
 
-export default function OrganizeTool({ locale = 'en' }: { locale?: string }) {
+/**
+ * The page editor.
+ *
+ * `focus` is what makes this one component serve nine tool pages: it names the
+ * operation a page is about, and the toolbar, batch bar and page cards bring
+ * that control to the foreground. Omit it (as the homepage does) to get the
+ * neutral full editor.
+ */
+export default function OrganizeTool({
+  locale = 'en',
+  focus,
+}: {
+  locale?: string;
+  focus?: ToolFocus;
+}) {
   return (
     <ToolI18nProvider locale={locale}>
-      <OrganizeToolInner />
+      <OrganizeToolInner focus={focus} />
     </ToolI18nProvider>
   );
 }
 
-function OrganizeToolInner() {
+function OrganizeToolInner({ focus }: { focus?: ToolFocus }) {
   const { t } = useToolI18n();
   const [status, setStatus] = useState<Status>('empty');
   const [docs, setDocs] = useState<SourceDoc[]>([]);
@@ -566,6 +580,7 @@ function OrganizeToolInner() {
             onStartOver={startOver}
             onDownload={handleDownload}
             status={status}
+            focus={focus}
           />
 
           {pages.length === 0 ? (
@@ -594,6 +609,7 @@ function OrganizeToolInner() {
               thumbnails={thumbnails}
               zoomWidth={ZOOM_WIDTHS[zoom]}
               selected={selected}
+              focus={focus}
               onReorder={reorderPages}
               onToggleSelect={toggleSelect}
               onRotate={(id) => rotatePages(id, 90)}
@@ -613,6 +629,7 @@ function OrganizeToolInner() {
           onDelete={() => deleteSelected()}
           onSelectAll={selectAll}
           onClear={clearSelection}
+          focus={focus}
         />
       )}
 

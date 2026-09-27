@@ -25,8 +25,31 @@ const ptBr = {
     features: 'Recursos',
     privacy: 'Privacidade',
     faq: 'Perguntas frequentes',
+    tools: 'Ferramentas',
     cta: 'Reorganizar um PDF',
     toggleMenu: 'Abrir menu',
+  },
+
+  tools: {
+    breadcrumb: 'Ferramentas',
+    meta: {
+      title: 'Ferramentas PDF gratuitas — Mesclar, dividir e reordenar',
+      description:
+        'Todas as ferramentas PDF gratuitas que você precisa no navegador: mesclar, dividir, excluir, girar e muito mais. Sem envios, sem cadastro, sem limites.',
+    },
+    h1: 'Ferramentas PDF gratuitas que nunca enviam seu arquivo',
+    intro:
+      'Escolha uma ferramenta e ela roda inteiramente dentro da aba do seu navegador. Nada é enviado para um servidor, não há conta para criar e nenhum arquivo recebe marca d’água.',
+    privateBadge: 'Roda no seu navegador',
+    benefitsHeading: 'Por que estas ferramentas são diferentes',
+    benefitsSub:
+      'A maioria das ferramentas PDF online envia seu documento para um servidor e pede que você confie na política de exclusão delas. Estas fazem o trabalho no seu próprio dispositivo, então não há cópia do seu arquivo para vazar, violar ou intimar.',
+    relatedHeading: 'Ferramentas relacionadas',
+    cardCta: 'Abrir ferramenta',
+    allInOneTitle: 'Prefere fazer tudo em um só lugar?',
+    allInOneBody:
+      'O editor completo na página inicial mescla, reordena, gira, duplica e exclui todas as páginas de uma vez — o conjunto completo de ferramentas de páginas em uma única grade.',
+    allInOneCta: 'Abrir o editor completo',
   },
 
   footer: {
@@ -281,26 +304,7 @@ const ptBr = {
             'Pré-visualização de páginas',
             'Processamento 100% client-side — arquivos nunca saem do navegador',
           ],
-        },
-        howTo: {
-          name: 'Como reorganizar páginas em um PDF',
-          description: 'Reorganize as páginas de qualquer PDF em três passos, inteiramente no seu navegador sem envios.',
-          steps: [
-            {
-              name: 'Adicione seu PDF',
-              text: 'Solte um arquivo PDF na ferramenta, clique para procurar ou cole um. Você pode adicionar vários PDFs de uma vez para mesclá-los.',
-            },
-            {
-              name: 'Organize suas páginas',
-              text: 'Arraste as miniaturas de páginas na ordem desejada. Gire, duplique ou exclua páginas conforme necessário — tudo pode ser desfeito.',
-            },
-            {
-              name: 'Baixe instantaneamente',
-              text: 'Clique em Baixar PDF. Seu arquivo reorganizado é reconstruído no seu dispositivo e salvo sem marca d’água.',
-            },
-          ],
-        },
-      },
+        },      },
     },
 
     howto: {
@@ -342,26 +346,6 @@ const ptBr = {
       ctaP: 'Gratuito, ilimitado, sem cadastro — e seu arquivo nunca sai do navegador.',
       ctaButton: 'Reorganizar um PDF agora',
       faqOutro: 'Procurando mais respostas? Veja a <a href="/#faq">seção de perguntas frequentes na página inicial</a>.',
-      jsonLd: {
-        howTo: {
-          name: 'Como organizar páginas de PDF online de graça',
-          description: 'Um guia passo a passo para reorganizar páginas de PDF no seu navegador sem enviar o arquivo a lugar nenhum.',
-          steps: [
-            {
-              name: 'Abra a ferramenta e adicione seu PDF',
-              text: 'Vá a rearrangepdf.com e solte seu PDF na ferramenta, clique em "Selecionar arquivo PDF", ou cole o arquivo com Ctrl+V.',
-            },
-            {
-              name: 'Arraste as páginas para a nova ordem',
-              text: 'Arraste qualquer miniatura de página para uma nova posição. Use os botões ao passar o mouse ou a barra de seleção para girar, duplicar ou excluir páginas.',
-            },
-            {
-              name: 'Baixe o PDF organizado',
-              text: 'Clique em "Baixar PDF" — o arquivo é reconstruído no seu dispositivo e salvo imediatamente, sem marca d’água.',
-            },
-          ],
-        },
-      },
     },
 
     about: {

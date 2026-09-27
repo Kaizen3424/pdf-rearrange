@@ -1,0 +1,224 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/site/Nav.astro';
+import Footer from '../components/site/Footer.astro';
+import Icon from '../components/site/Icon.astro';
+import RichText from '../components/RichText.astro';
+import FaqList from '../components/site/FaqList.astro';
+import PrivacySection from '../components/site/PrivacySection.astro';
+import HowItWorks from '../components/site/HowItWorks.astro';
+import Features from '../components/site/Features.astro';
+import CtaSection from '../components/site/CtaSection.astro';
+import OrganizeTool from '../components/organize/OrganizeTool';
+import SplitTool from '../components/split/SplitTool';
+import ExtractTool from '../components/extract/ExtractTool';
+import { getDictionary, localePath, type Locale } from '../i18n/utils';
+import { getTool, toolLocales } from '../content/tools/manifest';
+import { getRelatedTools, getToolContent } from '../content/tools';
+import { toolSchemas } from '../i18n/schema';
+import type { ToolFocus } from '../components/organize/types';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+
+const tool = getTool(slug);
+const content = getToolContent(slug, locale);
+if (!tool || !content) {
+  throw new Error(`Tool page requested for unknown slug "${slug}" (locale ${locale})`);
+}
+if (!toolLocales(tool).includes(locale)) {
+  throw new Error(`Tool "${slug}" is not published in locale ${locale}`);
+}
+
+const t = getDictionary(locale);
+const site = Astro.site ?? new URL('https://rearrangepdf.com');
+const jsonLd = toolSchemas(tool, content, { siteName: t.siteName, tools: t.tools.breadcrumb }, locale, site);
+
+const related = getRelatedTools(tool, locale);
+
+const benefitIcons = ['gauge', 'zap', 'shield-check'];
+const stepIcons = ['upload', 'move', 'download'];
+---
+
+<Layout
+  title={content.meta.title}
+  description={content.meta.description}
+  canonicalPath={`/${tool.slug}`}
+  locale={locale}
+  jsonLd={jsonLd}
+>
+  <Nav locale={locale} />
+  <main id="main">
+    <section class="bg-canvas border-b border-hairline">
+      <div class="container-page pt-10 pb-14 md:pt-14 md:pb-20">
+        <nav aria-label={t.breadcrumbAriaLabel} class="text-body-sm text-mute">
+          <a href={localePath('/', locale)} class="hover:text-ink transition-colors">
+            {t.breadcrumbHome}
+          </a>
+          <span aria-hidden="true"> / </span>
+          <a href={localePath('/tools', locale)} class="hover:text-ink transition-colors">
+            {t.nav.tools}
+          </a>
+          <span aria-hidden="true"> / </span>
+          <span aria-current="page" class="text-body">{content.breadcrumb}</span>
+        </nav>
+
+        <div class="mt-6 flex max-w-3xl flex-col gap-4">
+          <span
+            class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-pale px-3 py-1.5 text-caption font-semibold text-ink"
+          >
+            <Icon name={tool.icon} size={15} />
+            {t.tools.privateBadge}
+          </span>
+          <h1 class="font-black text-display-sm md:text-display-md">{content.h1}</h1>
+          <p class="text-body-lg text-body">
+            <RichText text={content.intro} locale={locale} />
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="rearrange" class="scroll-mt-24 bg-canvas-soft border-b border-hairline">
+      <div class="container-page py-12 md:py-16">
+        {
+          tool.engine === 'split' ? (
+            <SplitTool client:load locale={locale} />
+          ) : tool.engine === 'extract' ? (
+            <ExtractTool client:load locale={locale} />
+          ) : (
+            <OrganizeTool client:load locale={locale} focus={tool.focus} />
+          )
+        }
+      </div>
+    </section>
+
+    {
+      content.benefits ? (
+        <section class="bg-canvas">
+          <div class="container-page py-16 md:py-24">
+            <div class="max-w-2xl" data-reveal>
+              <h2 class="text-display-sm font-semibold">{t.tools.benefitsHeading}</h2>
+              <p class="mt-3 text-body-lg text-body">
+                <RichText text={t.tools.benefitsSub} locale={locale} />
+              </p>
+            </div>
+            <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {content.benefits.map((benefit, index) => (
+                <li
+                  class:list={[
+                    'rounded-xl p-6 md:p-7 h-full transition-[transform,box-shadow] duration-200 ease-standard hover:-translate-y-1 hover:elev-2',
+                    index === 0 ? 'bg-primary-pale' : 'bg-canvas',
+                  ]}
+                  data-reveal
+                  style={`--reveal-delay:${index * 70}ms`}
+                >
+                  <span
+                    class:list={[
+                      'flex size-11 items-center justify-center rounded-md',
+                      index === 0 ? 'bg-solid text-primary' : 'bg-canvas-soft text-ink',
+                    ]}
+                  >
+                    <Icon name={benefitIcons[index] ?? 'check'} size={22} />
+                  </span>
+                  <h3 class="mt-5 text-display-xs font-semibold">{benefit.title}</h3>
+                  <p class="mt-2 text-body-md text-body">
+                    <RichText text={benefit.text} locale={locale} />
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : (
+        <Features locale={locale} />
+      )
+    }
+
+    {
+      content.howTo ? (
+        <section id="how-it-works" class="scroll-mt-24 bg-canvas">
+          <div class="container-page py-16 md:py-24">
+            <div class="max-w-2xl" data-reveal>
+              <h2 class="text-display-sm font-semibold">{content.howTo.heading}</h2>
+              <p class="mt-3 text-body-lg text-body">{content.howTo.sub}</p>
+            </div>
+            <ol class="mt-10 grid gap-6 md:grid-cols-3">
+              {content.howTo.steps.map((step, index) => (
+                <li
+                  class="relative rounded-xl bg-canvas-soft p-6 md:p-7 transition-[transform,box-shadow] duration-200 ease-standard hover:-translate-y-1 hover:elev-2"
+                  data-reveal
+                  style={`--reveal-delay:${index * 80}ms`}
+                >
+                  <div class="flex items-center justify-between">
+                    <span class="flex size-11 items-center justify-center rounded-md bg-solid text-primary">
+                      <Icon name={stepIcons[index] ?? 'check'} size={22} />
+                    </span>
+                    <span class="font-black text-display-md text-ink/10" aria-hidden="true">
+                      {index + 1}
+                    </span>
+                  </div>
+                  <h3 class="mt-5 text-display-xs font-semibold">{step.title}</h3>
+                  <p class="mt-2 text-body-md text-body">
+                    <RichText text={step.text} locale={locale} />
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      ) : (
+        <HowItWorks locale={locale} />
+      )
+    }
+
+    <PrivacySection locale={locale} />
+
+    <FaqList items={content.faq} heading={t.faq.heading} id="faq" />
+
+    {
+      related.length > 0 && (
+        <section class="bg-canvas border-t border-hairline">
+          <div class="container-page py-16 md:py-20">
+            <h2 class="text-display-sm font-semibold" data-reveal>
+              {t.tools.relatedHeading}
+            </h2>
+            <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((entry, index) => (
+                <li data-reveal style={`--reveal-delay:${index * 60}ms`}>
+                  <a
+                    href={localePath(`/${entry.tool.slug}`, locale)}
+                    class="group flex h-full items-start gap-4 rounded-xl bg-canvas-soft p-5 transition-[transform,box-shadow] duration-200 ease-standard hover:-translate-y-1 hover:elev-2"
+                  >
+                    <span class="flex size-10 shrink-0 items-center justify-center rounded-md bg-solid text-primary">
+                      <Icon name={entry.tool.icon} size={20} />
+                    </span>
+                    <span class="min-w-0">
+                      <span class="flex items-center gap-2 text-body-md-strong text-ink">
+                        {entry.content.breadcrumb}
+                        <Icon
+                          name="arrow-right"
+                          size={16}
+                          class="shrink-0 text-mute transition-transform duration-200 ease-out-expo group-hover:translate-x-1"
+                        />
+                      </span>
+                      <span class="mt-1.5 block text-body-sm text-body">
+                        {entry.content.meta.description}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    <CtaSection locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Layout>

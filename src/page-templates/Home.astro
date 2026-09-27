@@ -4,6 +4,7 @@ import Nav from '../components/site/Nav.astro';
 import Hero from '../components/site/Hero.astro';
 import HowItWorks from '../components/site/HowItWorks.astro';
 import Features from '../components/site/Features.astro';
+import ToolsStrip from '../components/site/ToolsStrip.astro';
 import PrivacySection from '../components/site/PrivacySection.astro';
 import Faq from '../components/site/Faq.astro';
 import SeoContent from '../components/site/SeoContent.astro';
@@ -38,6 +39,7 @@ const jsonLd = homeSchemas(t, locale, site);
     </Hero>
     <HowItWorks locale={locale} />
     <Features locale={locale} />
+    <ToolsStrip locale={locale} />
     <PrivacySection locale={locale} />
     <Faq locale={locale} />
     <SeoContent locale={locale} />

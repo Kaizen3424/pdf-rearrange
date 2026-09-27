@@ -5,7 +5,7 @@ import Footer from '../components/site/Footer.astro';
 import Icon from '../components/site/Icon.astro';
 import RichText from '../components/RichText.astro';
 import { getDictionary, localePath, type Locale } from '../i18n/utils';
-import { howToSchemas } from '../i18n/schema';
+import { webPageSchemas } from '../i18n/schema';
 
 interface Props {
   locale: Locale;
@@ -14,7 +14,12 @@ interface Props {
 const { locale } = Astro.props;
 const t = getDictionary(locale);
 const site = Astro.site ?? new URL('https://rearrangepdf.com');
-const jsonLd = howToSchemas(t, locale, site);
+const jsonLd = webPageSchemas(t, locale, site, {
+  logicalPath: '/how-to-organize-pdf-pages',
+  name: t.pages.howto.h1,
+  description: t.pages.howto.meta.description,
+  breadcrumb: t.pages.howto.breadcrumb,
+});
 
 const trickIcons = ['undo-2', 'layers', 'file-plus', 'plus', 'layout-grid', 'maximize-2'];
 ---

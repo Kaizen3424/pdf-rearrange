@@ -25,8 +25,31 @@ const de = {
     features: 'Funktionen',
     privacy: 'Datenschutz',
     faq: 'FAQ',
+    tools: 'Tools',
     cta: 'PDF neu anordnen',
     toggleMenu: 'Menü öffnen/schließen',
+  },
+
+  tools: {
+    breadcrumb: 'Tools',
+    meta: {
+      title: 'Kostenlose PDF-Tools — Neu anordnen, teilen, drehen',
+      description:
+        'Alle kostenlosen PDF-Tools für den Browser: zusammenführen, teilen, löschen, drehen und vieles mehr. Keine Uploads, keine Anmeldung, keine Limits.',
+    },
+    h1: 'Kostenlose PDF-Tools, die Ihre Datei nie hochladen',
+    intro:
+      'Wählen Sie ein Tool, und es läuft vollständig in Ihrer Browser-Registerkarte. Nichts wird auf einen Server hochgeladen, es gibt kein Konto zu erstellen, und keine Datei wird mit einem Wasserzeichen versehen.',
+    privateBadge: 'Läuft in Ihrem Browser',
+    benefitsHeading: 'Warum diese Tools anders sind',
+    benefitsSub:
+      'Die meisten Online-PDF-Tools laden Ihre Datei auf einen Server und bitten Sie, deren Löschrichtlinie zu vertrauen. Diese erledigen die Arbeit auf Ihrem eigenen Gerät, sodass es von Anfang an nichts zu leaken, zu kompromittieren oder vorzuladen gibt.',
+    relatedHeading: 'Verwandte Tools',
+    cardCta: 'Tool öffnen',
+    allInOneTitle: 'Lieber alles an einem Ort erledigen?',
+    allInOneBody:
+      'Der vollständige Editor auf der Startseite führt Seiten zusammen, ordnet sie neu, dreht, dupliziert und löscht sie alle auf einmal — die komplette Sammlung von Seiten-Tools in einem einzigen Raster.',
+    allInOneCta: 'Vollständigen Editor öffnen',
   },
 
   footer: {
@@ -100,7 +123,7 @@ const de = {
       },
       {
         title: 'Originalqualität erhalten',
-        text: 'Seiten werden Byte für Byte aus Ihrer Original-PDF kopiert. Schriften, Vektoren, Bilder und Links bleiben genau wie sie waren — keine Neubelichtung.',
+        text: 'Seiten werden Byte für Byte aus Ihrer Original-PDF kopiert. Schriften, Vektoren, Bilder und Links bleiben genau wie sie waren — keine erneute Komprimierung.',
       },
     ],
   },
@@ -133,7 +156,7 @@ const de = {
     items: [
       {
         q: 'Wie kann ich Seiten in einer PDF neu anordnen?',
-        a: 'Öffnen Sie das Tool oben auf dieser Seite und fügen Sie Ihre PDF hinzu, dann ziehen Sie eine Miniaturansicht an ihre neue Position — die umgebenden Seiten verschieben sich automatisch, um Platz zu schaffen. Drehen, duplizieren oder löschen Sie Seiten bei Bedarf und klicken Sie auf „PDF herunterladen", um die neu sortierte Datei zu speichern. Der gesamte Prozess dauert weniger als eine Minute und Ihre Datei verlässt niemals Ihr Gerät.',
+        a: 'Öffnen Sie das Tool oben auf dieser Seite und fügen Sie Ihre PDF hinzu, dann ziehen Sie eine Miniaturansicht an ihre neue Position — die umgebenden Seiten verschieben sich automatisch, um Platz zu schaffen. Drehen, duplizieren oder löschen Sie Seiten bei Bedarf und klicken Sie auf „PDF herunterladen“, um die neu sortierte Datei zu speichern. Der gesamte Prozess dauert weniger als eine Minute und Ihre Datei verlässt niemals Ihr Gerät.',
       },
       {
         q: 'Wie kann ich Seiten in einer PDF kostenlos neu anordnen?',
@@ -141,11 +164,11 @@ const de = {
       },
       {
         q: 'Wie ordne ich PDF-Seiten neu an?',
-        a: 'Der einfachste Weg ist Drag-and-Drop: Ihre PDF erscheint als Raster von Miniaturansichten, und Sie ziehen jede Seite dorthin, wo sie hingehört. Da der Editor vollständig in Ihrem Browser läuft, gibt es nichts zu installieren und keine Datei wird irgendwo hochgeladen. Wenn die Reihenfolge stimmt, klicken Sie auf „PDF herunterladen", um die neue Datei zu speichern.',
+        a: 'Der einfachste Weg ist Drag-and-Drop: Ihre PDF erscheint als Raster von Miniaturansichten, und Sie ziehen jede Seite dorthin, wo sie hingehört. Da der Editor vollständig in Ihrem Browser läuft, gibt es nichts zu installieren und keine Datei wird irgendwo hochgeladen. Wenn die Reihenfolge stimmt, klicken Sie auf „PDF herunterladen“, um die neue Datei zu speichern.',
       },
       {
         q: 'Wie kann ich Seiten in einer PDF auf dem iPhone neu anordnen?',
-        a: 'Öffnen Sie diese Seite in Safari und tippen Sie, um Ihre PDF hinzuzufügen — aus der Dateien-App, Mail oder einer anderen App, die PDFs teilt. Halten Sie eine Miniaturansicht kurz gedrückt, um sie anzuheben, ziehen Sie sie an die gewünschte Stelle und tippen Sie dann auf „PDF herunterladen" und speichern Sie das Ergebnis zurück in Dateien oder teilen Sie es direkt. Keine App-Installation erforderlich, und derselbe Ablauf funktioniert auf dem iPad.',
+        a: 'Öffnen Sie diese Seite in Safari und tippen Sie, um Ihre PDF hinzuzufügen — aus der Dateien-App, Mail oder einer anderen App, die PDFs teilt. Halten Sie eine Miniaturansicht kurz gedrückt, um sie anzuheben, ziehen Sie sie an die gewünschte Stelle und tippen Sie dann auf „PDF herunterladen“ und speichern Sie das Ergebnis zurück in Dateien oder teilen Sie es direkt. Keine App-Installation erforderlich, und derselbe Ablauf funktioniert auf dem iPad.',
       },
       {
         q: 'Kann ich PDF-Seiten auf dem Handy neu anordnen?',
@@ -177,7 +200,7 @@ const de = {
       },
       {
         q: 'Kann ich mehrere PDFs gleichzeitig zusammenführen und neu anordnen?',
-        a: 'Ja. Fügen Sie beliebig viele PDFs hinzu — ziehen Sie mehrere Dateien auf einmal herein oder verwenden Sie „PDFs hinzufügen" während der Bearbeitung — und sie werden zu einem Seitennetz zusammengeführt, mit Badges, die zeigen, aus welcher Datei jede Seite stammt. Sie können dann Seiten aus jedem Dokument nach Belieben kombinieren und neu anordnen, bevor Sie eine einzelne PDF herunterladen.',
+        a: 'Ja. Fügen Sie beliebig viele PDFs hinzu — ziehen Sie mehrere Dateien auf einmal herein oder verwenden Sie „PDFs hinzufügen“ während der Bearbeitung — und sie werden zu einem Seitennetz zusammengeführt, mit Badges, die zeigen, aus welcher Datei jede Seite stammt. Sie können dann Seiten aus jedem Dokument nach Belieben kombinieren und neu anordnen, bevor Sie eine einzelne PDF herunterladen.',
       },
       {
         q: 'Kann ich einen Fehler rückgängig machen?',
@@ -197,7 +220,7 @@ const de = {
     h3Merge: 'PDF-Seiten an einem Ort zusammenführen und neu anordnen',
     pMerge: 'Echte Dokumente leben selten in einer einzigen Datei: Der Bericht ist eine PDF, der Anhang eine andere, die neue Titelseite eine dritte. Rearrange PDF ermöglicht es Ihnen, PDF-Seiten zu zusammenführen und neu anzuordnen, ohne zwischen Apps zu wechseln. Laden Sie beliebig viele Dateien auf einmal hoch — oder fügen Sie mitten in der Bearbeitung weitere hinzu — und jede Seite landet in einem Raster, versehen mit einem farbigen Badge, das zeigt, aus welchem Dokument sie stammt. Von dort aus können Sie Seiten aus jeder Quelle zu einer einzigen zusammenhängenden Datei kombinieren und neu anordnen: Kapitel durchweben, die neue Titelseite nach vorne bringen oder zusätzliches Material in die Mitte einfügen. Ein Klick erzeugt eine sauber zusammengeführte PDF.',
     h3Delete: 'PDF-Seiten löschen und neu anordnen',
-    pDelete: 'Bereinigung und Sortierung gehen normalerweise Hand in Hand. Wenn Sie PDF-Seiten im selben Durchgang löschen und neu anordnen, vermeiden Sie doppeltes Exportieren — und genau beim erneuten Exportieren elsewhere schleichen sich Qualitätsverlust und Wasserzeichen ein. Wählen Sie eine beliebige Seite und entfernen Sie sie mit einem Klick, oder tippen Sie auf mehrere Miniaturansichten und löschen Sie sie als Stapel. Gelöschte Seiten bleiben in Ihrem Rückgängig-Verlauf, sodass ein übermäßiges Löschen nie dauerhaft ist. In Kombination mit Duplizieren, Drehen und Leer-seite-einfügen macht dies das Tool zu einem leichtgewichtigen Seiten-Editor: Entfernen Sie, was Sie nicht benötigen, ordnen Sie, was übrig bleibt, exportieren Sie einmal.',
+    pDelete: 'Bereinigung und Sortierung gehen normalerweise Hand in Hand. Wenn Sie PDF-Seiten im selben Durchgang löschen und neu anordnen, vermeiden Sie doppeltes Exportieren — und genau beim erneuten Exportieren anderswo schleichen sich Qualitätsverlust und Wasserzeichen ein. Wählen Sie eine beliebige Seite und entfernen Sie sie mit einem Klick, oder tippen Sie auf mehrere Miniaturansichten und löschen Sie sie als Stapel. Gelöschte Seiten bleiben in Ihrem Rückgängig-Verlauf, sodass ein übermäßiges Löschen nie dauerhaft ist. In Kombination mit Duplizieren, Drehen und dem Einfügen einer leeren Seite macht dies das Tool zu einem leichtgewichtigen Seiten-Editor: Entfernen Sie, was Sie nicht benötigen, ordnen Sie, was übrig bleibt, exportieren Sie einmal.',
     h3Steps: 'PDF-Seiten in drei Schritten neu anordnen',
     pSteps: 'Wenn Sie sich fragen, wie Sie PDF-Seiten neu anordnen, ohne ein Handbuch zu lesen, ist der gesamte Arbeitsablauf drei Schritte:',
     steps: [
@@ -215,7 +238,7 @@ const de = {
       '<strong>Desktop-Software — für schwere, wiederholte Bearbeitung.</strong> Editoren wie Adobe Acrobat bieten tiefgreifende PDF-Toolkits, aber sie kosten ein Abonnement, müssen installiert und aktuell gehalten werden und sind überdimensioniert, wenn Sie nur Seiten 12 und 13 tauschen müssen.',
       '<strong>Mobile Apps — bequem, mit Einschränkungen.</strong> Dedizierte Apps funktionieren offline, fügen aber Speicherberechtigungen, Werbung und Datenschutzrichtlinien zum Lesen hinzu. Für eine einmalige Korrektur ist ein Browser-Tool, dem Sie bereits vertrauen, die leichtere Option.',
     ],
-    pBestOutro: 'Für die meisten Menschen, most of the time, gewinnt die erste Option: Öffnen Sie das <a href="/#rearrange">Tool oben auf dieser Seite</a>, ordnen Sie PDF kostenlos ohne Uploads und Wasserzeichen neu und sind in einer Minute fertig.',
+    pBestOutro: 'Für die meisten Menschen gewinnt in den meisten Fällen die erste Option: Öffnen Sie das <a href="/#rearrange">Tool oben auf dieser Seite</a>, ordnen Sie PDF kostenlos ohne Uploads und Wasserzeichen neu und sind in einer Minute fertig.',
     h3Why: 'Warum kostenlos nicht gleich riskant bedeutet',
     pWhy: 'Kostenlose Online-Tools verdienen ihren Ruf ehrlich: Viele monetarisieren, indem sie die Dokumente, die Sie hochladen, abbauen, oder indem sie Wasserzeichen stampfen, bis Sie bezahlen. Dieses Tool nimmt den umgekehrten Weg. Ihre PDF wird vollständig in Ihrem Browser gelesen, angezeigt und umgeschrieben, sodass keine Kopie Ihrer Datei jemals auf einem Server existiert — nichts zu leaken, nichts zu verkaufen, nichts, das nach dem Schließen des Tabs aufbewahrt wird. Sie müssen das nicht auf Treu und Glauben akzeptieren: Öffnen Sie die Entwicklertools Ihres Browsers, beobachten Sie den Netzwerk-Tab während Sie arbeiten, und Sie werden null Datenverkehr sehen. Das ist es, was es sicher für Verträge, Krankenakten, Finanzberichte und alles Vertrauliche macht. Lesen Sie die vollständige <a href="/privacy">Datenschutzgarantie</a> für Details.',
   },
@@ -281,26 +304,7 @@ const de = {
             'Seitenvorschau',
             '100 % clientseitige Verarbeitung — Dateien verlassen niemals den Browser',
           ],
-        },
-        howTo: {
-          name: 'Wie man Seiten in einer PDF neu anordnet',
-          description: 'Ordnen Sie die Seiten einer beliebigen PDF in drei Schritten neu, vollständig in Ihrem Browser ohne Uploads.',
-          steps: [
-            {
-              name: 'PDF hinzufügen',
-              text: 'PDF-Datei auf das Tool ziehen, zum Durchsuchen klicken oder einfügen. Sie können mehrere PDFs auf einmal hinzufügen, um sie zusammenzuführen.',
-            },
-            {
-              name: 'Seiten anordnen',
-              text: 'Seitenminiaturansichten in die gewünschte Reihenfolge ziehen. Seiten bei Bedarf drehen, duplizieren oder löschen — alles kann rückgängig gemacht werden.',
-            },
-            {
-              name: 'Sofort herunterladen',
-              text: 'Auf PDF herunterladen klicken. Ihre neu angeordnete Datei wird auf Ihrem Gerät erstellt und ohne Wasserzeichen gespeichert.',
-            },
-          ],
-        },
-      },
+        },      },
     },
 
     howto: {
@@ -310,7 +314,7 @@ const de = {
       },
       breadcrumb: 'PDF-Seiten organisieren',
       h1: 'PDF-Seiten online kostenlos organisieren',
-      intro: 'Ihr Dokument verkehrt herum gescannt? Anhang vor der Einleitung? Hier ist der schnellste Weg, die Seitenordnung einer beliebigen PDF zu korrigieren — ohne sie auf jemandes Server hochzuladen, ein Konto zu erstellen oder eine „Kostenlose Testversion"-Wand zu treffen.',
+      intro: 'Ihr Dokument verkehrt herum gescannt? Anhang vor der Einleitung? Hier ist der schnellste Weg, die Seitenordnung einer beliebigen PDF zu korrigieren — ohne sie auf jemandes Server hochzuladen, ein Konto zu erstellen oder eine „Kostenlose Testversion“-Wand zu treffen.',
       quickH2: 'Die schnelle Antwort',
       quickSteps: [
         '<a href="/#rearrange">Öffnen Sie das Tool</a> und legen Sie Ihre PDF darauf ab.',
@@ -327,41 +331,21 @@ const de = {
       step3P: 'Klicken Sie auf <strong>PDF herunterladen</strong>. Die Datei wird auf Ihrem Gerät neu erstellt — die genauen Originalseiten, nur in Ihrer gewählten Reihenfolge — und direkt in Ihren Download-Ordner gespeichert. Kein Wasserzeichen, keine E-Mail erforderlich, keine Warteschlange.',
       tricksH2: 'Nützliche Tricks, die Sie kennen sollten',
       tricks: [
-        '<strong>Nichts ist endgültig.</strong> Jede Aktion ist mit Strg+Z rückgängig und mit Strg+Umschalt+Z wiederholbar. Experimentieren Sie frei — die One-Click-„Originalreihenfolge wiederherstellen"-Schaltfläche bringt das gesamte Dokument zurück in seinen Ausgangszustand.',
+        '<strong>Nichts ist endgültig.</strong> Jede Aktion ist mit Strg+Z rückgängig und mit Strg+Umschalt+Z wiederholbar. Experimentieren Sie frei — die Ein-Klick-„Originalreihenfolge wiederherstellen“-Schaltfläche bringt das gesamte Dokument zurück in seinen Ausgangszustand.',
         '<strong>Ein ganzes Dokument umkehren</strong> mit der Umkehrschaltfläche in der Werkzeugleiste — praktisch für verkehrt herum gescannte Dokumente, kein Ziehen erforderlich.',
-        '<strong>Eine Seite ersetzen:</strong> Löschen Sie die veraltete Seite, klicken Sie auf „PDFs hinzufügen", um die Ersatzseite einzubringen, und ziehen Sie sie dann an die richtige Position.',
-        '<strong>Eine leere Seite einfügen</strong> — nützlich für Notizen oder Drucktrennseiten — mit der „+"-Schaltfläche in der Werkzeugleiste.',
+        '<strong>Eine Seite ersetzen:</strong> Löschen Sie die veraltete Seite, klicken Sie auf „PDFs hinzufügen“, um die Ersatzseite einzubringen, und ziehen Sie sie dann an die richtige Position.',
+        '<strong>Eine leere Seite einfügen</strong> — nützlich für Notizen oder Drucktrennseiten — mit der „+“-Schaltfläche in der Werkzeugleiste.',
         '<strong>Nur behalten, was Sie brauchen:</strong> Wählen Sie die Seiten aus, die Sie behalten möchten, kehren Sie die Auswahl nicht um — löschen Sie einfach die anderen und laden Sie das bereinigte Dokument herunter.',
         '<strong>Vor dem Bestätigen prüfen:</strong> Öffnen Sie eine beliebige Seite im Vollbildmodus mit der Vorschauschaltfläche und blättern Sie mit den Pfeiltasten durch das Dokument, bevor Sie herunterladen.',
       ],
       mobileH2: 'PDF-Seiten auf dem Handy neu anordnen',
       mobileP: 'Der Editor ist Touch-first konzipiert: Miniaturansichten sind groß, Aktionsschaltflächen befinden sich in Reichweite der Daumen und Ziehen funktioniert mit kurzem Drücken und Halten. Tippen Sie auf Seiten, um sie für Stapeldrehung oder -löschung auszuwählen. Auf iOS oder Android können Sie eine PDF aus Ihrer Dateien- oder Drive-App öffnen, sie an den Browser weitergeben und direkt dort neu anordnen.',
       localH2: 'Warum lokales Neuanordnen wichtig ist',
-      localP: 'Die meisten „kostenlosen" PDF-Organisatoren laden Ihre Datei auf einen Verarbeitungsserver hoch und versprechen dann, sie später zu löschen. Das ist in Ordnung, bis es das nicht mehr ist — Verträge, Krankenakten und Finanzberichte verdienen etwas Besseres. Dieses Tool erledigt die gesamte Arbeit innerhalb Ihrer Browser-Registerkarte: Ihre PDF wird in den Speicher gelesen, angezeigt und wieder ausgegeben, ohne dass ein einziges Byte Ihr Gerät verlässt. Sie müssen uns nicht einfach glauben — öffnen Sie die Entwicklertools Ihres Browsers, beobachten Sie den Netzwerk-Tab und ordnen Sie nach Herzenslust um.',
+      localP: 'Die meisten „kostenlosen“ PDF-Organisatoren laden Ihre Datei auf einen Verarbeitungsserver hoch und versprechen dann, sie später zu löschen. Das ist in Ordnung, bis es das nicht mehr ist — Verträge, Krankenakten und Finanzberichte verdienen etwas Besseres. Dieses Tool erledigt die gesamte Arbeit innerhalb Ihrer Browser-Registerkarte: Ihre PDF wird in den Speicher gelesen, angezeigt und wieder ausgegeben, ohne dass ein einziges Byte Ihr Gerät verlässt. Sie müssen uns nicht einfach glauben — öffnen Sie die Entwicklertools Ihres Browsers, beobachten Sie den Netzwerk-Tab und ordnen Sie nach Herzenslust um.',
       ctaH2: 'Bereit, Ihre Seitenordnung zu korrigieren?',
       ctaP: 'Kostenlos, unbegrenzt, keine Anmeldung — und Ihre Datei verlässt niemals den Browser.',
       ctaButton: 'PDF jetzt neu anordnen',
       faqOutro: 'Suchen Sie nach weiteren Antworten? Siehe das vollständige <a href="/#faq">FAQ auf der Startseite</a>.',
-      jsonLd: {
-        howTo: {
-          name: 'PDF-Seiten online kostenlos organisieren',
-          description: 'Eine Schritt-für-Schritt-Anleitung zum Neuanordnen von PDF-Seiten in Ihrem Browser, ohne die Datei irgendwo hochzuladen.',
-          steps: [
-            {
-              name: 'Tool öffnen und PDF hinzufügen',
-              text: 'Gehen Sie zu rearrangepdf.com und legen Sie Ihre PDF auf das Tool, klicken Sie auf „PDF-Datei auswählen" oder fügen Sie die Datei mit Strg+V ein.',
-            },
-            {
-              name: 'Seiten in die neue Reihenfolge ziehen',
-              text: 'Ziehen Sie eine beliebige Seitenminiaturansicht an eine neue Position. Verwenden Sie die Hover-Schaltflächen oder die Auswahlwerkzeugleiste zum Drehen, Duplizieren oder Löschen von Seiten.',
-            },
-            {
-              name: 'Die organisierte PDF herunterladen',
-              text: 'Klicken Sie auf „PDF herunterladen" — die Datei wird auf Ihrem Gerät neu erstellt und sofort ohne Wasserzeichen gespeichert.',
-            },
-          ],
-        },
-      },
     },
 
     about: {
@@ -397,7 +381,7 @@ const de = {
       beforeItems: [
         '<strong>Sagen Sie uns, welche Datei Probleme gemacht hat.</strong> Wenn eine PDF nicht lädt oder exportiert, beschreiben Sie den Dokumenttyp (Scan, Formular, verschlüsselt, sehr groß), anstatt die Datei zu senden.',
         '<strong>Wir können Ihre Dateien nicht sehen.</strong> Das Tool läuft vollständig in Ihrem Browser, also erreichen uns Ihre PDFs nie. Bitte senden Sie keine sensiblen Dokumente per E-Mail — eine Beschreibung ist alles, was wir brauchen.',
-        '<strong>Fügen Sie Ihren Browser und Ihr Gerät hinzu</strong> (zum Beispiel „Safari auf iPhone"), wenn Sie ein Problem melden — es hilft uns, es zu reproduzieren.',
+        '<strong>Fügen Sie Ihren Browser und Ihr Gerät hinzu</strong> (zum Beispiel „Safari auf iPhone“), wenn Sie ein Problem melden — es hilft uns, es zu reproduzieren.',
       ],
       answersH2: 'Hier finden Sie vielleicht sofort eine Antwort',
       helpLinks: [
@@ -510,7 +494,7 @@ const de = {
         },
         {
           title: '4. Keine Garantie',
-          text: 'Der Service wird „wie er ist" kostenlos und ohne Gewährleistungen jeglicher Art bereitgestellt. Wir arbeiten hart daran, ihn genau und zuverlässig zu halten — Seiteninhalte werden Byte für Byte aus Ihrer Originaldatei kopiert — aber wir können eine ununterbrochene Verfügbarkeit oder Eignung für einen bestimmten Zweck nicht garantieren. Erstellen Sie Backups wichtiger Dokumente.',
+          text: 'Der Service wird „wie er ist“ kostenlos und ohne Gewährleistungen jeglicher Art bereitgestellt. Wir arbeiten hart daran, ihn genau und zuverlässig zu halten — Seiteninhalte werden Byte für Byte aus Ihrer Originaldatei kopiert — aber wir können eine ununterbrochene Verfügbarkeit oder Eignung für einen bestimmten Zweck nicht garantieren. Erstellen Sie Backups wichtiger Dokumente.',
         },
         {
           title: '5. Haftungsbeschränkung',

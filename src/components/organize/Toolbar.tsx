@@ -9,7 +9,7 @@ import {
   Redo2,
   Undo2,
 } from 'lucide-react';
-import type { SourceDoc, Status, Zoom } from './types';
+import type { SourceDoc, Status, ToolFocus, Zoom } from './types';
 import { SOURCE_COLORS } from './types';
 import { useToolI18n } from './i18n';
 
@@ -29,6 +29,8 @@ interface ToolbarProps {
   onStartOver: () => void;
   onDownload: () => void;
   status: Status;
+  /** Highlights the control matching the tool page's primary operation. */
+  focus?: ToolFocus;
 }
 
 const zoomOptions: Zoom[] = ['sm', 'md', 'lg'];
@@ -37,11 +39,13 @@ function ToolButton({
   label,
   onClick,
   disabled,
+  emphasis = false,
   children,
 }: {
   label: string;
   onClick: () => void;
   disabled?: boolean;
+  emphasis?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -49,7 +53,12 @@ function ToolButton({
       type="button"
       title={label}
       aria-label={label}
-      className="tap-target flex size-9 items-center justify-center rounded-md text-ink transition-[background-color,transform] duration-150 ease-standard hover:bg-canvas-soft active:scale-95 disabled:opacity-35 disabled:hover:bg-transparent"
+      className={[
+        'tap-target flex size-9 items-center justify-center rounded-md text-ink transition-[background-color,transform] duration-150 ease-standard hover:bg-canvas-soft active:scale-95 disabled:opacity-35 disabled:hover:bg-transparent',
+        // The control a focused tool page is about gets a persistent ring plus a
+        // tinted plate, so it reads as primary without a hover state.
+        emphasis ? 'bg-primary-pale ring-2 ring-primary' : '',
+      ].join(' ')}
       onClick={onClick}
       disabled={disabled}
     >
@@ -74,6 +83,7 @@ export default function Toolbar({
   onStartOver,
   onDownload,
   status,
+  focus,
 }: ToolbarProps) {
   const { t } = useToolI18n();
   const [confirmReset, setConfirmReset] = useState(false);
@@ -138,7 +148,12 @@ export default function Toolbar({
         <ToolButton label={t.toolbar.redo} onClick={onRedo} disabled={!canRedo}>
           <Redo2 className="size-4" />
         </ToolButton>
-        <ToolButton label={t.toolbar.reverse} onClick={onReverse} disabled={pageCount < 2}>
+        <ToolButton
+          label={t.toolbar.reverse}
+          onClick={onReverse}
+          disabled={pageCount < 2}
+          emphasis={focus === 'reverse'}
+        >
           <ArrowDownUp className="size-4" />
         </ToolButton>
         <button
@@ -186,13 +201,20 @@ export default function Toolbar({
       <div className="flex items-center gap-2">
         <button
           type="button"
-          className="btn btn-secondary tap-target px-4 py-2 text-body-sm"
           onClick={onAddFiles}
+          className={[
+            'btn btn-secondary tap-target px-4 py-2 text-body-sm',
+            focus === 'merge' || focus === 'insert' ? 'ring-2 ring-primary' : '',
+          ].join(' ')}
         >
           <FilePlus className="size-4" />
           <span className="hidden sm:inline">{t.toolbar.addPdfs}</span>
         </button>
-        <ToolButton label={t.toolbar.addBlank} onClick={onAddBlank}>
+        <ToolButton
+          label={t.toolbar.addBlank}
+          onClick={onAddBlank}
+          emphasis={focus === 'blank' || focus === 'insert'}
+        >
           <Plus className="size-4" />
         </ToolButton>
       </div>

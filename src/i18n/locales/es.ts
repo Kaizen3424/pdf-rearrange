@@ -25,8 +25,31 @@ const es = {
     features: 'Funciones',
     privacy: 'Privacidad',
     faq: 'Preguntas frecuentes',
+    tools: 'Herramientas',
     cta: 'Reorganizar un PDF',
     toggleMenu: 'Abrir menú',
+  },
+
+  tools: {
+    breadcrumb: 'Herramientas',
+    meta: {
+      title: 'Herramientas PDF gratuitas — Fusionar, dividir y reordenar',
+      description:
+        'Todas las herramientas PDF gratuitas que necesitas en tu navegador: fusionar, dividir, eliminar, rotar y mucho más. Sin subidas, sin registro, sin límites.',
+    },
+    h1: 'Herramientas PDF gratuitas que nunca suben tu archivo',
+    intro:
+      'Elige una herramienta y se ejecuta íntegramente dentro de la pestaña de tu navegador. Nada se sube a un servidor, no hay que crear una cuenta y ningún archivo recibe una marca de agua.',
+    privateBadge: 'Funciona en tu navegador',
+    benefitsHeading: 'Por qué estas herramientas son distintas',
+    benefitsSub:
+      'La mayoría de las herramientas PDF online suben tu documento a un servidor y te piden que confíes en su política de eliminación. Estas hacen el trabajo en tu propio dispositivo, así que desde el principio no hay ninguna copia de tu archivo que pueda filtrarse, violarse o ser requerida.',
+    relatedHeading: 'Herramientas relacionadas',
+    cardCta: 'Abrir herramienta',
+    allInOneTitle: '¿Prefieres hacerlo todo en un solo lugar?',
+    allInOneBody:
+      'El editor completo de la página de inicio fusiona, reordena, rota, duplica y elimina todas las páginas a la vez — el conjunto completo de herramientas de páginas en una sola cuadrícula.',
+    allInOneCta: 'Abrir el editor completo',
   },
 
   footer: {
@@ -108,7 +131,7 @@ const es = {
   privacySection: {
     h2: 'Tu PDF nunca sale de tu navegador.',
     p1: 'La mayoría de las herramientas PDF online suben tu archivo a un servidor, lo procesan allí y te piden que confíes en su política de eliminación. Nosotros invertimos el modelo: la reorganización de páginas ocurre <strong>íntegramente en tu dispositivo</strong>, usando el mismo motor de renderizado que ya tiene tu navegador.',
-    p2: 'Ningún servidor recibe nunca tu documento. No hay nada que filtrar, violar o subpoena. Eso lo hace seguro para contratos, historiales médicos, estados financieros y cualquier otra cosa que no le darías a un desconocido.',
+    p2: 'Ningún servidor recibe nunca tu documento. No hay nada que filtrar, violar ni que pueda ser objeto de una citación judicial. Eso lo hace seguro para contratos, historiales médicos, estados financieros y cualquier otra cosa que no le darías a un desconocido.',
     readPromise: 'Lee nuestra promesa de privacidad',
     tryNow: 'Pruébalo ahora',
     bullets: [
@@ -193,9 +216,9 @@ const es = {
   seoContent: {
     h2: 'Reorganiza páginas PDF online — gratis e ilimitado',
     p1: 'Rearrange PDF es una herramienta online gratuita creada para una sola función: ayudarte a reorganizar páginas PDF de forma rápida, privada y sin fricciones. Ya sea que necesites corregir un escaneo al revés, mover un anexo al final, o poner en orden lógico una exportación caótica, obtienes un editor visual completo con miniaturas de páginas arrastrables — directamente en tu navegador. Nada que instalar, ninguna cuenta que crear, ninguna marca de agua en el resultado. Y como todo se ejecuta localmente en tu dispositivo, puedes reorganizar páginas PDF online gratis, sin las subidas, colas y límites diarios que imponen otras herramientas.',
-    p2: 'El editor se comporta como una pequeña aplicación de escritorio. Cada página de tu documento aparece como una miniatura que puedes agarrar y soltar en una nueva posición, mientras las páginas restantes se desplazan automáticamente para dejar espacio. Más allá de reordenar, puedes rotar escaneados sideways, duplicar páginas repetidas, insertar hojas en blanco y seleccionar varias páginas a la vez para acciones por lotes. Un historial de deshacer completo significa que puedes experimentar libremente — nada es definitivo hasta que descargas.',
+    p2: 'El editor se comporta como una pequeña aplicación de escritorio. Cada página de tu documento aparece como una miniatura que puedes agarrar y soltar en una nueva posición, mientras las páginas restantes se desplazan automáticamente para dejar espacio. Más allá de reordenar, puedes rotar escaneados de lado, duplicar páginas repetidas, insertar hojas en blanco y seleccionar varias páginas a la vez para acciones por lotes. Un historial de deshacer completo significa que puedes experimentar libremente — nada es definitivo hasta que descargas.',
     h3Merge: 'Fusiona y reorganiza páginas PDF en un solo lugar',
-    pMerge: 'Los documentos reales rara vez viven en un solo archivo: el informe es un PDF, el anexo otro, la nueva portada un tercero. Rearrange PDF te permite fusionar y reorganizar páginas PDF sin cambiar de aplicación. Suelta tantos archivos como quieras — todos a la vez, o añadiendo más a mitad de la edición — y cada página aterriza en una cuadrícula, etiquetada con una insignia de color que muestra de qué documento proviene. Desde allí puedes combinar y reorganizar páginas PDF de cada fuente en un único archivo continuo: intercalar capítulos, mover la nueva portada al frente, o insertar material extra en el medio. Un clic produce un PDF fusionado cleanly.',
+    pMerge: 'Los documentos reales rara vez viven en un solo archivo: el informe es un PDF, el anexo otro, la nueva portada un tercero. Rearrange PDF te permite fusionar y reorganizar páginas PDF sin cambiar de aplicación. Suelta tantos archivos como quieras — todos a la vez, o añadiendo más a mitad de la edición — y cada página aterriza en una cuadrícula, etiquetada con una insignia de color que muestra de qué documento proviene. Desde allí puedes combinar y reorganizar páginas PDF de cada fuente en un único archivo continuo: intercalar capítulos, mover la nueva portada al frente, o insertar material extra en el medio. Un clic produce un PDF fusionado y limpio.',
     h3Delete: 'Eliminar y reorganizar páginas PDF',
     pDelete: 'Limpieza y ordenamiento suelen ir juntos. Cuando eliminas y reorganizas páginas PDF en el mismo paso, evitas exportar dos veces — y reexportar en otro lugar es exactamente donde se cuelan la pérdida de calidad y las marcas de agua. Selecciona cualquier página y elimínala con un clic, o toca varias miniaturas y elimínalas como lote. Las páginas eliminadas permanecen en tu historial de deshacer, así que un corte excesivo nunca es permanente. Combinado con las acciones de duplicar, rotar e insertar en blanco, esto convierte la herramienta en un editor de páginas ligero: recorta lo que no necesitas, ordena lo que queda, exporta una vez.',
     h3Steps: 'Cómo reorganizar páginas PDF en tres pasos',
@@ -232,7 +255,7 @@ const es = {
     notFound: {
       title: 'Página no encontrada — Rearrange PDF',
       description: 'Esa página no existe. Vuelve atrás para reorganizar tus páginas PDF.',
-      heading: 'Esta página tomó el camino wrong.',
+      heading: 'Esta página tomó un camino equivocado.',
       message: 'La página que buscas no existe — pero el orden de las páginas de tu PDF aún puede arreglarse en segundos.',
     },
     serverError: {
@@ -281,26 +304,7 @@ const es = {
             'Vista previa de páginas',
             'Procesamiento 100% del lado del cliente — los archivos nunca salen del navegador',
           ],
-        },
-        howTo: {
-          name: 'Cómo reorganizar páginas en un PDF',
-          description: 'Reorganiza las páginas de cualquier PDF en tres pasos, íntegramente en tu navegador sin subidas.',
-          steps: [
-            {
-              name: 'Añade tu PDF',
-              text: 'Suelta un archivo PDF en la herramienta, haz clic para explorar, o pega uno. Puedes añadir varios PDFs a la vez para fusionarlos.',
-            },
-            {
-              name: 'Organiza tus páginas',
-              text: 'Arrastra las miniaturas de las páginas al orden que quieras. Rota, duplica o elimina páginas según sea necesario — todo se puede deshacer.',
-            },
-            {
-              name: 'Descarga al instante',
-              text: 'Haz clic en Descargar PDF. Tu archivo reorganizado se reconstruye en tu dispositivo y se guarda sin marca de agua.',
-            },
-          ],
-        },
-      },
+        },      },
     },
 
     howto: {
@@ -342,26 +346,6 @@ const es = {
       ctaP: 'Gratis, ilimitado, sin registro — y tu archivo nunca sale del navegador.',
       ctaButton: 'Reorganizar un PDF ahora',
       faqOutro: '¿Buscas más respuestas? Consulta las <a href="/#faq">preguntas frecuentes en la página de inicio</a>.',
-      jsonLd: {
-        howTo: {
-          name: 'Cómo organizar páginas PDF online gratis',
-          description: 'Una guía paso a paso para reorganizar páginas PDF en tu navegador sin subir el archivo a ningún lugar.',
-          steps: [
-            {
-              name: 'Abre la herramienta y añade tu PDF',
-              text: 'Ve a rearrangepdf.com y suelta tu PDF sobre la herramienta, haz clic en "Seleccionar archivo PDF", o pega el archivo con Ctrl+V.',
-            },
-            {
-              name: 'Arrastra las páginas al nuevo orden',
-              text: 'Arrastra cualquier miniatura de página a una nueva posición. Usa los botones al pasar el cursor o la barra de herramientas de selección para rotar, duplicar o eliminar páginas.',
-            },
-            {
-              name: 'Descarga el PDF organizado',
-              text: 'Haz clic en "Descargar PDF" — el archivo se reconstruye en tu dispositivo y se guarda inmediatamente, sin marca de agua.',
-            },
-          ],
-        },
-      },
     },
 
     about: {
@@ -374,7 +358,7 @@ const es = {
       p1: 'Reorganizar las páginas de un PDF es un trabajo pequeño. Escaneaste un contrato al revés, o el resumen de un informe quedó al final, y solo quieres que esté arreglado. Sin embargo, la mayoría de las herramientas para esta tarea simple piden mucho a cambio: tu archivo se sube a un servidor que no conoces, llegas a un límite diario después de dos documentos, y generalmente hay un aviso de actualización esperando.',
       p2: 'Construimos Rearrange PDF porque nada de eso es necesario. Reordenar páginas no necesita un servidor — un navegador moderno tiene todo lo necesario para leer, mostrar y reconstruir un PDF. Así que esto es todo lo que es este sitio: una sola página, una zona de arrastre y una cuadrícula de miniaturas que puedes arrastrar. Sin subidas, sin cuentas, sin anuncios, sin límites.',
       howItWorksH2: 'Cómo funciona',
-      howItWorksP: 'Bajo el capó, la herramienta usa dos bibliotecas de código abierto que se ejecutan íntegramente en tu navegador: <strong>PDF.js</strong> renderiza cada página como miniatura, y <strong>pdf-lib</strong> assembla tu nuevo documento copiando las páginas originales — byte a byte, así que el formato, las fuentes y la calidad se preservan exactamente. Cuando haces clic en descargar, el PDF terminado se crea ahí mismo en la pestaña y se entrega al diálogo de guardar de tu navegador.',
+      howItWorksP: 'Bajo el capó, la herramienta usa dos bibliotecas de código abierto que se ejecutan íntegramente en tu navegador: <strong>PDF.js</strong> renderiza cada página como miniatura, y <strong>pdf-lib</strong> ensambla tu nuevo documento copiando las páginas originales — byte a byte, así que el formato, las fuentes y la calidad se preservan exactamente. Cuando haces clic en descargar, el PDF terminado se crea ahí mismo en la pestaña y se entrega al diálogo de guardar de tu navegador.',
       getInTouchH2: 'Ponte en contacto',
       getInTouchP: '¿Encontraste un PDF que no funciona? ¿Tienes una idea para la herramienta? Leemos todo — <a href="/contact">contáctanos</a> en <a href="mailto:kaizen3242@gmail.com">kaizen3242@gmail.com</a>.',
       ctaH2: 'Pruébalo con tu propio archivo',

@@ -1,4 +1,5 @@
 import { Check, Copy, RotateCw, Trash2, X } from 'lucide-react';
+import type { ToolFocus } from './types';
 import { useToolI18n } from './i18n';
 
 interface BatchBarProps {
@@ -8,6 +9,8 @@ interface BatchBarProps {
   onDelete: () => void;
   onSelectAll: () => void;
   onClear: () => void;
+  /** Highlights the action matching the tool page's primary operation. */
+  focus?: ToolFocus;
 }
 
 export default function BatchBar({
@@ -17,8 +20,18 @@ export default function BatchBar({
   onDelete,
   onSelectAll,
   onClear,
+  focus,
 }: BatchBarProps) {
   const { t } = useToolI18n();
+
+  // The batch action a focused tool page is about is ringed, so the page's
+  // primary operation stays identifiable once several pages are selected.
+  const action = (base: string, active: boolean) =>
+    [
+      'tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard active:scale-95',
+      base,
+      active ? 'bg-on-solid/25 ring-2 ring-on-solid/60' : '',
+    ].join(' ');
 
   return (
     <div
@@ -30,7 +43,7 @@ export default function BatchBar({
       <span className="h-5 w-px bg-on-solid/25" aria-hidden="true" />
       <button
         type="button"
-        className="tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard hover:bg-on-solid/15 active:scale-95"
+        className={action('hover:bg-on-solid/15', focus === 'rotate')}
         onClick={onRotate}
       >
         <RotateCw className="size-4" />
@@ -38,7 +51,7 @@ export default function BatchBar({
       </button>
       <button
         type="button"
-        className="tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard hover:bg-on-solid/15 active:scale-95"
+        className={action('hover:bg-on-solid/15', focus === 'duplicate')}
         onClick={onDuplicate}
       >
         <Copy className="size-4" />
@@ -46,7 +59,7 @@ export default function BatchBar({
       </button>
       <button
         type="button"
-        className="tap-target flex min-h-10 items-center gap-1.5 rounded-md px-2.5 py-2 text-body-sm transition-[background-color,transform] duration-150 ease-standard hover:bg-negative/25 active:scale-95"
+        className={action('hover:bg-negative/25', focus === 'delete')}
         onClick={onDelete}
       >
         <Trash2 className="size-4" />

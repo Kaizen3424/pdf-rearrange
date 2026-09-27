@@ -33,8 +33,31 @@ const en = {
     features: 'Features',
     privacy: 'Privacy',
     faq: 'FAQ',
+    tools: 'Tools',
     cta: 'Rearrange a PDF',
     toggleMenu: 'Toggle menu',
+  },
+
+  tools: {
+    breadcrumb: 'Tools',
+    meta: {
+      title: 'Free PDF Tools — Merge, Split, Rotate & Reorder Pages',
+      description:
+        'All the free PDF tools you need in your browser: merge, split, delete, rotate and more. No uploads, no sign-up, no limits.',
+    },
+    h1: 'Free PDF tools that never upload your file',
+    intro:
+      'Pick a tool and it runs entirely inside your browser tab. Nothing is uploaded to a server, there is no account to create, and no file is stamped with a watermark.',
+    privateBadge: 'Runs in your browser',
+    benefitsHeading: 'Why these tools are different',
+    benefitsSub:
+      'Most online PDF tools upload your document to a server and ask you to trust their deletion policy. These do the work on your own device, so there is no copy of your file to leak, breach or subpoena in the first place.',
+    relatedHeading: 'Related tools',
+    cardCta: 'Open tool',
+    allInOneTitle: 'Prefer to do it all in one place?',
+    allInOneBody:
+      'The full editor on the home page merges, reorders, rotates, duplicates and deletes every page at once — the complete set of page tools in a single grid.',
+    allInOneCta: 'Open the full editor',
   },
 
   footer: {
@@ -289,26 +312,7 @@ const en = {
             'Page preview',
             '100% client-side processing — files never leave the browser',
           ],
-        },
-        howTo: {
-          name: 'How to rearrange pages in a PDF',
-          description: 'Rearrange the pages of any PDF in three steps, entirely in your browser with no uploads.',
-          steps: [
-            {
-              name: 'Add your PDF',
-              text: 'Drop a PDF file on the tool, click to browse, or paste one in. You can add several PDFs at once to merge them.',
-            },
-            {
-              name: 'Arrange your pages',
-              text: 'Drag page thumbnails into the order you want. Rotate, duplicate or delete pages as needed — everything can be undone.',
-            },
-            {
-              name: 'Download instantly',
-              text: 'Click Download PDF. Your rearranged file is rebuilt on your device and saved with no watermark.',
-            },
-          ],
-        },
-      },
+        },      },
     },
 
     howto: {
@@ -350,26 +354,6 @@ const en = {
       ctaP: 'Free, unlimited, no sign-up — and your file never leaves the browser.',
       ctaButton: 'Rearrange a PDF now',
       faqOutro: 'Looking for more answers? See the full <a href="/#faq">FAQ on the home page</a>.',
-      jsonLd: {
-        howTo: {
-          name: 'How to organize PDF pages online for free',
-          description: 'A step-by-step guide to rearranging PDF pages in your browser without uploading the file anywhere.',
-          steps: [
-            {
-              name: 'Open the tool and add your PDF',
-              text: 'Go to rearrangepdf.com and drop your PDF onto the tool, click "Select PDF file", or paste the file with Ctrl+V.',
-            },
-            {
-              name: 'Drag pages into the new order',
-              text: 'Drag any page thumbnail to a new position. Use the hover buttons or selection toolbar to rotate, duplicate or delete pages.',
-            },
-            {
-              name: 'Download the organized PDF',
-              text: 'Click "Download PDF" — the file is rebuilt on your device and saved immediately, with no watermark.',
-            },
-          ],
-        },
-      },
     },
 
     about: {

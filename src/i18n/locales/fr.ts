@@ -25,13 +25,36 @@ const fr = {
     features: "Fonctionnalités",
     privacy: "Confidentialité",
     faq: "FAQ",
+    tools: "Outils",
     cta: "Réorganiser un PDF",
     toggleMenu: "Ouvrir le menu",
   },
 
+  tools: {
+    breadcrumb: "Outils",
+    meta: {
+      title: "Outils PDF gratuits — Fusionner, diviser et réordonner",
+      description:
+        "Tous les outils PDF gratuits dans votre navigateur : fusionner, diviser, pivoter, extraire et plus. Aucun téléversement, sans inscription ni limite.",
+    },
+    h1: "Des outils PDF gratuits qui ne téléversent jamais votre fichier",
+    intro:
+      "Choisissez un outil et il fonctionne entièrement dans l'onglet de votre navigateur. Rien n'est téléversé vers un serveur, il n'y a aucun compte à créer, et aucun fichier ne reçoit de filigrane.",
+    privateBadge: "Fonctionne dans votre navigateur",
+    benefitsHeading: "Pourquoi ces outils sont différents",
+    benefitsSub:
+      "La plupart des outils PDF en ligne téléversent votre document sur un serveur et vous demandent de faire confiance à leur politique de suppression. Ceux-ci font le travail sur votre propre appareil : il n'y a donc aucune copie qui puisse fuir, être piratée ou faire l'objet d'une réquisition.",
+    relatedHeading: "Outils associés",
+    cardCta: "Ouvrir l'outil",
+    allInOneTitle: "Vous préférez tout faire au même endroit ?",
+    allInOneBody:
+      "L'éditeur complet sur la page d'accueil fusionne, réordonne, fait pivoter, duplique et supprime toutes les pages à la fois — l'ensemble complet des outils de pages dans une seule grille.",
+    allInOneCta: "Ouvrir l'éditeur complet",
+  },
+
   footer: {
     tagline:
-      "La solution qui place la confidentialité en premier pour réorganiser, faire pivoter et organiser vos pages PDF. Tout se passe dans votre navigateur — vos fichiers ne sont jamais téléchargés.",
+      "La solution qui place la confidentialité en premier pour réorganiser, faire pivoter et organiser vos pages PDF. Tout se passe dans votre navigateur — vos fichiers ne sont jamais téléversés.",
     colTool: "Outil",
     colCompany: "Entreprise",
     colLegal: "Mentions légales",
@@ -45,7 +68,7 @@ const fr = {
     privacyPolicy: "Politique de confidentialité",
     termsOfService: "Conditions d'utilisation",
     copyright: (year: number) => `© ${year} rearrangepdf.com. Tous droits réservés.`,
-    noAds: "Pas de pub. Pas de pistage de fichiers. Pas de téléchargement.",
+    noAds: "Pas de pub. Pas de pistage de fichiers. Pas de téléversement.",
   },
 
   hero: {
@@ -57,7 +80,7 @@ const fr = {
 
   howItWorks: {
     heading: "Comment réorganiser les pages d'un PDF",
-    sub: "Trois étapes, zéro téléchargement. Votre fichier est traité localement du début à la fin.",
+    sub: "Trois étapes, zéro téléversement. Votre fichier est traité localement du début à la fin.",
     steps: [
       {
         title: "Ajoutez votre PDF",
@@ -76,11 +99,11 @@ const fr = {
 
   features: {
     heading: "Tout ce dont vous avez besoin pour organiser un PDF",
-    sub: "Les outils de réorganisation de pages que les gens adorent déjà — sans les téléchargements, les limites, les pubs ou les inscriptions qu'ils reprochent.",
+    sub: "Les outils de réorganisation de pages que les gens adorent déjà — sans les téléversements, les limites, les pubs ou les inscriptions qu'ils reprochent.",
     items: [
       {
         title: "Conçu pour la confidentialité",
-        text: "Votre PDF est traité entièrement dans votre navigateur. Aucun téléchargement, aucun serveur, aucun pistage de fichiers — ouvrez l'onglet réseau de votre navigateur et vérifiez vous-même.",
+        text: "Votre PDF est traité entièrement dans votre navigateur. Aucun téléversement, aucun serveur, aucun pistage de fichiers — ouvrez l'onglet réseau de votre navigateur et vérifiez vous-même.",
       },
       {
         title: "Aucune limite, jamais",
@@ -88,7 +111,7 @@ const fr = {
       },
       {
         title: "Résultats instantanés",
-        text: "Il n'y a pas d'aller-retour de téléchargement et d'attente. Les pages s'affichent et votre nouveau PDF est créé sur votre appareil, si bien que même les gros fichiers semblent immédiats.",
+        text: "Il n'y a pas d'aller-retour de téléversement et d'attente. Les pages s'affichent et votre nouveau PDF est créé sur votre appareil, si bien que même les gros fichiers semblent immédiats.",
       },
       {
         title: "Annulez n'importe quelle action",
@@ -107,13 +130,13 @@ const fr = {
 
   privacySection: {
     h2: "Votre PDF ne quitte jamais votre navigateur.",
-    p1: "La plupart des outils PDF en ligne téléchargent votre fichier sur un serveur, le traitent là-bas, et vous demandez de faire confiance à leur politique de suppression. Nous avons inversé le modèle : la réorganisation des pages se fait <strong>entièrement sur votre appareil</strong>, avec le même moteur de rendu que votre navigateur utilise déjà.",
+    p1: "La plupart des outils PDF en ligne téléversent votre fichier sur un serveur, le traitent là-bas, et vous demandez de faire confiance à leur politique de suppression. Nous avons inversé le modèle : la réorganisation des pages se fait <strong>entièrement sur votre appareil</strong>, avec le même moteur de rendu que votre navigateur utilise déjà.",
     p2: "Aucun serveur ne reçoit jamais votre document. Il n'y a rien à fuir, pirater ou assigner. Cela le rend sûr pour les contrats, dossiers médicaux, relevés bancaires et tout ce que vous ne confieriez pas à un inconnu.",
     readPromise: "Lire notre promesse de confidentialité",
     tryNow: "Essayez maintenant",
     bullets: [
       {
-        title: "Zéro téléchargement",
+        title: "Zéro téléversement",
         text: "Le contenu de votre fichier n'est jamais transmis nulle part.",
       },
       {
@@ -141,7 +164,7 @@ const fr = {
       },
       {
         q: "Comment réorganiser les pages d'un PDF ?",
-        a: "Le moyen le plus simple est le glisser-déposer : votre PDF apparaît sous forme de grille de vignettes, et vous faites glisser chaque page à sa place. Comme l'éditeur fonctionne entièrement dans votre navigateur, il n'y a rien à installer et aucun fichier n'est téléchargé nulle part. Quand l'ordre vous convient, cliquez sur Télécharger le PDF pour enregistrer le nouveau fichier.",
+        a: "Le moyen le plus simple est le glisser-déposer : votre PDF apparaît sous forme de grille de vignettes, et vous faites glisser chaque page à sa place. Comme l'éditeur fonctionne entièrement dans votre navigateur, il n'y a rien à installer et aucun fichier n'est téléversé nulle part. Quand l'ordre vous convient, cliquez sur Télécharger le PDF pour enregistrer le nouveau fichier.",
       },
       {
         q: "Comment réorganiser les pages d'un PDF sur iPhone ?",
@@ -165,14 +188,14 @@ const fr = {
       },
       {
         q: "Comment réorganiser les pages d'un PDF gratuitement ?",
-        a: "Les outils PDF gratuits existent en deux types : les éditeurs en ligne qui téléchargent votre fichier sur leurs serveurs, et les outils côté client comme celui-ci qui traitent tout localement. Le second type est véritablement gratuit — pas d'essai, pas de filigrane, pas de quota quotidien — car c'est votre propre appareil qui fait le travail. Ajoutez un PDF, réorganisez les vignettes, et téléchargez sans frais.",
+        a: "Les outils PDF gratuits existent en deux types : les éditeurs en ligne qui téléversent votre fichier sur leurs serveurs, et les outils côté client comme celui-ci qui traitent tout localement. Le second type est véritablement gratuit — pas d'essai, pas de filigrane, pas de quota quotidien — car c'est votre propre appareil qui fait le travail. Ajoutez un PDF, réorganisez les vignettes, et téléchargez sans frais.",
       },
       {
         q: "Comment puis-je réorganiser les pages d'un document PDF ?",
         a: "Chargez votre document dans l'éditeur, puis faites glisser les vignettes dans le nouvel ordre — ou sélectionnez plusieurs pages à la fois et déplacez-les ensemble. Chaque étape est annulable avec Ctrl+Z (Cmd+Z sur Mac), et vous pouvez restaurer l'ordre original en un clic, donc expérimenter est sans risque. Vous ne vous engagez qu'au téléchargement.",
       },
       {
-        q: "Mes fichiers sont-ils téléchargés vers un serveur ?",
+        q: "Mes fichiers sont-ils téléversés vers un serveur ?",
         a: "Non. Rearrange PDF fonctionne entièrement dans votre navigateur avec JavaScript. Votre PDF est lu, affiché et reconstitué sur votre propre appareil — aucun contenu de fichier n'est jamais transmis. Vous pouvez le vérifier vous-même : ouvrez les outils de développement de votre navigateur, surveillez l'onglet Réseau, et réorganisez quelques pages. Rien n'est envoyé.",
       },
       {
@@ -192,7 +215,7 @@ const fr = {
 
   seoContent: {
     h2: "Réorganisez les pages PDF en ligne — gratuit et illimité",
-    p1: "Rearrange PDF est un outil en ligne gratuit conçu pour une seule tâche : vous aider à réorganiser les pages PDF rapidement, en privé et sans friction. Que vous ayez besoin de corriger un scan à l'envers, de déplacer une annexe à la fin, ou de mettre de l'ordre dans un export chaotique, vous disposez d'un éditeur visuel complet avec des vignettes de pages en glisser-déposer — directement dans votre navigateur. Rien à installer, pas de compte à créer, pas de filigrane sur le résultat. Et comme tout s'exécute localement sur votre appareil, vous pouvez réorganiser les pages PDF en ligne gratuitement, sans les téléchargements, les files d'attente et les limites quotidiennes qu'imposent les autres outils.",
+    p1: "Rearrange PDF est un outil en ligne gratuit conçu pour une seule tâche : vous aider à réorganiser les pages PDF rapidement, en privé et sans friction. Que vous ayez besoin de corriger un scan à l'envers, de déplacer une annexe à la fin, ou de mettre de l'ordre dans un export chaotique, vous disposez d'un éditeur visuel complet avec des vignettes de pages en glisser-déposer — directement dans votre navigateur. Rien à installer, pas de compte à créer, pas de filigrane sur le résultat. Et comme tout s'exécute localement sur votre appareil, vous pouvez réorganiser les pages PDF en ligne gratuitement, sans les téléversements, les files d'attente et les limites quotidiennes qu'imposent les autres outils.",
     p2: "L'éditeur se comporte comme une petite application de bureau. Chaque page de votre document apparaît sous forme de vignette que vous pouvez saisir et déposer à une nouvelle position, tandis que les autres pages se décalent automatiquement pour laisser place. Au-delà de la réorganisation, vous pouvez faire pivoter les scans de travers, dupliquer les pages qui se répètent, insérer des feuilles blanches et sélectionner plusieurs pages à la fois pour des actions par lot. Un historique d'annulation complet vous permet d'expérimenter librement — rien n'est définitif tant que vous n'avez pas téléchargé.",
     h3Merge: "Fusionnez et réorganisez les pages PDF en un seul endroit",
     pMerge: "Les vrais documents vivent rarement dans un seul fichier : le rapport est un PDF, l'annexe un autre, la nouvelle page de couverture un troisième. Rearrange PDF vous permet de fusionner et réorganiser les pages PDF sans basculer entre les applications. Déposez autant de fichiers que vous le souhaitez — tous à la fois, ou en ajoutant d'autres en cours de route — et chaque page apparaît dans une grille, étiquetée avec un badge coloré indiquant de quel document elle provient. De là, vous pouvez combiner et réorganiser les pages PDF de chaque source en un seul fichier continu : entrelacer les chapitres, déplacer la nouvelle couverture au début, ou glisser du matériel supplémentaire au milieu. Un clic produit un seul PDF proprement fusionné.",
@@ -205,24 +228,24 @@ const fr = {
       "<strong>Faites glisser les pages dans l'ordre.</strong> Déplacez n'importe quelle vignette vers une nouvelle position, puis faites pivoter, dupliquez ou supprimez les pages jusqu'à ce que la séquence soit correcte. La sélection multiple et l'annulation gardent les grandes éditions rapides.",
       "<strong>Téléchargez instantanément.</strong> Le PDF reconstitué est généré sur votre appareil et enregistré immédiatement — pas de filigrane, pas d'e-mail requis.",
     ],
-    pStepsOutro: "C'est vraiment tout ce qu'il y a à faire — le moyen le plus rapide de réorganiser les pages PDF en ligne gratuitement, sans inscription ni téléchargement. Pour un guide plus approfondi, y compris l'inversion de l'ordre des pages et le remplacement de pages individuelles, consultez le <a href=\"/how-to-organize-pdf-pages\">guide complet pour organiser les pages PDF</a>.",
+    pStepsOutro: "C'est vraiment tout ce qu'il y a à faire — le moyen le plus rapide de réorganiser les pages PDF en ligne gratuitement, sans inscription ni téléversement. Pour un guide plus approfondi, y compris l'inversion de l'ordre des pages et le remplacement de pages individuelles, consultez le <a href=\"/how-to-organize-pdf-pages\">guide complet pour organiser les pages PDF</a>.",
     h3Mobile: "Réorganisez les pages PDF sur iPhone, iPad et Android",
     pMobile: "Le mobile est là où beaucoup d'outils PDF en ligne échouent : boutons minuscules, zones de dépôt étroites, pop-ups étouffant la grille de pages. Cet éditeur est conçu pour le tactile, donc comprendre comment réorganiser les pages PDF sur iPhone ou iPad prend quelques secondes — appuyez longuement sur une vignette pour la soulever, faites-la glisser à sa place, relâchez. Les boutons de rotation, de duplication et de suppression sont grands et à portée du pouce, et taper sur les pages les sélectionne pour des actions par lot. Sur iOS, vous pouvez ouvrir un PDF depuis Fichiers ou Mail, le partager vers Safari, le réorganiser, et enregistrer le résultat directement. Le même flux fonctionne sur les téléphones et tablettes Android.",
     h3Best: "Quelles sont les meilleures façons de réorganiser les pages PDF ?",
     pBest: "Recherchez les meilleures façons de réorganiser les pages PDF et vous trouverez trois options réalistes. Voici comment elles se comparent pour le travail documentaire quotidien :",
     bestList: [
-      "<strong>Un outil basé sur le navigateur — le mieux pour la plupart des gens.</strong> Il vous permet de réorganiser le PDF en ligne en quelques secondes : rien à installer, rien à mettre à jour, fonctionne de manière identique sur Windows, Mac, Linux et téléphones. L'inconvénient habituel est que votre fichier est téléchargé vers un serveur. Cet outil supprime cet inconvénient — les pages sont traitées sur votre appareil, jamais transmises.",
+      "<strong>Un outil basé sur le navigateur — le mieux pour la plupart des gens.</strong> Il vous permet de réorganiser le PDF en ligne en quelques secondes : rien à installer, rien à mettre à jour, fonctionne de manière identique sur Windows, Mac, Linux et téléphones. L'inconvénient habituel est que votre fichier est téléversé vers un serveur. Cet outil supprime cet inconvénient — les pages sont traitées sur votre appareil, jamais transmises.",
       "<strong>Logiciel de bureau — pour l'édition lourde et répétée.</strong> Les éditeurs comme Adobe Acrobat proposent des boîtes à outils PDF profondes, mais ils coûtent un abonnement, doivent être installés et maintenus à jour, et sont disproportionnés quand vous avez juste besoin d'échanger les pages 12 et 13.",
       "<strong>Apps mobiles — pratiques, avec des réserves.</strong> Les apps dédiées fonctionnent hors ligne, mais elles ajoutent des permissions de stockage, des pubs et des politiques de confidentialité à lire. Pour une correction ponctuelle, un outil de navigateur auquel vous faites déjà confiance est l'option la plus légère.",
     ],
-    pBestOutro: "Pour la plupart des gens, la plupart du temps, la première option l'emporte : ouvrez l'<a href=\"/#rearrange\">outil en haut de cette page</a>, réorganisez le PDF sans téléchargements ni filigranes, et terminez en moins d'une minute.",
+    pBestOutro: "Pour la plupart des gens, la plupart du temps, la première option l'emporte : ouvrez l'<a href=\"/#rearrange\">outil en haut de cette page</a>, réorganisez le PDF sans téléversements ni filigranes, et terminez en moins d'une minute.",
     h3Why: "Pourquoi gratuit ne signifie pas risqué",
-    pWhy: "Les outils PDF en ligne gratuits méritent leur réputation honnêtement : beaucoup monétisent en extrayant les documents que vous téléchargez, ou en apposant des filigranes jusqu'à ce que vous payiez. Cet outil emprunte la route opposée. Votre PDF est lu, affiché et réécrit entièrement dans votre navigateur, donc aucune copie de votre fichier n'existe jamais sur un serveur — rien à fuir, rien à vendre, rien conservé après la fermeture de l'onglet. Vous n'avez pas à le croire sur parole : ouvrez les outils de développement de votre navigateur, surveillez l'onglet réseau pendant que vous travaillez, et vous verrez zéro trafic de fichiers. C'est ce qui le rend sûr pour les contrats, dossiers médicaux, relevés bancaires et tout ce qui est confidentiel. Lisez la <a href=\"/privacy\">promesse de confidentialité</a> complète pour les détails.",
+    pWhy: "Les outils PDF en ligne gratuits méritent leur réputation honnêtement : beaucoup monétisent en extrayant les documents que vous téléversez, ou en apposant des filigranes jusqu'à ce que vous payiez. Cet outil emprunte la route opposée. Votre PDF est lu, affiché et réécrit entièrement dans votre navigateur, donc aucune copie de votre fichier n'existe jamais sur un serveur — rien à fuir, rien à vendre, rien conservé après la fermeture de l'onglet. Vous n'avez pas à le croire sur parole : ouvrez les outils de développement de votre navigateur, surveillez l'onglet réseau pendant que vous travaillez, et vous verrez zéro trafic de fichiers. C'est ce qui le rend sûr pour les contrats, dossiers médicaux, relevés bancaires et tout ce qui est confidentiel. Lisez la <a href=\"/privacy\">promesse de confidentialité</a> complète pour les détails.",
   },
 
   cta: {
     h2: "Corrigez l'ordre de vos pages en quelques secondes.",
-    sub: "Pas de téléchargement. Pas de limite. Pas d'inscription. Juste glisser, déposer et télécharger.",
+    sub: "Pas de téléversement. Pas de limite. Pas d'inscription. Juste glisser, déposer et télécharger.",
     button: "Réorganiser un PDF maintenant",
   },
 
@@ -247,7 +270,7 @@ const fr = {
     home: {
       meta: {
         title: "Réorganiser les Pages PDF Gratuitement en Ligne — Fusionner",
-        description: "Réorganisez les pages PDF gratuitement en ligne. Glissez-déposez pour réordonner ou fusionner — 100 % privé, sans téléchargement, sans filigrane, sans limite.",
+        description: "Réorganisez les pages PDF gratuitement en ligne. Glissez-déposez pour réordonner ou fusionner — 100 % privé, sans téléversement, sans filigrane, sans limite.",
         keywords: [
           "réorganiser pdf",
           "réorganiser pages pdf",
@@ -269,7 +292,7 @@ const fr = {
         webApplication: {
           name: "Rearrange PDF",
           alternateName: "Réorganiser les Pages PDF",
-          description: "Outil en ligne gratuit pour réorganiser, réordonner, faire pivoter, dupliquer et supprimer des pages PDF entièrement dans votre navigateur. Pas de téléchargement, pas de limite, pas d'inscription.",
+          description: "Outil en ligne gratuit pour réorganiser, réordonner, faire pivoter, dupliquer et supprimer des pages PDF entièrement dans votre navigateur. Pas de téléversement, pas de limite, pas d'inscription.",
           featureList: [
             "Réorganisation de pages par glisser-déposer",
             "Rotation, duplication et suppression de pages",
@@ -281,36 +304,17 @@ const fr = {
             "Aperçu des pages",
             "Traitement 100 % côté client — les fichiers ne quittent jamais le navigateur",
           ],
-        },
-        howTo: {
-          name: "Comment réorganiser les pages d'un PDF",
-          description: "Réorganisez les pages de n'importe quel PDF en trois étapes, entièrement dans votre navigateur sans téléchargement.",
-          steps: [
-            {
-              name: "Ajoutez votre PDF",
-              text: "Déposez un fichier PDF sur l'outil, cliquez pour parcourir, ou collez-en un. Vous pouvez ajouter plusieurs PDF à la fois pour les fusionner.",
-            },
-            {
-              name: "Organisez vos pages",
-              text: "Faites glisser les vignettes de pages dans l'ordre souhaité. Faites pivoter, dupliquez ou supprimez les pages selon les besoins — tout peut être annulé.",
-            },
-            {
-              name: "Téléchargez instantanément",
-              text: "Cliquez sur Télécharger le PDF. Votre fichier réorganisé est reconstruit sur votre appareil et enregistré sans filigrane.",
-            },
-          ],
-        },
-      },
+        },      },
     },
 
     howto: {
       meta: {
         title: "Comment Organiser les Pages PDF Gratuitement en Ligne",
-        description: "Apprenez à réorganiser les pages PDF dans n'importe quel navigateur — gratuit et sans téléchargement, sur ordinateur et mobile.",
+        description: "Apprenez à réorganiser les pages PDF dans n'importe quel navigateur — gratuit et sans téléversement, sur ordinateur et mobile.",
       },
       breadcrumb: "Comment organiser les pages PDF",
       h1: "Comment organiser les pages PDF en ligne gratuitement",
-      intro: "Vous avez scanné votre document à l'envers ? L'annexe se trouve avant l'introduction ? Voici le moyen le plus rapide de corriger l'ordre des pages de n'importe quel PDF — sans le télécharger sur le serveur de personne, sans créer de compte, et sans tomber sur un mur d'« essai gratuit ».",
+      intro: "Vous avez scanné votre document à l'envers ? L'annexe se trouve avant l'introduction ? Voici le moyen le plus rapide de corriger l'ordre des pages de n'importe quel PDF — sans le téléverser sur le serveur de personne, sans créer de compte, et sans tomber sur un mur d'« essai gratuit ».",
       quickH2: "La réponse rapide",
       quickSteps: [
         '<a href="/#rearrange">Ouvrez l\'outil</a> et déposez votre PDF dessus.',
@@ -319,7 +323,7 @@ const fr = {
       ],
       detailedH2: "Étape par étape : réorganiser les pages en détail",
       step1H: "Étape 1 — Ajoutez votre PDF",
-      step1P: "Faites glisser le fichier depuis votre bureau ou gestionnaire de fichiers directement sur la carte de téléchargement, ou cliquez dessus pour parcourir. Vous pouvez également copier un PDF et le coller avec <strong>Ctrl+V</strong> (⌘V sur Mac). Vous voulez d'abord combiner des documents ? Déposez plusieurs PDF à la fois — leurs pages fusionnent en une seule grille, chaque fichier marqué de sa propre couleur, afin que vous puissiez ensuite entrelacer les pages de tous.",
+      step1P: "Faites glisser le fichier depuis votre bureau ou gestionnaire de fichiers directement sur la carte de téléversement, ou cliquez dessus pour parcourir. Vous pouvez également copier un PDF et le coller avec <strong>Ctrl+V</strong> (⌘V sur Mac). Vous voulez d'abord combiner des documents ? Déposez plusieurs PDF à la fois — leurs pages fusionnent en une seule grille, chaque fichier marqué de sa propre couleur, afin que vous puissiez ensuite entrelacer les pages de tous.",
       step2H: "Étape 2 — Faites glisser les pages dans l'ordre",
       step2P1: "Chaque page s'affiche sous forme de vignette. Saisissez-en une et faites-la glisser où elle doit aller — les autres s'écartent au passage. Sur un téléphone ou une tablette, appuyez brièvement sur une page pour la soulever, puis faites-la glisser.",
       step2P2: "Survoler une page révèle de petits boutons pour <strong> faire pivoter </strong> (corriger les scans de travers), <strong>dupliquer</strong>, <strong>aperçu</strong> en taille réelle, ou <strong>supprimer</strong>. Cliquez sur les pages pour en sélectionner plusieurs à la fois — ou <strong>Ctrl+A</strong> pour tout sélectionner — puis faites-les pivoter ou supprimez-les en un seul lot depuis la barre d'outils qui apparaît.",
@@ -337,42 +341,22 @@ const fr = {
       mobileH2: "Réorganiser les pages PDF sur mobile",
       mobileP: "L'éditeur est conçu pour le tactile : les vignettes sont grandes, les boutons d'action sont à portée du pouce, et le glisser-déposer fonctionne avec un appui long. Touchez les pages pour les sélectionner en vue d'une rotation ou suppression par lot. Sur iOS ou Android, vous pouvez ouvrir un PDF depuis votre app Fichiers ou Drive, le partager vers le navigateur, et le réorganiser sur place.",
       localH2: "Pourquoi la réorganisation en local compte",
-      localP: "La plupart des organisateurs PDF « gratuits » téléchargent votre fichier vers un serveur de traitement, puis promettent de le supprimer plus tard. C'est bien jusqu'à ce que ça ne le soit plus — les contrats, dossiers médicaux et relevés bancaires méritent mieux. Cet outil fait tout le travail à l'intérieur de l'onglet de votre navigateur : votre PDF est lu en mémoire, affiché, et réécrit sans qu'un seul octet ne quitte votre appareil. Vous n'avez pas à nous croire sur parole — ouvrez les outils de développement de votre navigateur, surveillez l'onglet réseau, et réorganisez à votre guise.",
+      localP: "La plupart des organisateurs PDF « gratuits » téléversent votre fichier vers un serveur de traitement, puis promettent de le supprimer plus tard. C'est bien jusqu'à ce que ça ne le soit plus — les contrats, dossiers médicaux et relevés bancaires méritent mieux. Cet outil fait tout le travail à l'intérieur de l'onglet de votre navigateur : votre PDF est lu en mémoire, affiché, et réécrit sans qu'un seul octet ne quitte votre appareil. Vous n'avez pas à nous croire sur parole — ouvrez les outils de développement de votre navigateur, surveillez l'onglet réseau, et réorganisez à votre guise.",
       ctaH2: "Prêt à corriger l'ordre de vos pages ?",
       ctaP: "Gratuit, illimité, sans inscription — et votre fichier ne quitte jamais le navigateur.",
       ctaButton: "Réorganiser un PDF maintenant",
       faqOutro: "Vous cherchez d'autres réponses ? Consultez la <a href=\"/#faq\">FAQ complète sur la page d'accueil</a>.",
-      jsonLd: {
-        howTo: {
-          name: "Comment organiser les pages PDF en ligne gratuitement",
-          description: "Un guide étape par étape pour réorganiser les pages PDF dans votre navigateur sans télécharger le fichier nulle part.",
-          steps: [
-            {
-              name: "Ouvrez l'outil et ajoutez votre PDF",
-              text: "Allez sur rearrangepdf.com et déposez votre PDF sur l'outil, cliquez sur « Sélectionner un fichier PDF », ou collez le fichier avec Ctrl+V.",
-            },
-            {
-              name: "Faites glisser les pages dans le nouvel ordre",
-              text: "Faites glisser n'importe quelle vignette de page vers une nouvelle position. Utilisez les boutons au survol ou la barre d'outils de sélection pour faire pivoter, dupliquer ou supprimer les pages.",
-            },
-            {
-              name: "Téléchargez le PDF organisé",
-              text: "Cliquez sur « Télécharger le PDF » — le fichier est reconstruit sur votre appareil et enregistré immédiatement, sans filigrane.",
-            },
-          ],
-        },
-      },
     },
 
     about: {
       meta: {
         title: "À propos — Rearrange PDF",
-        description: "Pourquoi nous avons créé un organisateur de pages PDF qui ne télécharge jamais vos fichiers, comment il fonctionne en coulisses, et comment nous contacter.",
+        description: "Pourquoi nous avons créé un organisateur de pages PDF qui ne téléverse jamais vos fichiers, comment il fonctionne en coulisses, et comment nous contacter.",
       },
       breadcrumb: "À propos",
       h1: "Un outil, bien fait.",
-      p1: "Réorganiser les pages d'un PDF est une petite tâche. Vous avez scanné un contrat à l'envers, ou le résumé d'un rapport s'est retrouvé à la fin, et vous voulez juste que ce soit corrigé. Pourtant, la plupart des outils pour cette tâche simple demandent beaucoup en retour : votre fichier est téléchargé vers un serveur que vous ne connaissez pas, vous atteignez une limite quotidienne après deux documents, et il y a généralement une invitation de mise à niveau qui attend.",
-      p2: "Nous avons créé Rearrange PDF parce qu'aucune de ces choses n'est nécessaire. La réorganisation de pages n'a pas besoin d'un serveur — un navigateur moderne dispose de tout ce qu'il faut pour lire, afficher et reconstruire un PDF. Donc tout ce que ce site propose, c'est : une seule page, une zone de dépôt, et une grille de vignettes que vous pouvez faire glisser. Pas de téléchargements, pas de comptes, pas de pubs, pas de limites.",
+      p1: "Réorganiser les pages d'un PDF est une petite tâche. Vous avez scanné un contrat à l'envers, ou le résumé d'un rapport s'est retrouvé à la fin, et vous voulez juste que ce soit corrigé. Pourtant, la plupart des outils pour cette tâche simple demandent beaucoup en retour : votre fichier est téléversé vers un serveur que vous ne connaissez pas, vous atteignez une limite quotidienne après deux documents, et il y a généralement une invitation de mise à niveau qui attend.",
+      p2: "Nous avons créé Rearrange PDF parce qu'aucune de ces choses n'est nécessaire. La réorganisation de pages n'a pas besoin d'un serveur — un navigateur moderne dispose de tout ce qu'il faut pour lire, afficher et reconstruire un PDF. Donc tout ce que ce site propose, c'est : une seule page, une zone de dépôt, et une grille de vignettes que vous pouvez faire glisser. Pas de téléversements, pas de comptes, pas de pubs, pas de limites.",
       howItWorksH2: "Comment ça marche",
       howItWorksP: "Sous le capot, l'outil utilise deux bibliothèques open source qui s'exécutent entièrement dans votre navigateur : <strong>PDF.js</strong> rend chaque page sous forme de vignette, et <strong>pdf-lib</strong> assemble votre nouveau document en copiant les pages originales — octet par octet, donc la mise en forme, les polices et la qualité sont préservées exactement. Quand vous cliquez sur télécharger, le PDF terminé est créé directement dans l'onglet et remis à la boîte de dialogue d'enregistrement de votre navigateur.",
       getInTouchH2: "Contactez-nous",
@@ -403,7 +387,7 @@ const fr = {
       helpLinks: [
         {
           title: "Lisez la FAQ",
-          body: "Réponses rapides sur les téléchargements, la taille des fichiers, la qualité des pages et la confidentialité.",
+          body: "Réponses rapides sur les téléversements, la taille des fichiers, la qualité des pages et la confidentialité.",
         },
         {
           title: "Ouvrez le guide",
@@ -422,7 +406,7 @@ const fr = {
       jsonLd: {
         contactPage: {
           name: "Contact Rearrange PDF",
-          description: "Coordonnées de Rearrange PDF, l'outil basé sur le navigateur pour réorganiser et organiser les pages PDF sans téléchargement.",
+          description: "Coordonnées de Rearrange PDF, l'outil basé sur le navigateur pour réorganiser et organiser les pages PDF sans téléversement.",
         },
       },
     },
@@ -430,7 +414,7 @@ const fr = {
     privacy: {
       meta: {
         title: "Politique de Confidentialité — Rearrange PDF",
-        description: "Notre promesse : vos PDF ne quittent jamais votre navigateur, pas de pubs, pas de téléchargement de documents. Lisez la politique complète.",
+        description: "Notre promesse : vos PDF ne quittent jamais votre navigateur, pas de pubs, pas de téléversement de documents. Lisez la politique complète.",
       },
       breadcrumb: "Politique de confidentialité",
       h1: "Politique de confidentialité",
@@ -439,13 +423,13 @@ const fr = {
       shortItems: [
         "Vos fichiers PDF ne quittent jamais votre appareil. Tout le traitement se fait dans votre navigateur.",
         "Nous n'avons pas de compte utilisateur et ne diffusons pas de publicité.",
-        "Vos fichiers ne sont jamais téléchargés, stockés, exploités ni profilés — ni par nous ni par quiconque.",
+        "Vos fichiers ne sont jamais téléversés, stockés, exploités ni profilés — ni par nous ni par quiconque.",
         "Nous utilisons deux services de mesure pour compter les visites : Cloudflare Web Analytics, sans cookie, et Google Analytics, qui utilise des cookies (voir ci-dessous).",
       ],
       sections: [
         {
           title: "1. Comment fonctionne l'outil",
-          text: "Rearrange PDF est une application côté client. Quand vous ouvrez un PDF ici, le fichier est lu directement par votre navigateur en utilisant les API JavaScript disponibles sur cette page. Les vignettes sont rendues et votre document modifié est reconstruit entièrement sur votre appareil. Aucun contenu de fichier n'est transmis à nous ni à aucun tiers — il n'y a pas de serveur de téléchargement pour l'envoyer.",
+          text: "Rearrange PDF est une application côté client. Quand vous ouvrez un PDF ici, le fichier est lu directement par votre navigateur en utilisant les API JavaScript disponibles sur cette page. Les vignettes sont rendues et votre document modifié est reconstruit entièrement sur votre appareil. Aucun contenu de fichier n'est transmis à nous ni à aucun tiers — il n'y a pas de serveur de téléversement pour l'envoyer.",
         },
         {
           title: "2. Ce que nous ne collectons jamais",
@@ -460,17 +444,17 @@ const fr = {
           subsections: [
             {
               title: "Analytique et cookies",
-              text: "Nous utilisons deux services pour comprendre l'utilisation agrégée du site (par exemple, combien de personnes visitent l'outil et depuis quel pays). Cloudflare Web Analytics est sans cookie, n'identifie pas les visiteurs individuels et ne vous suit pas sur d'autres sites web. Google Analytics utilise des cookies propriétaires pour reconnaître un navigateur de retour et envoie les données de pages vues à Google ; nous l'utilisons uniquement pour des mesures agrégées. Aucun des deux services ne reçoit jamais vos documents — les fichiers sont traités localement et ne sont jamais téléchargés. Vous pouvez bloquer ou supprimer ces cookies dans votre navigateur sans que cela affecte l'outil.",
+              text: "Nous utilisons deux services pour comprendre l'utilisation agrégée du site (par exemple, combien de personnes visitent l'outil et depuis quel pays). Cloudflare Web Analytics est sans cookie, n'identifie pas les visiteurs individuels et ne vous suit pas sur d'autres sites web. Google Analytics utilise des cookies propriétaires pour reconnaître un navigateur de retour et envoie les données de pages vues à Google ; nous l'utilisons uniquement pour des mesures agrégées. Aucun des deux services ne reçoit jamais vos documents — les fichiers sont traités localement et ne sont jamais téléversés. Vous pouvez bloquer ou supprimer ces cookies dans votre navigateur sans que cela affecte l'outil.",
             },
             {
               title: "Journaux serveur standard",
-              text: "Comme tout site web, notre hébergeur (Cloudflare) conserve des journaux techniques de courte durée des requêtes effectuées pour charger le site lui-même — des éléments comme l'adresse IP, le type de navigateur et les horodatages. Ces journaux ne contiennent jamais vos documents (qui ne sont jamais téléchargés) et existent uniquement pour maintenir le site sécurisé et opérationnel.",
+              text: "Comme tout site web, notre hébergeur (Cloudflare) conserve des journaux techniques de courte durée des requêtes effectuées pour charger le site lui-même — des éléments comme l'adresse IP, le type de navigateur et les horodatages. Ces journaux ne contiennent jamais vos documents (qui ne sont jamais téléversés) et existent uniquement pour maintenir le site sécurisé et opérationnel.",
             },
           ],
         },
         {
           title: "4. Vérifiez vous-même",
-          text: "Vous n'avez pas à faire confiance à cette page. Ouvrez les outils de développement de votre navigateur (F12), basculez vers l'onglet Réseau, et utilisez l'outil : téléchargez un PDF, faites glisser les pages, téléchargez le résultat. Vous verrez qu'aucune requête ne transporte votre fichier.",
+          text: "Vous n'avez pas à faire confiance à cette page. Ouvrez les outils de développement de votre navigateur (F12), basculez vers l'onglet Réseau, et utilisez l'outil : téléversez un PDF, faites glisser les pages, téléchargez le résultat. Vous verrez qu'aucune requête ne transporte votre fichier.",
         },
         {
           title: "5. Vos droits",
@@ -498,7 +482,7 @@ const fr = {
       sections: [
         {
           title: "1. Le service",
-          text: "Rearrange PDF (rearrangepdf.com) est un outil gratuit basé sur le navigateur qui vous permet de réorganiser, faire pivoter, dupliquer, supprimer et organiser les pages de fichiers PDF. Tout le traitement a lieu localement dans votre navigateur web ; vos fichiers ne sont pas téléchargés vers nous.",
+          text: "Rearrange PDF (rearrangepdf.com) est un outil gratuit basé sur le navigateur qui vous permet de réorganiser, faire pivoter, dupliquer, supprimer et organiser les pages de fichiers PDF. Tout le traitement a lieu localement dans votre navigateur web ; vos fichiers ne sont pas téléversés vers nous.",
         },
         {
           title: "2. Acceptation",
