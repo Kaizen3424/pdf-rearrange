@@ -2,6 +2,7 @@ import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const DIST = process.argv[2] || 'dist';
+const SITE_URL = 'https://rearrangepdf.com';
 const indexable = (robots) => !robots || !/noindex/.test(robots);
 
 function walk(dir, out = []) {
@@ -103,14 +104,34 @@ else {
   const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   if (new Set(locs).size !== locs.length) errors.push('sitemap.xml: duplicate <loc> URLs');
 
-  const today = new Date().toISOString().slice(0, 10);
-  for (const block of sitemap.match(/<url>[\s\S]*?<\/url>/g) ?? []) {
-    const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1] ?? '(no <loc>)';
-    const lastmod = block.match(/<lastmod>([^<]*)<\/lastmod>/)?.[1];
-    if (!lastmod) errors.push(`sitemap.xml: ${loc} missing <lastmod>`);
-    else if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod))
-      errors.push(`sitemap.xml: ${loc} lastmod not YYYY-MM-DD: ${lastmod}`);
-    else if (lastmod > today) errors.push(`sitemap.xml: ${loc} lastmod is in the future`);
+  // No <lastmod>, by decision. It previously emitted the same date for every URL
+  // (a single commit stamps the site; uncommitted work falls back to mtimes),
+  // and Google stops reading the field once it is not verifiably accurate — so a
+  // column of identical dates is worse than none. <priority> and <changefreq>
+  // are ignored by Google outright. Assert their absence so neither can creep
+  // back in, and so a future lastmod cannot reintroduce the misleading form.
+  for (const tag of ['lastmod', 'changefreq', 'priority']) {
+    const hits = [...sitemap.matchAll(new RegExp(`<${tag}>`, 'g'))].length;
+    if (hits > 0) {
+      errors.push(
+        `sitemap.xml: ${hits} <${tag}> element(s) present; this sitemap deliberately omits them`,
+      );
+    }
+  }
+
+  // Every <loc> must be absolute https on the production host; a relative or
+  // off-host URL is silently discarded by crawlers. The host is taken from the
+  // pages' own canonicals rather than hardcoded, so the check follows the site.
+  for (const loc of locs) {
+    let origin = null;
+    try {
+      origin = new URL(loc).origin;
+    } catch {
+      errors.push(`sitemap.xml: <loc>${loc}</loc> is not an absolute URL`);
+    }
+    if (origin && origin !== new URL(SITE_URL).origin) {
+      errors.push(`sitemap.xml: <loc>${loc}</loc> is on ${origin}, not ${SITE_URL}`);
+    }
   }
 
   // The sitemap must list exactly the canonical URLs of the indexable pages.

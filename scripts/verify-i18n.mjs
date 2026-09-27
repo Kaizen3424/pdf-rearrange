@@ -410,6 +410,55 @@ if (!existsSync(sitemapPath)) {
   for (const url of expectedUrls) {
     if (!xml.includes(`<loc>${url}</loc>`)) fail('sitemap', `emitted page missing from sitemap: ${url}`);
   }
+
+  /*
+   * Honesty of the freshness hints. Google reads <lastmod> only while it is
+   * verifiably accurate and stops reading it once it is not; this sitemap
+   * previously emitted the same date for every URL, which is exactly the
+   * misrepresentation that voids the field. <priority> and <changefreq> are
+   * ignored by Google outright. None of the three may come back.
+   */
+  for (const tag of ['lastmod', 'changefreq', 'priority']) {
+    const hits = matchAll(xml, new RegExp(`<${tag}>`, 'g')).length;
+    if (hits > 0) {
+      fail('sitemap', `${hits} <${tag}> element(s) present; this sitemap deliberately omits them`);
+    }
+  }
+
+  // Absolute https on the production host. A relative or off-host <loc> is
+  // silently discarded by crawlers, which would hide whole pages.
+  for (const body of urlBodies) {
+    const loc = /<loc>([^<]+)<\/loc>/.exec(body)?.[1];
+    if (!loc) continue;
+    if (loc !== SITE && !loc.startsWith(`${SITE}/`)) {
+      fail('sitemap', `<loc>${loc}</loc> is not an absolute https URL on ${SITE}`);
+    }
+  }
+}
+
+/*
+ * robots.txt is how crawlers are told they may fetch the sitemap at all. A
+ * missing file, a Disallow on "/", or a stale sitemap host means the sitemap
+ * above can sit valid and still never be read.
+ */
+const robotsPath = path.join(dist, 'robots.txt');
+if (!existsSync(robotsPath)) {
+  fail('robots', 'missing dist/robots.txt');
+} else {
+  const robots = await readFile(robotsPath, 'utf8');
+  const disallowRoot = robots
+    .split(/\r?\n/)
+    .filter((line) => /^\s*disallow\s*:\s*\/\s*$/i.test(line));
+  if (disallowRoot.length > 0) fail('robots', 'disallows "/" — the whole site is blocked from crawling');
+  if (!/^\s*allow\s*:\s*\/\s*$/im.test(robots)) {
+    fail('robots', 'no explicit "Allow: /" line');
+  }
+  const sitemapLine = robots.match(/^\s*sitemap\s*:\s*(\S+)\s*$/im)?.[1];
+  if (!sitemapLine) {
+    fail('robots', 'no Sitemap: line — crawlers have to guess where it lives');
+  } else if (sitemapLine !== `${SITE}/sitemap.xml`) {
+    fail('robots', `Sitemap: ${sitemapLine} != ${SITE}/sitemap.xml`);
+  }
 }
 
 // Report
