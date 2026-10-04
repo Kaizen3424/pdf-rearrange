@@ -7,11 +7,11 @@ const EXCLUDED_PAGES = new Set(['404', '500']);
 
 /**
  * sitemaps.org caps a single file at 50,000 URLs / 50 MB uncompressed. This site
- * is two orders of magnitude below that (16 logical paths x 8 locales = 128), so
- * a single file stays the right answer — splitting into a <sitemapindex> early
- * would only add indirection. The guard exists so that if the tool catalogue
- * ever grows that far, the build fails loudly instead of silently emitting a
- * sitemap the protocol disallows.
+ * is over two orders of magnitude below that (29 logical paths across 8 locales
+ * = 211 URLs at the time of writing), so a single file stays the right answer —
+ * splitting into a <sitemapindex> early would only add indirection. The guard
+ * exists so that if the tool catalogue ever grows that far, the build fails
+ * loudly instead of silently emitting a sitemap the protocol disallows.
  */
 const MAX_URLS = 50_000;
 
@@ -40,7 +40,7 @@ function escapeXml(value: string): string {
 /*
  * No <lastmod>. It was previously derived from git and file mtimes, and it
  * emitted the same date for every URL — a single commit stamps the whole site,
- * and uncommitted work falls back to mtimes, so all 128 entries were identical.
+ * and uncommitted work falls back to mtimes, so every entry was identical.
  *
  * Google reads <lastmod> only while it is verifiably accurate and "will stop
  * reading it" once it is not; a column of identical dates teaches Google the
