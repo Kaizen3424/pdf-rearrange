@@ -4,9 +4,9 @@ import { CSS } from '@dnd-kit/utilities';
 import { Check, Copy, Eye, LoaderCircle, RotateCw, Trash2, TriangleAlert } from 'lucide-react';
 import type { PageItem, SourceDoc, ToolFocus } from './types';
 import { blankPageRatio, A4_RATIO } from './types';
-import type { ThumbnailsApi } from './hooks/useThumbnails';
-import { useInView } from './hooks/useThumbnails';
-import { renderBlankThumbnail, renderThumbnail } from './lib/pdfService';
+import type { ThumbnailsApi } from '../../lib/pdf/useThumbnails';
+import { useInView } from '../../lib/pdf/useThumbnails';
+import { renderBlankThumbnail, renderThumbnail } from '../../lib/pdf/pdfService';
 import { useToolI18n } from './i18n';
 
 interface PageCardProps {

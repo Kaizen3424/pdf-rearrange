@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, LoaderCircle, X } from 'lucide-react';
 import type { PageItem, SourceDoc } from './types';
 import { A4_RATIO, blankPageRatio } from './types';
-import type { ThumbnailsApi } from './hooks/useThumbnails';
-import { renderBlankThumbnail, renderThumbnail } from './lib/pdfService';
+import type { ThumbnailsApi } from '../../lib/pdf/useThumbnails';
+import { renderBlankThumbnail, renderThumbnail } from '../../lib/pdf/pdfService';
 import { useToolI18n } from './i18n';
 
 interface PreviewModalProps {

@@ -16,7 +16,12 @@
   --color-ink: #0e0f0c;
   --color-ink-deep: #163300;
   --color-body: #454745;
-  --color-mute: #6d6f6d;
+  /* 4.74:1 on --color-canvas-soft, 5.70:1 on white.
+     The previous #6d6f6d measured 4.21:1 on --color-canvas-soft, just under the
+     4.5:1 WCAG AA floor, so every muted paragraph and breadcrumb link on a
+     soft-canvas section failed contrast. Darkened by ~8 to clear it; the
+     difference is not perceptible but the failure was real and site-wide. */
+  --color-mute: #656765;
 
   --color-canvas: #ffffff;
   --color-canvas-soft: #e8ebe6;

@@ -21,9 +21,9 @@ import { CSS } from '@dnd-kit/utilities';
 import { ArrowDown, ArrowUp, GripVertical, X } from 'lucide-react';
 import type { PageItem, SourceDoc } from '../organize/types';
 import { A4_RATIO } from '../organize/types';
-import type { ThumbnailsApi } from '../organize/hooks/useThumbnails';
-import { useInView } from '../organize/hooks/useThumbnails';
-import { renderThumbnail } from '../organize/lib/pdfService';
+import type { ThumbnailsApi } from '../../lib/pdf/useThumbnails';
+import { useInView } from '../../lib/pdf/useThumbnails';
+import { renderThumbnail } from '../../lib/pdf/pdfService';
 import { useToolI18n } from '../organize/i18n';
 import { useReducedMotion } from './lib/useReducedMotion';
 

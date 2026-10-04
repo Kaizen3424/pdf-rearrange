@@ -1,4 +1,4 @@
-import type { PageItem, SourceDoc } from '../types';
+import type { PageItem, SourceDoc } from '../../components/organize/types';
 
 export interface ExportResult {
   blob: Blob;

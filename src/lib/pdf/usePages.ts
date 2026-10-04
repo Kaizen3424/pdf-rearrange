@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import type { PageItem } from '../types';
+import type { PageItem } from '../../components/organize/types';
 
 const HISTORY_LIMIT = 80;
 

@@ -3,10 +3,10 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { FileText, TriangleAlert, Upload } from 'lucide-react';
 import type { PageItem, SourceDoc, Status, ToastMessage, ToolFocus, Zoom } from './types';
 import { uid, ZOOM_WIDTHS } from './types';
-import { usePages } from './hooks/usePages';
-import { useThumbnails } from './hooks/useThumbnails';
-import { isPdfEncrypted, openPdf } from './lib/pdfService';
-import { exportRearrangedPdf, triggerDownload } from './lib/exportService';
+import { usePages } from '../../lib/pdf/usePages';
+import { useThumbnails } from '../../lib/pdf/useThumbnails';
+import { isPdfEncrypted, openPdf } from '../../lib/pdf/pdfService';
+import { exportRearrangedPdf, triggerDownload } from '../../lib/pdf/exportService';
 import { ToolI18nProvider, useToolI18n } from './i18n';
 import DropZone from './DropZone';
 import Toolbar from './Toolbar';
@@ -68,6 +68,7 @@ function OrganizeToolInner({ focus }: { focus?: ToolFocus }) {
   const [reexporting, setReexporting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragCounterRef = useRef(0);
+  const toastTimers = useRef<number[]>([]);
   const thumbnails = useThumbnails();
 
   useEffect(() => {
@@ -81,9 +82,27 @@ function OrganizeToolInner({ focus }: { focus?: ToolFocus }) {
   const toast = useCallback((kind: ToastMessage['kind'], text: string) => {
     const id = uid();
     setToasts((prev) => [...prev.slice(-2), { id, kind, text }]);
-    window.setTimeout(() => {
+    const timer = window.setTimeout(() => {
       setToasts((prev) => prev.filter((item) => item.id !== id));
+      toastTimers.current = toastTimers.current.filter((value) => value !== timer);
     }, 5500);
+    toastTimers.current.push(timer);
+  }, []);
+
+  // Split and extract both release their toast timers and their pdf.js worker
+  // documents here; organize did not, so navigating away mid-toast left a timer
+  // that would call setState on an unmounted tree, and every document this
+  // component opened kept its worker alive for the life of the tab. Matching
+  // the sibling engines: tear down on unmount, and tear down in startOver.
+  useEffect(() => {
+    const held = docsRef.current;
+    return () => {
+      toastTimers.current.forEach((timer) => window.clearTimeout(timer));
+      toastTimers.current = [];
+      held.forEach((doc) => {
+        if (doc.doc) void doc.doc.cleanup().catch(() => undefined);
+      });
+    };
   }, []);
 
   const editorActive = status === 'ready' || status === 'exporting' || status === 'done';
@@ -366,6 +385,9 @@ function OrganizeToolInner({ focus }: { focus?: ToolFocus }) {
   }, [commit, markDirty, toast, t]);
 
   const startOver = useCallback(() => {
+    docsRef.current.forEach((doc) => {
+      if (doc.doc) void doc.doc.cleanup().catch(() => undefined);
+    });
     docsRef.current = [];
     setDocs([]);
     hardSet([]);

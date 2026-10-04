@@ -19,7 +19,7 @@ import {
 import type { PageItem, SourceDoc, ToolFocus } from './types';
 import { SOURCE_COLORS } from './types';
 import PageCard from './PageCard';
-import type { ThumbnailsApi } from './hooks/useThumbnails';
+import type { ThumbnailsApi } from '../../lib/pdf/useThumbnails';
 import { useToolI18n } from './i18n';
 
 interface PageGridProps {

@@ -12,7 +12,7 @@ colors:
   ink: "#0e0f0c"
   ink-deep: "#163300"
   body: "#454745"
-  mute: "#6d6f6d"
+  mute: "#656765"
   canvas: "#ffffff"
   canvas-soft: "#e8ebe6"
   # Role tokens — theme-invariant. `solid` + `on-solid` are the always-dark
@@ -336,7 +336,7 @@ Three tokens exist so a surface can stay dark regardless of the active theme —
 - **Ink** (`{colors.ink}` — `#0e0f0c`): Near-black with a hint of olive warmth — the brand's default text and headings color.
 - **Ink Deep** (`{colors.ink-deep}` — `#163300`): A deep forest-green ink used on positive-state surfaces.
 - **Body** (`{colors.body}` — `#454745`): Secondary body text.
-- **Mute** (`{colors.mute}` — `#6d6f6d`): Lowest-priority text — captions, placeholder, fine print.
+- **Mute** (`{colors.mute}` — `#656765`): Lowest-priority text — captions, placeholder, fine print.
 
 ### Semantic
 - **Positive** (`{colors.positive}` — `#2ead4b`): Success indicator.
@@ -626,7 +626,7 @@ Light values are the canonical palette above. Dark values:
 | `{colors.ink}` | `#0e0f0c` | `#f2f5ee` | Primary text — flips to near-white. |
 | `{colors.ink-deep}` | `#163300` | `#c9f7ad` | Ink on positive surfaces brightens. |
 | `{colors.body}` | `#454745` | `#b9c0b2` | Secondary text. |
-| `{colors.mute}` | `#6d6f6d` | `#949c8c` | Tertiary text. |
+| `{colors.mute}` | `#656765` | `#949c8c` | Tertiary text. |
 | `{colors.primary}` | `#9fe870` | `#9fe870` | Constant — the lime accent. |
 | `{colors.primary-active}` | `#cdffad` | `#bff59a` | |
 | `{colors.primary-neutral}` | `#c5edab` | `#7fb768` | |
