@@ -1,0 +1,9 @@
+---
+import Comparison from '../page-templates/Comparison.astro';
+import { getComparison } from '../content/comparisons';
+
+const page = getComparison('smallpdf-alternative', 'en');
+if (!page) throw new Error('missing comparison content for smallpdf-alternative (en)');
+---
+
+<Comparison locale="en" page={page} />

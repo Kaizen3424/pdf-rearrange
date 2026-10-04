@@ -61,6 +61,7 @@ const it = {
     colTool: 'Strumento',
     colCompany: 'Azienda',
     colLegal: 'Legale',
+    colAlternatives: 'Alternative',
     colLanguage: 'Lingua',
     rearrangePages: 'Riordina le pagine PDF',
     howItWorks: 'Come funziona',

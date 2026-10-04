@@ -21,10 +21,95 @@ import path from 'node:path';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 const toolContent = path.join(root, 'src', 'content', 'tools');
+const registryPath = path.join(root, 'src', 'content', 'registry.json');
 const SITE = 'https://rearrangepdf.com';
 const CJK_FONT = { ja: 'Noto Sans JP', ko: 'Noto Sans KR' };
 /** Per-check cap: a systemic bug must not print one line per page. */
 const MAX_LINES_PER_CHECK = 10;
+
+/**
+ * Locales each logical path is published in, from `src/content/registry.json`.
+ *
+ * This script cannot import the TypeScript wrapper, which is precisely why the
+ * registry is JSON: the build and the verifier then read the *same* file rather
+ * than two representations of it that can disagree. A path absent from the
+ * registry is published in every locale, matching `localesForLogicalPath`.
+ */
+function readRegistryLocales() {
+  if (!existsSync(registryPath)) {
+    fail('registry', 'src/content/registry.json does not exist');
+    return new Map();
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(readFileSync(registryPath, 'utf8'));
+  } catch (error) {
+    fail('registry', `src/content/registry.json is not valid JSON: ${error.message}`);
+    return new Map();
+  }
+  const byPath = new Map();
+  for (const tool of parsed.tools ?? []) {
+    if (tool.locales) byPath.set(`/${tool.slug}`, [...tool.locales]);
+  }
+  for (const page of parsed.pages ?? []) {
+    if (page.locales) byPath.set(`/${page.path}`, [...page.locales]);
+  }
+  return byPath;
+}
+
+/**
+ * Non-tool page paths from `registry.json`, whether or not they carry a
+ * restriction. Separate from `restrictedTo`, which only holds paths that
+ * actually declare `locales` — the comparison checks need to know that all three
+ * `-alternative` pages exist even though each one lists just `["en"]`.
+ */
+function readRegistryPages() {
+  if (!existsSync(registryPath)) return new Set();
+  try {
+    const parsed = JSON.parse(readFileSync(registryPath, 'utf8'));
+    return new Set((parsed.pages ?? []).map((page) => page.path));
+  } catch {
+    return new Set();
+  }
+}
+
+const restrictedTo = readRegistryLocales();
+const registryPages = readRegistryPages();
+
+/** Locales a logical path should be emitted in, per the registry. */
+function expectedLocalesFor(logical) {
+  return restrictedTo.get(logical) ?? localeCodes;
+}
+
+/** True when the registry deliberately publishes `logical` in fewer locales. */
+function isRestricted(logical) {
+  return restrictedTo.has(logical);
+}
+
+/**
+ * Inverse of `localeUrl`: a full `<loc>` back to its locale-independent path.
+ * `/fr/merge-pdf/` → `/merge-pdf`, `/about/` → `/about`, `/` → `/`.
+ */
+function sitemapLogicalPath(loc) {
+  let pathname;
+  try {
+    pathname = new URL(loc).pathname;
+  } catch {
+    return loc;
+  }
+  for (const code of localeCodes) {
+    if (code === defaultLocale) continue;
+    if (pathname === `/${code}/`) return '/';
+    if (pathname.startsWith(`/${code}/`)) {
+      pathname = `/${pathname.slice(code.length + 2)}`;
+      break;
+    }
+  }
+  // Registry keys carry no trailing slash (`/merge-pdf`, not `/merge-pdf/`),
+  // so normalise once at the end — doing it per-branch misses the locales that
+  // returned early.
+  return pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+}
 
 // Failures are grouped by check name, so one broken assumption reports once
 // instead of hundreds of near-identical lines once the site has many pages.
@@ -193,18 +278,52 @@ for (const code of localeCodes) {
 }
 
 // Locale symmetry. Every page below is verified in isolation, so a page that
-// exists in one locale and not another is otherwise invisible. The one
-// legitimate cause is a locale-restricted tool in src/content/tools/manifest.ts,
-// which only works once the [lang] routes and the hreflang cluster honour it.
+// exists in one locale and not another is otherwise invisible.
+//
+// The one legitimate exception is a path the registry restricts to a subset of
+// locales — a tool or editorial page staged English-first and ported only once
+// the English page earns impressions. Those are checked in the *opposite*
+// direction below: not "is it in every locale" but "is it in exactly the
+// locales the registry claims". That inversion is the point. The old check
+// simply exempted restricted paths, which would have let a typo in `locales`
+// silently drop a page from a language it was meant to ship in.
 for (const code of verifiableLocales) {
   if (code === defaultLocale) continue;
   const own = logicalByLocale.get(code) ?? new Set();
   for (const logical of englishLogical) {
+    // English is the staging locale, so a restricted page is always expected
+    // to exist there; the reverse (a page that exists only in a non-default
+    // locale) is caught by the second loop.
+    if (isRestricted(logical)) {
+      if (expectedLocalesFor(logical).includes(code) && !own.has(logical)) {
+        fail(
+          'locale restriction',
+          `${code}: missing ${logical}, which registry.json publishes in ${code}`,
+        );
+      }
+      continue;
+    }
     if (!own.has(logical)) fail('locale symmetry', `${code}: missing ${logical} (emitted in ${defaultLocale})`);
   }
   for (const logical of own) {
     if (!englishLogical.has(logical)) {
       fail('locale symmetry', `${code}: emits ${logical}, which ${defaultLocale} does not`);
+    }
+  }
+}
+
+// A path the registry restricts must appear in exactly those locales — no more
+// (a stray `/fr/` build of an English-only page) and no fewer (above). Crawler
+// budget spent on a 404 is the failure mode this exists to prevent.
+for (const [logical, allowed] of restrictedTo) {
+  for (const locale of localeCodes) {
+    const present = (logicalByLocale.get(locale) ?? new Set()).has(logical);
+    const shouldBe = allowed.includes(locale);
+    if (present && !shouldBe) {
+      fail(
+        'locale restriction',
+        `${locale}${logical} was emitted but registry.json does not publish it in ${locale}`,
+      );
     }
   }
 }
@@ -229,11 +348,13 @@ for (const page of pages) {
   const expectedUrl = localeUrl(logical, locale);
   if (canonical !== expectedUrl) fail('canonical', `${where}: canonical ${canonical} != ${expectedUrl}`);
 
-  // hreflang cluster: every locale + x-default, each pointing at the right URL.
+  // hreflang cluster: every locale this page is published in, plus x-default.
+  // A restricted page must NOT advertise a locale that was never built, so the
+  // expectation comes from the registry rather than from the full locale list.
   const alternates = matchAll(html, /<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g);
   const gotAlternates = alternates.map((m) => ({ hreflang: m[1], href: m[2] }));
   const expectedAlternates = [
-    ...verifiableLocales.map((code) => ({
+    ...expectedLocalesFor(logical).map((code) => ({
       hreflang: metaByCode.get(code).hreflang,
       href: localeUrl(logical, code),
     })),
@@ -328,12 +449,25 @@ for (const special of ['404', '500']) {
 // Tool copy coverage. src/content/tools/<locale>/<slug>.ts holds the page copy
 // and en/ is the master list. The runtime resolver falls back to English per
 // tool, which keeps the build green but ships English copy to a localised URL
-// and hreflang to it — so every (locale, English slug) pair needs a real file.
+// and hreflang to it — so every published (locale, English slug) pair needs a
+// real file.
+//
+// "Published" comes from the registry, not from all locales. A tool staged
+// English-first has no route in the other seven locales and no hreflang
+// pointing at one, so demanding copy there would forbid exactly the workflow
+// Phase 0 was built to enable — and the copy would have to be written before
+// anyone knows whether the English page earns impressions.
 async function toolSlugsIn(code) {
   const dir = path.join(toolContent, code);
   if (!existsSync(dir)) return null;
   return (await readdir(dir)).filter((name) => name.endsWith('.ts')).map((name) => name.slice(0, -3));
 }
+
+/** Master slugs the registry actually publishes in `code`. */
+const requiredSlugsFor = (code) =>
+  code === defaultLocale
+    ? masterSlugs
+    : masterSlugs.filter((slug) => expectedLocalesFor(`/${slug}`).includes(code));
 
 const formatList = (items) => {
   const shown = items.slice(0, MAX_LINES_PER_CHECK);
@@ -348,17 +482,35 @@ if (masterSlugs === null) {
   for (const code of verifiableLocales) {
     const own = await toolSlugsIn(code);
     if (own === null) {
-      fail('tool copy', `${code}: missing src/content/tools/${code}/ — all ${master.size} slug(s) absent: ${formatList([...master])}`);
+      fail('tool copy', `${code}: missing src/content/tools/${code}/ — directory absent`);
       continue;
     }
     const ownSet = new Set(own);
-    const missing = masterSlugs.filter((slug) => !ownSet.has(slug));
+    const required = requiredSlugsFor(code);
+    // The default locale must have copy for every registered slug, restricted
+    // or not: `en/` is the master list, and a slug staged for English with no
+    // English copy has nothing to publish.
+    const requiredSet = new Set(required);
+    const missing = required.filter((slug) => !ownSet.has(slug));
     if (missing.length > 0) {
-      fail('tool copy', `${code}: missing ${formatList(missing)} (no src/content/tools/${code}/<slug>.ts — the page would silently serve English)`);
+      fail(
+        'tool copy',
+        `${code}: missing ${formatList(missing)} (no src/content/tools/${code}/<slug>.ts — the page would silently serve English)`,
+      );
     }
-    const stale = own.filter((slug) => !master.has(slug));
-    if (stale.length > 0) {
-      fail('tool copy', `${code}: has slug(s) ${formatList(stale)} with no master file in src/content/tools/${defaultLocale}/`);
+    // Copy for a locale the registry does not publish is dead weight and a
+    // latent bug: the moment someone drops the `locales` restriction the page
+    // goes live with copy nobody reviewed against the rendered template.
+    const unpublished = own.filter((slug) => master.has(slug) && !requiredSet.has(slug));
+    if (unpublished.length > 0) {
+      fail(
+        'tool copy',
+        `${code}: has copy for ${formatList(unpublished)} but registry.json does not publish those tools in ${code}`,
+      );
+    }
+    const orphan = own.filter((slug) => !master.has(slug));
+    if (orphan.length > 0) {
+      fail('tool copy', `${code}: has slug(s) ${formatList(orphan)} with no master file in src/content/tools/${defaultLocale}/`);
     }
   }
   // Content without a route is dead weight the sitemap and hub will not know
@@ -370,6 +522,93 @@ if (masterSlugs === null) {
   }
 }
 notes.push(`tool slugs ${masterSlugs === null ? 'unavailable' : masterSlugs.length}`);
+
+/**
+ * Comparison-page copy agreement.
+ *
+ * These pages are staged English-first, so the check is the mirror image of the
+ * tool check: rather than "every locale must have every comparison", it is
+ * "every registered comparison must exist in exactly the locales the registry
+ * publishes it in, and nowhere else". The registry already drives the routes,
+ * so the failure this catches is a *content* mismatch — a slug in
+ * `src/content/comparisons/en.ts` that nobody registered (no route, no sitemap
+ * entry, invisible), or a registry entry with no content behind it.
+ */
+const comparisonDir = path.join(root, 'src', 'content', 'comparisons');
+if (!existsSync(comparisonDir)) {
+  fail('comparison copy', 'missing src/content/comparisons/');
+} else {
+  const bundleFiles = (await readdir(comparisonDir)).filter((name) => name.endsWith('.ts'));
+  /** slug -> locale codes whose bundle defines it. Read by parsing the export. */
+  const defined = new Map();
+  for (const name of bundleFiles) {
+    if (name === 'types.ts' || name === 'index.ts') continue;
+    const locale = name.replace(/\.ts$/, '');
+    const source = await readFile(path.join(comparisonDir, name), 'utf8');
+    for (const match of source.matchAll(/^\s{4}'?([a-z0-9-]+-alternative)'?:\s*\{/gm)) {
+      const slug = match[1];
+      if (!defined.has(slug)) defined.set(slug, []);
+      defined.get(slug).push(locale);
+    }
+  }
+
+  for (const [slug, localesDefining] of defined) {
+    if (!registryPages.has(slug)) {
+      fail(
+        'comparison copy',
+        `src/content/comparisons defines "${slug}" but registry.json has no pages entry — no route, no sitemap entry, unreachable`,
+      );
+      continue;
+    }
+    const allowed = restrictedTo.get(`/${slug}`) ?? localeCodes;
+    for (const locale of localesDefining) {
+      if (!allowed.includes(locale)) {
+        fail(
+          'comparison copy',
+          `"${slug}" has ${locale} content but registry.json does not publish it in ${locale}`,
+        );
+      }
+      if (!(logicalByLocale.get(locale) ?? new Set()).has(`/${slug}`)) {
+        fail('comparison pages', `no page emitted for comparison "${slug}" in ${locale}`);
+      }
+    }
+  }
+
+  // The other direction: a registered *comparison page* with no content behind it
+// renders a route that throws. Scoped to `registryPages` rather than every
+// restricted path — restricted tools live in `registry.json` too, and they have
+// their own copy check below.
+for (const slug of registryPages) {
+    if (!defined.has(slug)) {
+      fail('comparison copy', `registry.json publishes "${slug}" but no content bundle defines it`);
+    }
+  }
+
+  /**
+   * Footer link integrity for staged pages.
+   *
+   * The footer is rendered on every page in every locale, so a link to a page
+   * that is not published in that locale is an internal link to a 404 — present
+   * on every page of the site, in seven languages. The comparison footer column
+   * filters on `isComparisonLive` for exactly this reason; this check proves it
+   * rather than trusting it, because the failure is invisible in review (the
+   * link looks correct) and only surfaces as crawl waste.
+   */
+  const footerChecks = pages.filter((p) => p.locale === defaultLocale);
+  for (const page of footerChecks) {
+    const html = await readFile(page.file, 'utf8');
+    for (const slug of defined.keys()) {
+      const publishedHere = expectedLocalesFor(`/${slug}`).includes(page.locale);
+      if (!publishedHere && new RegExp(`href="/${slug}/?"`).test(html)) {
+        fail(
+          'comparison links',
+          `${page.locale}${page.logical}: links to /${slug} but it is not published in ${page.locale}`,
+        );
+      }
+    }
+  }
+}
+notes.push(`comparison slugs ${registryPages.size}`);
 
 /**
  * Sitemap agreement. The sitemap is the only route by which an engine discovers
@@ -399,8 +638,12 @@ if (!existsSync(sitemapPath)) {
     }
     if (!expectedUrls.has(loc)) fail('sitemap', `<loc>${loc}</loc> has no matching emitted page`);
     const links = matchAll(body, /hreflang="([^"]+)" href="([^"]+)"/g);
-    if (verifiableLocales.length > 0 && links.length !== verifiableLocales.length + 1) {
-      fail('sitemap', `${loc}: ${links.length} alternates, expected ${verifiableLocales.length + 1}`);
+    // Same rule as the page's own hreflang cluster: the alternates must cover
+    // exactly the locales this path is published in, plus x-default.
+    const locLogical = sitemapLogicalPath(loc);
+    const expectedAlternates = expectedLocalesFor(locLogical).length + 1;
+    if (verifiableLocales.length > 0 && links.length !== expectedAlternates) {
+      fail('sitemap', `${loc}: ${links.length} alternates, expected ${expectedAlternates}`);
     }
     const xd = links.find((m) => m[1] === 'x-default');
     const en = links.find((m) => m[1] === metaByCode.get(defaultLocale)?.hreflang);

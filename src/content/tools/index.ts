@@ -10,7 +10,7 @@
  */
 
 import { defaultLocale, isLocale, locales, type Locale } from '../../i18n/ui';
-import { getTool, tools, type ToolEntry } from './manifest';
+import { getTool, tools, type ToolEntry } from '../registry';
 import type { ToolContent } from './types';
 
 export type { ToolContent } from './types';
@@ -57,7 +57,7 @@ export interface ResolvedTool {
   content: ToolContent;
 }
 
-/** Tool entries paired with their content for a locale, in manifest order. */
+/** Tool entries paired with their content for a locale, in registry order. */
 export function getToolsWithContent(locale: Locale): ResolvedTool[] {
   return tools
     .filter((tool) => tool.locales === undefined || tool.locales.includes(locale))

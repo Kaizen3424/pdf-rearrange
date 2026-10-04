@@ -3,7 +3,7 @@ import HowTo from '../../page-templates/HowTo.astro';
 import { defaultLocale, isLocale, localeStaticPaths, type Locale } from '../../i18n/utils';
 
 export function getStaticPaths() {
-  return localeStaticPaths();
+  return localeStaticPaths('/how-to-organize-pdf-pages');
 }
 
 const { lang } = Astro.params;

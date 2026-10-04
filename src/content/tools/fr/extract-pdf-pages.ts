@@ -2,7 +2,7 @@ import type { ToolContent } from '../types';
 
 const fr: ToolContent = {
   meta: {
-    title: 'Extraire des pages d\'un PDF — Gardez l\'essentiel',
+    title: 'Extraire des pages d\'un PDF en ligne gratuit — Sans envoi',
     description:
       'Extrait les pages utiles d\'un PDF et téléchargez un document neuf, sans filigrane. 100 % privé : le fichier n\'est jamais transmis, la qualité reste intacte.',
   },

@@ -1,0 +1,254 @@
+{
+  "$comment": [
+    "Single source of truth for the locale-independent page registry.",
+    "Read by src/content/registry.ts (typed, build-time) and directly by",
+    "scripts/*.mjs (plain Node cannot import TypeScript). One data file read by",
+    "both sides is deliberate: a generated sidecar could drift, this cannot.",
+    "Documentation lives in registry.ts, since JSON carries no comments.",
+    "Per-locale page COPY lives elsewhere: src/content/tools/<locale>/<slug>.ts",
+    "for tools, src/i18n/locales/<locale>.ts for editorial pages."
+  ],
+  "tools": [
+    {
+      "slug": "merge-pdf",
+      "icon": "file-stack",
+      "engine": "organize",
+      "focus": "merge",
+      "primary": "merge pdf",
+      "related": [
+        "split-pdf",
+        "insert-pdf-pages",
+        "rotate-pdf"
+      ]
+    },
+    {
+      "slug": "split-pdf",
+      "icon": "columns",
+      "engine": "split",
+      "primary": "split pdf",
+      "related": [
+        "extract-pdf-pages",
+        "merge-pdf",
+        "delete-pdf-pages"
+      ]
+    },
+    {
+      "slug": "delete-pdf-pages",
+      "icon": "trash",
+      "engine": "organize",
+      "focus": "delete",
+      "primary": "delete pdf pages",
+      "related": [
+        "extract-pdf-pages",
+        "split-pdf",
+        "insert-pdf-pages"
+      ]
+    },
+    {
+      "slug": "rotate-pdf",
+      "icon": "rotate-cw",
+      "engine": "organize",
+      "focus": "rotate",
+      "primary": "rotate pdf",
+      "related": [
+        "reverse-pdf-pages",
+        "merge-pdf",
+        "insert-blank-page"
+      ]
+    },
+    {
+      "slug": "reverse-pdf-pages",
+      "icon": "refresh-cw",
+      "engine": "organize",
+      "focus": "reverse",
+      "primary": "reverse pdf pages",
+      "related": [
+        "rotate-pdf",
+        "merge-pdf",
+        "duplicate-pdf-pages"
+      ]
+    },
+    {
+      "slug": "extract-pdf-pages",
+      "icon": "scan-line",
+      "engine": "extract",
+      "primary": "extract pdf pages",
+      "related": [
+        "delete-pdf-pages",
+        "split-pdf",
+        "merge-pdf"
+      ]
+    },
+    {
+      "slug": "insert-pdf-pages",
+      "icon": "file-plus",
+      "engine": "organize",
+      "focus": "insert",
+      "primary": "insert pdf pages",
+      "related": [
+        "merge-pdf",
+        "insert-blank-page",
+        "duplicate-pdf-pages"
+      ]
+    },
+    {
+      "slug": "duplicate-pdf-pages",
+      "icon": "copy",
+      "engine": "organize",
+      "focus": "duplicate",
+      "primary": "duplicate pdf pages",
+      "related": [
+        "insert-pdf-pages",
+        "merge-pdf",
+        "delete-pdf-pages"
+      ]
+    },
+    {
+      "slug": "insert-blank-page",
+      "icon": "plus",
+      "engine": "organize",
+      "focus": "blank",
+      "primary": "insert blank page pdf",
+      "related": [
+        "insert-pdf-pages",
+        "merge-pdf",
+        "rotate-pdf"
+      ]
+    },
+    {
+      "slug": "jpg-to-pdf",
+      "icon": "file-plus",
+      "engine": "image",
+      "primary": "jpg to pdf",
+      "related": [
+        "png-to-pdf",
+        "images-to-pdf",
+        "merge-pdf"
+      ]
+    },
+    {
+      "slug": "png-to-pdf",
+      "icon": "file-plus",
+      "engine": "image",
+      "primary": "png to pdf",
+      "related": [
+        "jpg-to-pdf",
+        "images-to-pdf",
+        "merge-pdf"
+      ]
+    },
+    {
+      "slug": "images-to-pdf",
+      "icon": "file-plus",
+      "engine": "image",
+      "primary": "images to pdf",
+      "related": [
+        "jpg-to-pdf",
+        "png-to-pdf",
+        "merge-pdf"
+      ]
+    },
+    {
+      "slug": "pdf-to-jpg",
+      "icon": "download",
+      "engine": "raster",
+      "primary": "pdf to jpg",
+      "related": [
+        "pdf-to-png",
+        "crop-pdf",
+        "resize-pdf"
+      ]
+    },
+    {
+      "slug": "pdf-to-png",
+      "icon": "download",
+      "engine": "raster",
+      "primary": "pdf to png",
+      "related": [
+        "pdf-to-jpg",
+        "crop-pdf",
+        "resize-pdf"
+      ]
+    },
+    {
+      "slug": "watermark-pdf",
+      "icon": "wand-sparkles",
+      "engine": "overlay",
+      "focus": "watermark",
+      "primary": "watermark pdf",
+      "related": [
+        "add-page-numbers",
+        "sign-pdf",
+        "merge-pdf"
+      ]
+    },
+    {
+      "slug": "add-page-numbers",
+      "icon": "file-text",
+      "engine": "overlay",
+      "focus": "numbers",
+      "primary": "add page numbers to pdf",
+      "related": [
+        "watermark-pdf",
+        "sign-pdf",
+        "merge-pdf"
+      ]
+    },
+    {
+      "slug": "sign-pdf",
+      "icon": "file-check",
+      "engine": "overlay",
+      "focus": "sign",
+      "primary": "sign pdf",
+      "related": [
+        "watermark-pdf",
+        "add-page-numbers",
+        "insert-pdf-pages"
+      ]
+    },
+    {
+      "slug": "crop-pdf",
+      "icon": "scan-line",
+      "engine": "geometry",
+      "focus": "crop",
+      "primary": "crop pdf",
+      "related": [
+        "resize-pdf",
+        "pdf-to-jpg",
+        "split-pdf"
+      ]
+    },
+    {
+      "slug": "resize-pdf",
+      "icon": "maximize-2",
+      "engine": "geometry",
+      "focus": "resize",
+      "primary": "resize pdf pages",
+      "related": [
+        "crop-pdf",
+        "pdf-to-jpg",
+        "merge-pdf"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "path": "smallpdf-alternative",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "ilovepdf-alternative",
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "pdf24-alternative",
+      "locales": [
+        "en"
+      ]
+    }
+  ]
+}

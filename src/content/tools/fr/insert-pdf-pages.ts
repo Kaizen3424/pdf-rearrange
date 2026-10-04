@@ -2,7 +2,7 @@ import type { ToolContent } from '../types';
 
 const fr: ToolContent = {
   meta: {
-    title: 'Insérer des pages dans un PDF — Blances ou depuis un fichier',
+    title: 'Insérer des pages dans un PDF en ligne gratuit — 100 % privé',
     description:
       'Insérez des pages dans un PDF : page blanche, pages venues d\'un autre fichier ou remplacement d\'une page. Sans envoi, sans inscription ni filigrane.',
   },

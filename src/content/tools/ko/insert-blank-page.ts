@@ -2,7 +2,7 @@ import type { ToolContent } from '../types';
 
 const ko: ToolContent = {
   meta: {
-    title: 'PDF 빈 페이지 넣기 온라인 무료 — 원하는 자리 A4 한 장',
+    title: 'PDF 빈 페이지 넣기 온라인 무료 — 원하는 위치에 삽입',
     description:
       'PDF에 빈 페이지를 원하는 자리에 추가해 보세요. 메모 자리, 챕터 구분선, 양면 인쇄 빈 면 해결까지. 업로드 없이 회원가입도 없이 기기에서 처리됩니다.',
   },

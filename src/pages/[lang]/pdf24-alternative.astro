@@ -1,0 +1,19 @@
+---
+import Comparison from '../../page-templates/Comparison.astro';
+import { defaultLocale, isLocale, localeStaticPaths, type Locale } from '../../i18n/utils';
+import { getComparison } from '../../content/comparisons';
+
+export function getStaticPaths() {
+  return localeStaticPaths('/pdf24-alternative');
+}
+
+const { lang } = Astro.params;
+const locale: Locale = isLocale(lang) ? lang : defaultLocale;
+const page = getComparison('pdf24-alternative', locale);
+// A locale with a route but no content bundle would render an empty page at a
+// localised URL. getStaticPaths already limits this to published locales; the
+// guard turns any future drift into a build error instead of a thin page.
+if (!page) throw new Error('missing comparison content for pdf24-alternative (' + locale + ')');
+---
+
+<Comparison locale={locale} page={page} />

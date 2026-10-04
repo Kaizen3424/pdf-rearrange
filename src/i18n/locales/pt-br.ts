@@ -58,6 +58,7 @@ const ptBr = {
     colTool: 'Ferramenta',
     colCompany: 'Empresa',
     colLegal: 'Legal',
+    colAlternatives: 'Alternativas',
     colLanguage: 'Idioma',
     rearrangePages: 'Reorganizar páginas de PDF',
     howItWorks: 'Como funciona',
@@ -310,7 +311,7 @@ const ptBr = {
     howto: {
       meta: {
         title: 'Como Organizar Páginas de PDF Online Grátis (Sem Envios)',
-        description: 'Aprenda a reorganizar páginas PDF em qualquer navegador — de graça e sem envios. Cobre desktop e mobile, mesclar e inverter a ordem.',
+        description: 'Aprenda a reorganizar páginas PDF em qualquer navegador — de graça e sem envios. Cobre desktop e mobile: mesclar, inverter a ordem e substituir páginas.',
       },
       breadcrumb: 'Como organizar páginas de PDF',
       h1: 'Como organizar páginas de PDF online de graça',

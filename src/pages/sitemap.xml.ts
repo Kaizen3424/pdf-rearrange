@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
-import { getAlternates, localePath, locales } from '../i18n/utils';
+import { getAlternates, localePath } from '../i18n/utils';
+import { localesForLogicalPath } from '../content/registry';
 
 const FALLBACK_SITE = 'https://rearrangepdf.com';
 const EXCLUDED_PAGES = new Set(['404', '500']);
@@ -59,8 +60,13 @@ export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL(FALLBACK_SITE);
   const paths = logicalPaths();
 
+  // Fan out over locales each logical path is actually published in, not all of
+  // them. Listing a locale that was never built hands Google a URL that 404s,
+  // which is worse than omitting it: the sitemap is the one file a crawler is
+  // guaranteed to trust wholesale, so a single wrong entry invites re-crawl
+  // budget spent on a page that does not exist.
   const entries = paths.flatMap((logical) =>
-    locales.map((locale) => {
+    localesForLogicalPath(logical).map((locale) => {
       const loc = new URL(localePath(logical, locale), base).href;
       const alternates = getAlternates(logical, base)
         .map(

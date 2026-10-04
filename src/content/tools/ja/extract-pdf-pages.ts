@@ -2,7 +2,7 @@ import type { ToolContent } from '../types';
 
 const ja: ToolContent = {
   meta: {
-    title: 'PDF ページ抽出 無料 - 必要なページだけを取り出して新しいPDFに保存',
+    title: 'PDF ページ抽出 無料 - 必要なページだけを選んで保存',
     description:
       'PDFから必要なページだけを選んで新しいPDFに書き出す無料ツール。範囲を選んで並べ替えもできます。アップロードなしで、ページはバイト単位のコピーのまま。',
   },

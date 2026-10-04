@@ -58,6 +58,7 @@ const ja = {
     colTool: 'ツール',
     colCompany: '会社',
     colLegal: '法的情報',
+    colAlternatives: '代用ツール',
     colLanguage: '言語',
     rearrangePages: 'PDFページの並べ替え',
     howItWorks: '使い方',

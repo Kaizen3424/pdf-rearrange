@@ -2,7 +2,7 @@ import type { ToolContent } from '../types';
 
 const ja: ToolContent = {
   meta: {
-    title: 'PDF ページの順序を逆にする 無料 - 裏表逆のスキャンを1クリックで',
+    title: 'PDF ページ順序を逆に 無料 - 裏表逆のスキャンを修正',
     description:
       'PDFのページ順序を丸ごと逆にします。裏表逆でスキャンされた文書を1クリックで正しい順番に。アップロードなし、登録不要、透かしなし、画質も変わりません。',
   },

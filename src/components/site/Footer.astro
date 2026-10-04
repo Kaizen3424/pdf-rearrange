@@ -3,6 +3,7 @@ import Logo from './Logo.astro';
 import LanguagePicker from './LanguagePicker.astro';
 import { defaultLocale, getDictionary, localePath, type Locale } from '../../i18n/utils';
 import { getToolsWithContent } from '../../content/tools';
+import { comparisonSlugs, getComparison, isComparisonLive } from '../../content/comparisons';
 
 interface Props {
   locale?: Locale;
@@ -12,6 +13,23 @@ const { locale = defaultLocale } = Astro.props;
 const t = getDictionary(locale);
 const year = new Date().getFullYear();
 const tools = getToolsWithContent(locale);
+
+/**
+ * Comparison links for this locale, filtered by the registry.
+ *
+ * The filter is what makes English-first staging safe here. These pages ship in
+ * one locale at a time, so listing all three on every locale would put three
+ * dead internal links in the footer of seven languages — the same class of bug
+ * the language picker had. `isComparisonLive` requires both content and a
+ * registry entry, so a locale only ever links to pages that exist in it.
+ */
+const comparisons = comparisonSlugs
+  .filter((slug) => isComparisonLive(slug, locale))
+  .map((slug) => {
+    const page = getComparison(slug, locale);
+    return page ? { href: localePath(`/${page.slug}`, locale), label: page.breadcrumb } : null;
+  })
+  .filter((link): link is { href: string; label: string } => link !== null);
 
 const columns = [
   {
@@ -26,6 +44,15 @@ const columns = [
       })),
     ],
   },
+  ...(comparisons.length > 0
+    ? [
+        {
+          title: t.footer.colAlternatives,
+          ariaLabel: t.footer.colAlternatives,
+          links: comparisons,
+        },
+      ]
+    : []),
   {
     title: t.footer.colCompany,
     ariaLabel: t.footer.colCompany,
@@ -46,7 +73,7 @@ const columns = [
 ---
 
 <footer class="bg-solid text-on-solid">
-  <div class="container-page py-12 md:py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
+  <div class="container-page py-12 md:py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr_1fr]">
     <div>
       <a href={localePath('/', locale)} class="inline-block focus-ring rounded-md">
         <Logo variant="light" />

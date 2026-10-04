@@ -58,6 +58,7 @@ const ko = {
     colTool: '도구',
     colCompany: '회사',
     colLegal: '법적 고지',
+    colAlternatives: '대안 도구',
     colLanguage: '언어',
     rearrangePages: 'PDF 페이지 순서 바꾸기',
     howItWorks: '사용 방법',

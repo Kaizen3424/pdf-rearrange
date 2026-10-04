@@ -12,7 +12,12 @@
     "astro": "astro",
     "favicon": "node scripts/generate-favicon.mjs",
     "verify:i18n": "node scripts/verify-i18n.mjs",
+    "verify:meta": "node scripts/measure-meta.mjs --check --quiet",
     "audit:seo": "node scripts/audit-seo.mjs",
+    "verify:types": "astro check",
+    "verify": "npm run verify:types && npm run verify:meta && npm run build && npm run verify:i18n && npm run audit:seo",
+    "meta:report": "node scripts/measure-meta.mjs",
+    "perf:bundle": "node scripts/measure-bundle.mjs dist",
     "deploy": "astro build && wrangler pages deploy dist --project-name=rearrangepdf --commit-dirty=true",
     "deploy:preview": "astro build && wrangler pages deploy dist --project-name=rearrangepdf --branch=preview --commit-dirty=true"
   },

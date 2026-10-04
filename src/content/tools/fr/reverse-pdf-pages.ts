@@ -2,7 +2,7 @@ import type { ToolContent } from '../types';
 
 const fr: ToolContent = {
   meta: {
-    title: 'Inverser l\'ordre des pages d\'un PDF — Privé',
+    title: 'Inverser l\'ordre des pages d\'un PDF en ligne gratuit',
     description:
       'Inversez l\'ordre des pages d\'un PDF en un clic, y compris les scans recto-verso. 100 % privé : rien n\'est téléchargé, aucune perte de qualité, sans inscription.',
   },

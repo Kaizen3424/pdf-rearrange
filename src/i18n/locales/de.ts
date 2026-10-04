@@ -58,6 +58,7 @@ const de = {
     colTool: 'Tool',
     colCompany: 'Unternehmen',
     colLegal: 'Rechtliches',
+    colAlternatives: 'Alternativen',
     colLanguage: 'Sprache',
     rearrangePages: 'PDF-Seiten neu anordnen',
     howItWorks: 'So funktioniert es',

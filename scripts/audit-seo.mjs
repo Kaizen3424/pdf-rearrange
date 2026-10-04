@@ -5,6 +5,46 @@ const DIST = process.argv[2] || 'dist';
 const SITE_URL = 'https://rearrangepdf.com';
 const indexable = (robots) => !robots || !/noindex/.test(robots);
 
+/**
+ * How many hreflang tags each page should carry: its published locales plus
+ * x-default.
+ *
+ * This used to be the constant 9. That was correct only while every page shipped
+ * in all eight locales, and the moment a page was staged English-first it
+ * reported "expected 9 hreflang tags, got 2" — an error, in the opposite
+ * direction from the real bug it was meant to catch. It looked like missing
+ * hreflang when the page was actually correct, so the honest fix is to ask the
+ * registry rather than count a number that has to be edited every time a locale
+ * is added.
+ *
+ * Reads `registry.json` directly because this is plain Node and cannot import the
+ * TypeScript wrapper. An unregistered path returns the full locale count, which
+ * is the right default for pages like `/about`.
+ */
+const REGISTRY = new Map(); // logical path -> Locale[]
+const ALL_LOCALES = 8;
+try {
+  const registry = JSON.parse(readFileSync(join('src', 'content', 'registry.json'), 'utf8'));
+  for (const entry of [...(registry.tools ?? []), ...(registry.pages ?? [])]) {
+    if (entry.locales) REGISTRY.set(entry.slug ?? entry.path, [...entry.locales]);
+  }
+} catch {
+  // No registry readable: fall back to assuming every page is fully localized,
+  // which is what this script assumed before the registry existed.
+}
+
+/** `merge-pdf-alternative/index.html` or `fr/merge-pdf-alternative/index.html`. */
+function expectedHreflangCount(rel) {
+  const segments = rel.split('/').filter(Boolean);
+  // The last segment is the file (`index.html`); the logical path is the one
+  // before it. `/index.html` for the homepage has nothing before it, which is
+  // correctly unregistered and so falls back to the full locale count.
+  const last = segments[segments.length - 1];
+  const logical = last === 'index.html' ? segments[segments.length - 2] : last;
+  const locales = logical === undefined ? undefined : REGISTRY.get(logical);
+  return (locales ? locales.length : ALL_LOCALES) + 1;
+}
+
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir)) {
     const p = join(dir, entry);
@@ -35,9 +75,46 @@ const grab = (html, re) => {
   return m ? decodeEntities((m[2] ?? m[1] ?? '').trim()) : null;
 };
 
+const cjk = (lang) => /^(ja|ko|zh)/.test(lang || '');
+
 // Title/description targets are character proxies for the SERP pixel limits;
 // CJK glyphs are ~2x wider, so allow fewer characters there.
-const cjk = (lang) => /^(ja|ko|zh)/.test(lang || '');
+//
+// Floors exist as well as ceilings. The original check was ceiling-only, which
+// means a page could ship a 20-character title and still pass. A title that
+// short cannot carry the query term plus a differentiator, and the SERP gives
+// you the pixels whether you use them or not — an under-filled title is a
+// wasted slot, not a safe one. CJK floors are set low deliberately: Google
+// truncates Japanese descriptions at roughly 70-80 full-width glyphs, so
+// padding to a Latin-equivalent number would only buy stilted translation.
+const BUDGETS = {
+  latin: { title: [50, 60], description: [140, 160] },
+  cjk: { title: [24, 38], description: [70, 100] },
+};
+const budgetsFor = (lang) => BUDGETS[cjk(lang) ? 'cjk' : 'latin'];
+
+/**
+ * Legal and utility pages are excluded from the length *floor*.
+ *
+ * Nobody searches "rearrangepdf terms of service" or "rearrangepdf privacy
+ * policy" — these pages exist to satisfy a legal or trust requirement, and
+ * their traffic is navigational. Padding a Terms page description out to 140
+ * characters to satisfy an SEO budget produces keyword-stuffed filler on the
+ * one page type where filler is most visible to a human reader and least
+ * valuable to a crawler. They still keep the *ceiling*, because a legal page
+ * with a 300-character title does get truncated badly in a tab.
+ *
+ * Everything else — tool pages, the /tools/ hub, editorial pages — is
+ * search-targeting and gets the full range.
+ */
+const NON_SEARCH_PAGES = new Set(['about', 'contact', 'privacy', 'terms']);
+
+/** `fr/terms/index.html` -> `terms`; `index.html` -> `/`; `es/index.html` -> `/`. */
+const logicalName = (rel) => {
+  const path = rel.replace(/^.*?\/?(?=[^/]*\/index\.html$)/, '').replace(/index\.html$/, '');
+  const trimmed = path.replace(/^\/+|\/+$/g, '');
+  return trimmed === '' ? '/' : trimmed;
+};
 
 const pages = [];
 for (const file of walk(DIST)) {
@@ -73,7 +150,10 @@ for (const p of pages) {
     continue;
   }
   if (!p.canonical) errors.push(`${p.rel}: missing canonical`);
-  if (p.hreflang.length !== 9) errors.push(`${p.rel}: expected 9 hreflang tags, got ${p.hreflang.length}`);
+  if (p.hreflang.length !== expectedHreflangCount(p.rel))
+    errors.push(
+      `${p.rel}: expected ${expectedHreflangCount(p.rel)} hreflang tags, got ${p.hreflang.length}`,
+    );
   if (!p.xDefault) errors.push(`${p.rel}: missing hreflang x-default`);
   if (!p.ogLocale) errors.push(`${p.rel}: missing og:locale`);
   if (!/index, follow/.test(p.robots || '')) errors.push(`${p.rel}: missing "index, follow" robots meta`);
@@ -82,10 +162,16 @@ for (const p of pages) {
   if (!p.desc) errors.push(`${p.rel}: missing meta description`);
   if (p.jsonldTypes.length && !p.hasInLanguage) errors.push(`${p.rel}: JSON-LD missing inLanguage`);
 
-  const maxTitle = cjk(p.lang) ? 38 : 60;
-  const maxDesc = cjk(p.lang) ? 100 : 160;
-  if (p.title && p.title.length > maxTitle) warnings.push(`${p.rel}: title ${p.title.length} chars (max ${maxTitle})`);
-  if (p.desc && p.desc.length > maxDesc) warnings.push(`${p.rel}: description ${p.desc.length} chars (max ${maxDesc})`);
+  const { title: tRange, description: dRange } = budgetsFor(p.lang);
+  const enforceFloor = !NON_SEARCH_PAGES.has(logicalName(p.rel));
+  if (p.title && p.title.length > tRange[1])
+    errors.push(`${p.rel}: title ${p.title.length} chars, over max ${tRange[1]} — SERP will truncate mid-keyword`);
+  else if (enforceFloor && p.title && p.title.length < tRange[0])
+    errors.push(`${p.rel}: title ${p.title.length} chars, under min ${tRange[0]} — too short to carry term + differentiator`);
+  if (p.desc && p.desc.length > dRange[1])
+    errors.push(`${p.rel}: description ${p.desc.length} chars, over max ${dRange[1]}`);
+  else if (enforceFloor && p.desc && p.desc.length < dRange[0])
+    errors.push(`${p.rel}: description ${p.desc.length} chars, under min ${dRange[0]}`);
 }
 
 if (!existsSync(join(DIST, 'robots.txt'))) errors.push('missing dist/robots.txt');

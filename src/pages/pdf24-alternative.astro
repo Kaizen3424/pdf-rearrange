@@ -1,0 +1,9 @@
+---
+import Comparison from '../page-templates/Comparison.astro';
+import { getComparison } from '../content/comparisons';
+
+const page = getComparison('pdf24-alternative', 'en');
+if (!page) throw new Error('missing comparison content for pdf24-alternative (en)');
+---
+
+<Comparison locale="en" page={page} />

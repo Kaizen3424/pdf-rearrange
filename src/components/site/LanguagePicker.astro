@@ -6,9 +6,9 @@ import {
   getLogicalPathFromUrl,
   localePath,
   localeMeta,
-  locales,
   type Locale,
 } from '../../i18n/utils';
+import { localesForLogicalPath } from '../../content/registry';
 
 interface Props {
   locale?: Locale;
@@ -19,7 +19,12 @@ const { locale = defaultLocale, variant = 'footer' } = Astro.props;
 const t = getDictionary(locale);
 const logicalPath = getLogicalPathFromUrl(Astro.url);
 
-const entries = locales.map((code) => ({
+// The switcher offers only locales this page is actually published in.
+// Without the filter it renders a link per locale regardless of the registry,
+// which on a locale-restricted page means eight entries where two of them are
+// dead links — and `hreflang` on an `<a>` pointing at a 404 is a stronger
+// signal to a crawler than any benefit the switcher provides.
+const entries = localesForLogicalPath(logicalPath).map((code) => ({
   code,
   label: localeMeta[code].nativeLabel,
   href: localePath(logicalPath, code),

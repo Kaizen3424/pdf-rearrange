@@ -1,0 +1,242 @@
+---
+/**
+ * Template for `[competitor]-alternative` pages.
+ *
+ * All three comparison pages render through this one component, driven by
+ * `ComparisonPage`. Adding a section to the comparison set means editing this
+ * file and `types.ts` — never a per-competitor page.
+ */
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/site/Nav.astro';
+import Footer from '../components/site/Footer.astro';
+import Icon from '../components/site/Icon.astro';
+import RichText from '../components/RichText.astro';
+import FaqList from '../components/site/FaqList.astro';
+import ToolsStrip from '../components/site/ToolsStrip.astro';
+import { getDictionary, localePath, type Locale } from '../i18n/utils';
+import { webPageSchemas } from '../i18n/schema';
+import { getComparisonChrome, comparisonSlugs, getComparison, isComparisonLive } from '../content/comparisons';
+import type { ComparisonPage } from '../content/comparisons';
+
+interface Props {
+  locale: Locale;
+  page: ComparisonPage;
+}
+
+const { locale, page } = Astro.props;
+const t = getDictionary(locale);
+const site = Astro.site ?? new URL('https://rearrangepdf.com');
+const logicalPath = `/${page.slug}`;
+
+// Chrome and page copy travel together in one bundle, so a published page can
+// never find its table headers missing. Guarded rather than asserted because a
+// missing bundle here means the route generator let through an unpublished
+// locale — a bug worth a visible message, not an empty cell.
+const chrome = getComparisonChrome(locale);
+if (!chrome) throw new Error(`no comparison content bundle for locale "${locale}" (needed by /${page.slug})`);
+
+/**
+ * The other comparison pages live in this locale.
+ *
+ * These three pages target overlapping queries, so linking them to each other
+ * gives a crawler a clear relationship between them instead of three isolated
+ * documents competing on the same topic. Filtered the same way the footer is:
+ * only pages actually published in this locale, so staging English-first does
+ * not leave two dead links on every translated page later.
+ */
+const siblings = comparisonSlugs
+  .filter((slug) => slug !== page.slug && isComparisonLive(slug, locale))
+  .map((slug) => {
+    const other = getComparison(slug, locale);
+    return other ? { href: localePath(`/${other.slug}`, locale), label: other.breadcrumb } : null;
+  })
+  .filter((link): link is { href: string; label: string } => link !== null);
+
+const jsonLd = webPageSchemas(t, locale, site, {
+  logicalPath,
+  name: page.h1,
+  description: page.meta.description,
+  breadcrumb: page.breadcrumb,
+});
+
+/** Card icons, cycled by index so a page with fewer advantages still renders. */
+const advantageIcons = ['shield-check', 'infinity', 'user-x', 'layout-grid', 'smartphone', 'zap'];
+---
+
+<Layout
+  title={page.meta.title}
+  description={page.meta.description}
+  canonicalPath={logicalPath}
+  locale={locale}
+  jsonLd={jsonLd}
+>
+  <Nav locale={locale} />
+  <main id="main">
+    <article class="bg-canvas-soft">
+      <div class="container-page py-12 md:py-16 max-w-4xl" data-reveal>
+        <nav aria-label={t.breadcrumbAriaLabel} class="text-body-sm text-mute">
+          <a href={localePath('/', locale)} class="hover:text-ink transition-colors">{t.breadcrumbHome}</a>
+          <span aria-hidden="true"> / </span>
+          <span aria-current="page" class="text-body">{page.breadcrumb}</span>
+        </nav>
+
+        <h1 class="mt-4 font-black text-display-sm md:text-display-md">{page.h1}</h1>
+        <p class="mt-4 text-body-lg text-body">
+          <RichText text={page.intro} locale={locale} />
+        </p>
+
+        <h2 class="mt-12 text-display-sm font-semibold">{page.reasonsH2}</h2>
+        <ul class="mt-4 space-y-4 text-body-md text-body">
+          {
+            page.reasons.map((reason) => (
+              <li class="flex gap-3">
+                <Icon name="ban" size={20} class="mt-0.5 shrink-0 text-mute" />
+                <span>
+                  <RichText text={reason} locale={locale} />
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <h2 class="mt-14 text-display-sm font-semibold">{page.advantagesH2}</h2>
+        <ul class="mt-6 grid gap-5 sm:grid-cols-2">
+          {
+            page.advantages.map((advantage, index) => (
+              <li class="rounded-xl bg-canvas p-6 ring-1 ring-hairline">
+                <Icon
+                  name={advantageIcons[index % advantageIcons.length] ?? 'check'}
+                  size={22}
+                  class="text-primary"
+                />
+                <h3 class="mt-3 font-semibold text-body-lg">{advantage.title}</h3>
+                <p class="mt-2 text-body-md text-body">
+                  <RichText text={advantage.text} locale={locale} />
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+
+        <h2 class="mt-14 text-display-sm font-semibold">{page.tableH2}</h2>
+        <p class="mt-3 text-body-md text-mute">
+          <RichText text={page.tableNote} locale={locale} />
+        </p>
+
+        <div class="mt-6 overflow-x-auto rounded-xl ring-1 ring-hairline">
+          <table class="w-full table-fixed border-collapse text-left text-body-md">
+            <caption class="sr-only">{page.tableH2}</caption>
+            <thead>
+              <tr class="bg-primary-pale">
+                {/*
+                  Explicit proportions, not auto layout. Without them the browser
+                  sizes columns by content and the row-header column collapses
+                  to whatever the longest single word needs, wrapping short
+                  labels like "Upload required" onto three lines. `table-fixed`
+                  plus widths keeps every column even at narrow viewports.
+                */}
+                <th scope="col" class="w-[32%] px-4 py-3 font-semibold">{chrome.tableFeature}</th>
+                <th scope="col" class="w-[34%] px-4 py-3 font-semibold">RearrangePDF</th>
+                <th scope="col" class="w-[34%] px-4 py-3 font-semibold">{page.competitor}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                page.rows.map((row, index) => (
+                  <tr class={index % 2 === 1 ? 'bg-canvas-soft' : 'bg-canvas'}>
+                    <th scope="row" class="px-4 py-3 font-medium text-ink align-top">{row.label}</th>
+                    <td class="px-4 py-3 text-body align-top">
+                      <span class="flex gap-2">
+                        <Icon name="check" size={18} class="mt-0.5 shrink-0 text-primary" />
+                        <span>{row.ours}</span>
+                      </span>
+                    </td>
+                    <td class="px-4 py-3 text-body align-top">
+                      {row.theirsHref ? (
+                        <a
+                          href={row.theirsHref}
+                          rel="nofollow noopener"
+                          target="_blank"
+                          class="underline underline-offset-2 hover:text-ink transition-colors"
+                        >
+                          {row.theirs}
+                          {row.theirsHrefLabel && <span class="sr-only"> ({row.theirsHrefLabel})</span>}
+                          <Icon name="arrow-right" size={14} class="inline-block align-baseline" />
+                        </a>
+                      ) : (
+                        row.theirs
+                      )}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="mt-14 text-display-sm font-semibold">{page.strengthsH2}</h2>
+        <ul class="mt-4 space-y-4 text-body-md text-body">
+          {
+            page.strengths.map((strength) => (
+              <li class="flex gap-3">
+                <Icon name="check" size={20} class="mt-0.5 shrink-0 text-primary" />
+                <span>
+                  <RichText text={strength} locale={locale} />
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </article>
+
+    <div class="container-page py-14 md:py-20 max-w-4xl" data-reveal>
+      <div class="rounded-xl bg-solid p-8 text-center ring-1 ring-inset ring-white/5">
+        <h2 class="font-black text-display-sm text-on-solid">{page.ctaH2}</h2>
+        <p class="mt-2 text-body-md text-on-solid/80">
+          <RichText text={page.ctaP} locale={locale} linkClass="underline underline-offset-2" />
+        </p>
+        <a href={localePath('/#rearrange', locale)} class="btn btn-primary mt-6 group">
+          {chrome.ctaButton}
+          <Icon name="arrow-right" size={18} class="transition-transform duration-200 ease-out-expo group-hover:translate-x-1" />
+        </a>
+      </div>
+    </div>
+
+    <section class="bg-canvas-soft border-t border-hairline">
+      <div class="container-page py-14 md:py-20 max-w-3xl" data-reveal>
+        <FaqList items={page.faq} heading={page.faqH2} id="faq" />
+      </div>
+    </section>
+
+    {
+      siblings.length > 0 && (
+        <section class="bg-canvas border-t border-hairline">
+          <div class="container-page py-12 md:py-16 max-w-4xl" data-reveal>
+            <h2 class="text-display-xs font-semibold">{chrome.otherAlternatives}</h2>
+            <ul class="mt-4 flex flex-wrap gap-3">
+              {siblings.map((sibling) => (
+                <li>
+                  <a
+                    href={sibling.href}
+                    class="btn btn-tertiary"
+                  >
+                    {sibling.label}
+                    <Icon
+                      name="arrow-right"
+                      size={16}
+                      class="transition-transform duration-200 ease-out-expo"
+                    />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    <ToolsStrip locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Layout>

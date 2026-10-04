@@ -3,7 +3,7 @@ import ToolPage from '../../page-templates/ToolPage.astro';
 import { defaultLocale, isLocale, localeStaticPaths, type Locale } from '../../i18n/utils';
 
 export function getStaticPaths() {
-  return localeStaticPaths();
+  return localeStaticPaths('/insert-pdf-pages');
 }
 
 const { lang } = Astro.params;

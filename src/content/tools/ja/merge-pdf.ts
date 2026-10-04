@@ -2,7 +2,7 @@ import type { ToolContent } from '../types';
 
 const ja: ToolContent = {
   meta: {
-    title: 'PDF 結合 無料 - アップロードなしで複数ファイルを一括でまとめる',
+    title: 'PDF 結合 無料 - アップロードなしで複数ファイルをまとめる',
     description:
       '複数のPDFを好きな順序で1つのファイルに結合。アップロードはゼロ、ブラウザ内で完結します。登録不要、透かしなし、ページ数無制限。ページはバイト単位のコピーなので画質はそのままです。',
   },

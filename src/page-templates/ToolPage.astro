@@ -12,11 +12,69 @@ import CtaSection from '../components/site/CtaSection.astro';
 import OrganizeTool from '../components/organize/OrganizeTool';
 import SplitTool from '../components/split/SplitTool';
 import ExtractTool from '../components/extract/ExtractTool';
+import ImageToPdfTool from '../components/image/ImageToPdfTool';
+import PdfToImageTool from '../components/raster/PdfToImageTool';
+import OverlayTool from '../components/overlay/OverlayTool';
+import GeometryTool from '../components/geometry/GeometryTool';
 import { getDictionary, localePath, type Locale } from '../i18n/utils';
-import { getTool, toolLocales } from '../content/tools/manifest';
+import { getTool, toolLocales } from '../content/registry';
 import { getRelatedTools, getToolContent } from '../content/tools';
 import { toolSchemas } from '../i18n/schema';
-import type { ToolFocus } from '../components/organize/types';
+
+/**
+ * Extra island props per engine, on top of `locale`.
+ *
+ * The engine itself is still selected by explicit branches below. Astro
+ * compiles `client:*` directives statically, so a component resolved out of a
+ * lookup table is not reliably hydratable — and the original ternary chain
+ * failed open: an engine added to the `ToolEngine` union fell through to
+ * `OrganizeTool` with `focus={undefined}`, shipping a working page showing the
+ * wrong tool. Explicit branches plus a throwing default make that a build error.
+ */
+const IMAGE_PROPS = {
+  accept: 'image/jpeg,image/png',
+  acceptExtensions: ['jpg', 'jpeg', 'png'],
+  fileName: 'images',
+} as const;
+
+/** Format pinned per slug, so `pdf-to-jpg` cannot offer a PNG toggle. */
+const RASTER_PROPS: Record<string, { defaultFormat: 'jpeg' | 'png' }> = {
+  'pdf-to-jpg': { defaultFormat: 'jpeg' },
+  'pdf-to-png': { defaultFormat: 'png' },
+};
+
+/**
+ * `focus` doubles as the sub-mode for the engines that have one.
+ *
+ * `overlay` and `geometry` each back three and two tools respectively, and the
+ * only thing distinguishing them is which thing gets drawn or changed — so the
+ * registry's existing `focus` field carries it rather than a second field that
+ * only two engines would use. Cast here because `ToolFocus` is typed for the
+ * organize engine's values; the assertion below is what keeps it honest.
+ */
+const OVERLAY_FOCUSES = ['watermark', 'numbers', 'sign'] as const;
+const GEOMETRY_FOCUSES = ['crop', 'resize'] as const;
+type OverlayMode = (typeof OVERLAY_FOCUSES)[number];
+type GeometryMode = (typeof GEOMETRY_FOCUSES)[number];
+
+/**
+ * Narrows `tool.focus` to a sub-mode, or fails the build.
+ *
+ * The cast in the JSX below is only safe because of this. `ToolFocus` is typed
+ * for the organize engine's values, so a watermark tool declaring `focus:
+ * "watermark"` would otherwise be a type error even though the value is exactly
+ * what OverlayTool wants — and, worse, a tool declaring `focus: "merge"` on the
+ * overlay engine would pass unnoticed and render the wrong tool.
+ */
+function requireFocus<T extends string>(allowed: readonly T[], slug: string, value: unknown): T {
+  if (typeof value !== 'string' || !(allowed as readonly string[]).includes(value)) {
+    throw new Error(
+      `tool "${slug}" declares focus ${JSON.stringify(value)}, expected one of: ${allowed.join(', ')}`,
+    );
+  }
+  return value as T;
+}
+
 
 interface Props {
   locale: Locale;
@@ -33,6 +91,9 @@ if (!tool || !content) {
 if (!toolLocales(tool).includes(locale)) {
   throw new Error(`Tool "${slug}" is not published in locale ${locale}`);
 }
+
+const overlayMode = tool.engine === 'overlay' ? requireFocus(OVERLAY_FOCUSES, tool.slug, tool.focus) : null;
+const geometryMode = tool.engine === 'geometry' ? requireFocus(GEOMETRY_FOCUSES, tool.slug, tool.focus) : null;
 
 const t = getDictionary(locale);
 const site = Astro.site ?? new URL('https://rearrangepdf.com');
@@ -89,8 +150,29 @@ const stepIcons = ['upload', 'move', 'download'];
             <SplitTool client:load locale={locale} />
           ) : tool.engine === 'extract' ? (
             <ExtractTool client:load locale={locale} />
-          ) : (
+          ) : tool.engine === 'image' ? (
+            // No `locale` prop: this engine's strings live beside the component
+            // in English only. Accepting a locale it cannot honour would imply
+            // localisation that does not exist yet.
+            <ImageToPdfTool client:load {...IMAGE_PROPS} />
+          ) : tool.engine === 'raster' ? (
+            <PdfToImageTool client:load defaultFormat={RASTER_PROPS[slug]?.defaultFormat} />
+          ) : tool.engine === 'overlay' ? (
+            <OverlayTool client:load mode={overlayMode as OverlayMode} />
+          ) : tool.engine === 'geometry' ? (
+            <GeometryTool client:load mode={geometryMode as GeometryMode} />
+          ) : tool.engine === 'organize' ? (
             <OrganizeTool client:load locale={locale} focus={tool.focus} />
+          ) : (
+            // Unreachable while `registry.ts` and this branch agree, which the
+            // check below enforces. Present so that adding an engine without
+            // wiring it here fails the build loudly instead of rendering the
+            // wrong tool on a live URL.
+            (() => {
+              throw new Error(
+                `tool "${tool.slug}" declares engine "${String(tool.engine)}" but ToolPage.astro has no branch for it`,
+              );
+            })()
           )
         }
       </div>

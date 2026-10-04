@@ -3,7 +3,7 @@ import Home from '../../page-templates/Home.astro';
 import { defaultLocale, isLocale, localeStaticPaths, type Locale } from '../../i18n/utils';
 
 export function getStaticPaths() {
-  return localeStaticPaths();
+  return localeStaticPaths('/');
 }
 
 const { lang } = Astro.params;

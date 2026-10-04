@@ -43,7 +43,7 @@ const en = {
     meta: {
       title: 'Free PDF Tools — Merge, Split, Rotate & Reorder Pages',
       description:
-        'All the free PDF tools you need in your browser: merge, split, delete, rotate and more. No uploads, no sign-up, no limits.',
+        'All the free PDF tools you need in your browser: merge, split, delete, rotate, reverse, extract and insert pages. No uploads, no sign-up, no limits.',
     },
     h1: 'Free PDF tools that never upload your file',
     intro:
@@ -66,6 +66,7 @@ const en = {
     colTool: 'Tool',
     colCompany: 'Company',
     colLegal: 'Legal',
+    colAlternatives: 'Alternatives',
     colLanguage: 'Language',
     rearrangePages: 'Rearrange PDF pages',
     howItWorks: 'How it works',
@@ -318,7 +319,7 @@ const en = {
     howto: {
       meta: {
         title: 'How to Organize PDF Pages Online Free (No Uploads)',
-        description: 'Learn to rearrange PDF pages in any browser — free, no uploads. Covers desktop and mobile, merging files, reversing order, replacing pages.',
+        description: 'Learn how to rearrange and organize PDF pages in any browser — free, no uploads. Works on desktop and mobile: merge files, reverse page order, replace pages.',
       },
       breadcrumb: 'How to organize PDF pages',
       h1: 'How to organize PDF pages online for free',

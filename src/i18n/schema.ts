@@ -1,7 +1,7 @@
 import { localeMeta, localePath, type Locale } from './utils';
 import type { SiteDictionary } from './locales';
 import type { ResolvedTool, ToolContent } from '../content/tools';
-import type { ToolEntry } from '../content/tools/manifest';
+import type { ToolEntry } from '../content/registry';
 
 type JsonLd = Record<string, unknown>;
 

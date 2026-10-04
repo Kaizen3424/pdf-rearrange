@@ -27,3 +27,15 @@ pnpm-debug.log*
 
 # agent skills / docs snapshots (not part of the codebase)
 .agents/
+
+# scratch test harness (Playwright fixtures, downloaded outputs, MT cache)
+.tmp-test/
+
+# Search Console exports: analytics data about this business, not source
+google_console_report/
+
+# local agent plans and config
+.opencode/plans/
+
+# strategy/analysis notes (tracked files stay tracked; new local files ignored)
+plans/
