@@ -116,118 +116,15 @@
       ]
     },
     {
-      "slug": "jpg-to-pdf",
-      "icon": "file-plus",
-      "engine": "image",
-      "primary": "jpg to pdf",
-      "related": [
-        "png-to-pdf",
-        "images-to-pdf",
-        "merge-pdf"
-      ]
-    },
-    {
-      "slug": "png-to-pdf",
-      "icon": "file-plus",
-      "engine": "image",
-      "primary": "png to pdf",
-      "related": [
-        "jpg-to-pdf",
-        "images-to-pdf",
-        "merge-pdf"
-      ]
-    },
-    {
-      "slug": "images-to-pdf",
-      "icon": "file-plus",
-      "engine": "image",
-      "primary": "images to pdf",
-      "related": [
-        "jpg-to-pdf",
-        "png-to-pdf",
-        "merge-pdf"
-      ]
-    },
-    {
-      "slug": "pdf-to-jpg",
-      "icon": "download",
-      "engine": "raster",
-      "primary": "pdf to jpg",
-      "related": [
-        "pdf-to-png",
-        "crop-pdf",
-        "resize-pdf"
-      ]
-    },
-    {
-      "slug": "pdf-to-png",
-      "icon": "download",
-      "engine": "raster",
-      "primary": "pdf to png",
-      "related": [
-        "pdf-to-jpg",
-        "crop-pdf",
-        "resize-pdf"
-      ]
-    },
-    {
-      "slug": "watermark-pdf",
-      "icon": "wand-sparkles",
-      "engine": "overlay",
-      "focus": "watermark",
-      "primary": "watermark pdf",
-      "related": [
-        "add-page-numbers",
-        "sign-pdf",
-        "merge-pdf"
-      ]
-    },
-    {
-      "slug": "add-page-numbers",
-      "icon": "file-text",
-      "engine": "overlay",
-      "focus": "numbers",
-      "primary": "add page numbers to pdf",
-      "related": [
-        "watermark-pdf",
-        "sign-pdf",
-        "merge-pdf"
-      ]
-    },
-    {
-      "slug": "sign-pdf",
-      "icon": "file-check",
-      "engine": "overlay",
-      "focus": "sign",
-      "primary": "sign pdf",
-      "related": [
-        "watermark-pdf",
-        "add-page-numbers",
-        "insert-pdf-pages"
-      ]
-    },
-    {
       "slug": "crop-pdf",
       "icon": "scan-line",
       "engine": "geometry",
       "focus": "crop",
       "primary": "crop pdf",
       "related": [
-        "resize-pdf",
-        "pdf-to-jpg",
-        "split-pdf"
-      ]
-    },
-    {
-      "slug": "resize-pdf",
-      "icon": "maximize-2",
-      "engine": "geometry",
-      "focus": "resize",
-      "primary": "resize pdf pages",
-      "related": [
-        "crop-pdf",
-        "pdf-to-jpg",
-        "merge-pdf"
+        "rotate-pdf",
+        "split-pdf",
+        "extract-pdf-pages"
       ]
     }
   ],
