@@ -60,21 +60,9 @@ function readRegistryLocales() {
 /**
  * Non-tool page paths from `registry.json`, whether or not they carry a
  * restriction. Separate from `restrictedTo`, which only holds paths that
- * actually declare `locales` — the comparison checks need to know that all three
- * `-alternative` pages exist even though each one lists just `["en"]`.
+ * actually declare `locales`.
  */
-function readRegistryPages() {
-  if (!existsSync(registryPath)) return new Set();
-  try {
-    const parsed = JSON.parse(readFileSync(registryPath, 'utf8'));
-    return new Set((parsed.pages ?? []).map((page) => page.path));
-  } catch {
-    return new Set();
-  }
-}
-
 const restrictedTo = readRegistryLocales();
-const registryPages = readRegistryPages();
 
 /** Locales a logical path should be emitted in, per the registry. */
 function expectedLocalesFor(logical) {
@@ -524,91 +512,12 @@ if (masterSlugs === null) {
 notes.push(`tool slugs ${masterSlugs === null ? 'unavailable' : masterSlugs.length}`);
 
 /**
- * Comparison-page copy agreement.
- *
- * These pages are staged English-first, so the check is the mirror image of the
- * tool check: rather than "every locale must have every comparison", it is
- * "every registered comparison must exist in exactly the locales the registry
- * publishes it in, and nowhere else". The registry already drives the routes,
- * so the failure this catches is a *content* mismatch — a slug in
- * `src/content/comparisons/en.ts` that nobody registered (no route, no sitemap
- * entry, invisible), or a registry entry with no content behind it.
+ * Comparison pages were retired outright: they earned two impressions between
+ * them and "X alternative" pages attract the closest scrutiny. There is no
+ * content directory and no registry `pages` entry left to verify. If a
+ * comparison page ever returns, restore this check alongside it — it caught
+ * content that nobody had registered, and registry entries with no content.
  */
-const comparisonDir = path.join(root, 'src', 'content', 'comparisons');
-if (!existsSync(comparisonDir)) {
-  fail('comparison copy', 'missing src/content/comparisons/');
-} else {
-  const bundleFiles = (await readdir(comparisonDir)).filter((name) => name.endsWith('.ts'));
-  /** slug -> locale codes whose bundle defines it. Read by parsing the export. */
-  const defined = new Map();
-  for (const name of bundleFiles) {
-    if (name === 'types.ts' || name === 'index.ts') continue;
-    const locale = name.replace(/\.ts$/, '');
-    const source = await readFile(path.join(comparisonDir, name), 'utf8');
-    for (const match of source.matchAll(/^\s{4}'?([a-z0-9-]+-alternative)'?:\s*\{/gm)) {
-      const slug = match[1];
-      if (!defined.has(slug)) defined.set(slug, []);
-      defined.get(slug).push(locale);
-    }
-  }
-
-  for (const [slug, localesDefining] of defined) {
-    if (!registryPages.has(slug)) {
-      fail(
-        'comparison copy',
-        `src/content/comparisons defines "${slug}" but registry.json has no pages entry — no route, no sitemap entry, unreachable`,
-      );
-      continue;
-    }
-    const allowed = restrictedTo.get(`/${slug}`) ?? localeCodes;
-    for (const locale of localesDefining) {
-      if (!allowed.includes(locale)) {
-        fail(
-          'comparison copy',
-          `"${slug}" has ${locale} content but registry.json does not publish it in ${locale}`,
-        );
-      }
-      if (!(logicalByLocale.get(locale) ?? new Set()).has(`/${slug}`)) {
-        fail('comparison pages', `no page emitted for comparison "${slug}" in ${locale}`);
-      }
-    }
-  }
-
-  // The other direction: a registered *comparison page* with no content behind it
-// renders a route that throws. Scoped to `registryPages` rather than every
-// restricted path — restricted tools live in `registry.json` too, and they have
-// their own copy check below.
-for (const slug of registryPages) {
-    if (!defined.has(slug)) {
-      fail('comparison copy', `registry.json publishes "${slug}" but no content bundle defines it`);
-    }
-  }
-
-  /**
-   * Footer link integrity for staged pages.
-   *
-   * The footer is rendered on every page in every locale, so a link to a page
-   * that is not published in that locale is an internal link to a 404 — present
-   * on every page of the site, in seven languages. The comparison footer column
-   * filters on `isComparisonLive` for exactly this reason; this check proves it
-   * rather than trusting it, because the failure is invisible in review (the
-   * link looks correct) and only surfaces as crawl waste.
-   */
-  const footerChecks = pages.filter((p) => p.locale === defaultLocale);
-  for (const page of footerChecks) {
-    const html = await readFile(page.file, 'utf8');
-    for (const slug of defined.keys()) {
-      const publishedHere = expectedLocalesFor(`/${slug}`).includes(page.locale);
-      if (!publishedHere && new RegExp(`href="/${slug}/?"`).test(html)) {
-        fail(
-          'comparison links',
-          `${page.locale}${page.logical}: links to /${slug} but it is not published in ${page.locale}`,
-        );
-      }
-    }
-  }
-}
-notes.push(`comparison slugs ${registryPages.size}`);
 
 /**
  * Sitemap agreement. The sitemap is the only route by which an engine discovers

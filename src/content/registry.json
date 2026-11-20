@@ -128,24 +128,5 @@
       ]
     }
   ],
-  "pages": [
-    {
-      "path": "smallpdf-alternative",
-      "locales": [
-        "en"
-      ]
-    },
-    {
-      "path": "ilovepdf-alternative",
-      "locales": [
-        "en"
-      ]
-    },
-    {
-      "path": "pdf24-alternative",
-      "locales": [
-        "en"
-      ]
-    }
-  ]
+  "pages": []
 }
