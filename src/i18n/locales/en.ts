@@ -132,7 +132,7 @@ const en = {
       },
       {
         title: 'Original quality preserved',
-        text: 'Pages are copied byte-for-byte from your original PDF. Fonts, vectors, images and links stay exactly as they were — no re-compression.',
+        text: 'Pages are copied from your original PDF rather than re-rendered. Fonts, vectors and images keep their original quality — no re-compression.',
       },
     ],
   },
@@ -140,7 +140,7 @@ const en = {
   privacySection: {
     h2: 'Your PDF never leaves your browser.',
     p1: 'Most online PDF tools upload your file to a server, process it there, and ask you to trust their deletion policy. We flipped the model: rearranging pages happens <strong>entirely on your device</strong>, using the same rendering engine your browser already has.',
-    p2: 'No server ever receives your document. There is nothing to leak, breach, or subpoena. That makes it safe for contracts, medical records, financial statements and anything else you wouldn’t hand to a stranger.',
+    p2: 'No server ever receives your document. There is nothing to leak, breach, or subpoena. That makes it safe for contracts, medical records, financial statements and anything else you wouldn’t hand to a stranger. Don’t take our word for it - the <a href="https://github.com/Kaizen3424/pdf-rearrange">source code is public</a>, so you can check exactly what happens to your file.',
     readPromise: 'Read our privacy promise',
     tryNow: 'Try it now',
     bullets: [
@@ -185,7 +185,7 @@ const en = {
       },
       {
         q: 'How do I replace a PDF page without losing formatting?',
-        a: 'Delete the page you want to replace, add the PDF that contains the new page, and drag it into the empty slot. Because every page is copied byte-for-byte rather than re-rendered, fonts, images, vectors, links and metadata are preserved exactly — nothing is re-compressed or restyled.',
+        a: 'Delete the page you want to replace, add the PDF that contains the new page, and drag it into the empty slot. Because every page is copied rather than re-rendered, fonts, images and vectors keep their original quality — nothing is re-compressed or restyled.',
       },
       {
         q: 'How do I swap, add, remove, and rotate PDF pages?',
@@ -367,7 +367,7 @@ const en = {
       p1: 'Rearranging the pages of a PDF is a small job. You scanned a contract back-to-front, or a report\'s summary ended up at the end, and you just want it fixed. Yet most tools for this simple task ask for a lot in return: your file gets uploaded to a server you know nothing about, you hit a daily limit after two documents, and there\'s usually an upgrade prompt waiting.',
       p2: 'We built Rearrange PDF because none of that is necessary. Page reordering doesn\'t need a server — a modern browser has everything required to read, display and rebuild a PDF. So that\'s all this site is: a single page, a drop zone, and a grid of thumbnails you can drag around. No uploads, no accounts, no ads, no limits.',
       howItWorksH2: 'How it works',
-      howItWorksP: 'Under the hood, the tool uses two open-source libraries that run entirely in your browser: <strong>PDF.js</strong> renders each page as a thumbnail, and <strong>pdf-lib</strong> assembles your new document by copying the original pages — byte-for-byte, so formatting, fonts and quality are preserved exactly. When you click download, the finished PDF is created right there in the tab and handed to your browser\'s save dialog.',
+      howItWorksP: 'Under the hood, the tool uses two open-source libraries that run entirely in your browser: <strong>PDF.js</strong> renders each page as a thumbnail, and <strong>pdf-lib</strong> assembles your new document by copying the original pages, so formatting, fonts and quality are preserved exactly. Bookmarks and form fields are not carried over, because the output is a new PDF. When you click download, the finished file is created right there in the tab and handed to your browser\'s save dialog.',
       getInTouchH2: 'Get in touch',
       getInTouchP: 'Found a PDF that doesn\'t work? Have an idea for the tool? We read everything — <a href="/contact">contact us</a> at <a href="mailto:kaizen3242@gmail.com">kaizen3242@gmail.com</a>.',
       ctaH2: 'Try it with your own file',
@@ -503,7 +503,7 @@ const en = {
         },
         {
           title: '4. No warranty',
-          text: 'The service is provided "as is", free of charge, without warranties of any kind. We work hard to keep it accurate and reliable — page content is copied byte-for-byte from your original file — but we cannot guarantee uninterrupted availability or fitness for a particular purpose. Keep backups of important documents.',
+          text: 'The service is provided "as is", free of charge, without warranties of any kind. We work hard to keep it accurate and reliable — page content is copied from your original file rather than re-rendered — but we cannot guarantee uninterrupted availability or fitness for a particular purpose. Keep backups of important documents.',
         },
         {
           title: '5. Limitation of liability',

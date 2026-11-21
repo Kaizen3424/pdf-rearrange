@@ -14,7 +14,15 @@ export type RichSegment =
 const PATTERN = /<strong>(.*?)<\/strong>|<a\s+href="([^"]*)"\s*>(.*?)<\/a>/g;
 
 function isSafeHref(href: string): boolean {
-  return href.startsWith('/') || href.startsWith('mailto:') || href.startsWith('#');
+  if (href.startsWith('/') || href.startsWith('mailto:') || href.startsWith('#')) return true;
+  // Public source links are part of the privacy proof. Allow https only, and
+  // require it to parse as a real URL so no script/data scheme can slip through.
+  if (!href.startsWith('https://')) return false;
+  try {
+    return new URL(href).protocol === 'https:';
+  } catch {
+    return false;
+  }
 }
 
 export function parseRich(text: string): RichSegment[] {

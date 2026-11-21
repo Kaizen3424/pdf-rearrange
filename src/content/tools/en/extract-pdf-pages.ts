@@ -20,8 +20,8 @@ const en: ToolContent = {
       text: 'Selected pages can be dragged into a different order before you export, so you can pull three pages out of a report and file them in the sequence you actually want.',
     },
     {
-      title: 'Byte-for-byte copies',
-      text: 'Extracted pages are copied straight from the source file, not re-rendered. Fonts, vector graphics, images and links are preserved exactly, with no re-compression.',
+      title: 'Copied, not re-rendered',
+      text: 'Extracted pages are copied straight from the source file, not re-rendered. Fonts, vector graphics and images keep their original quality, with no re-compression.',
     },
   ],
   howTo: {
@@ -58,6 +58,10 @@ const en: ToolContent = {
     {
       q: 'Can I reorder the pages I extract?',
       a: 'Yes. Once selected, the pages can be dragged into any sequence before you download, so you can pull a few pages out of a long report and file them in the order that suits you rather than the order they appeared in.',
+    },
+    {
+      q: 'Do bookmarks and form fields come along?',
+      a: 'Page content does, but the extract is a new PDF built from the selected pages. Bookmarks, clickable links and fillable form fields are not carried over. Keep the original if you need them.',
     },
   ],
 };

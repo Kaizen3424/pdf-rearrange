@@ -59,6 +59,10 @@ const ptBr: ToolContent = {
       q: 'Dá para mudar o tamanho da página em branco?',
       a: 'As páginas em branco são adicionadas no tamanho A4. Se você precisa de outro tamanho de papel, gire a página para mudar a orientação ou ajuste o tamanho da própria página depois de inseri-la.',
     },
+    {
+      q: 'Meus marcadores e campos de formulário continuam lá?',
+      a: 'Suas páginas mantêm texto, fontes, imagens e layout, mas o arquivo baixado é um PDF novo. Marcadores, links clicáveis e campos de formulário preenchíveis não são transportados. Guarde o original se esses recursos forem importantes.',
+    },
   ],
 };
 

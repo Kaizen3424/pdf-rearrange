@@ -21,7 +21,7 @@ const ptBr: ToolContent = {
     },
     {
       title: 'Qualidade inalterada',
-      text: 'As páginas que sobram são copiadas exatamente como estavam — fontes, imagens, vetores e links não são redesenhados nem recomprimidos, então excluir uma página não custa nada em fidelidade.',
+      text: 'As páginas que sobram são copiadas como estavam — fontes, imagens e vetores não são redesenhados nem recomprimidos, então excluir uma página não custa nada em fidelidade.',
     },
   ],
   howTo: {
@@ -58,6 +58,10 @@ const ptBr: ToolContent = {
     {
       q: 'E se eu excluir páginas demais?',
       a: 'Não se preocupe — as exclusões podem ser desfeitas, então nada é definitivo até você baixar. Se você já chegou a exportar, guarde o arquivo original e faça as exclusões numa cópia dele.',
+    },
+    {
+      q: 'Marcadores, links ou campos de formulário sobrevivem?',
+      a: 'As páginas restantes mantêm texto, fontes, imagens e vetores exatamente como estavam. Marcadores, links clicáveis e campos de formulário preenchíveis pertencem ao documento inteiro e não entram no arquivo novo. Guarde o original se precisar deles.',
     },
   ],
 };

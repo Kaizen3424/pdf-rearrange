@@ -9,7 +9,7 @@ const ptBr: ToolContent = {
   breadcrumb: 'Dividir PDF',
   h1: 'Divida um PDF em documentos separados',
   intro:
-    'Quebre um PDF em tantos arquivos quanto precisar. Escolha um intervalo de páginas e receba um documento, ou separe cada página em um arquivo próprio de uma só vez. Nada é enviado, e as páginas da saída são cópias byte por byte dos originais.',
+    'Quebre um PDF em tantos arquivos quanto precisar. Escolha um intervalo de páginas e receba um documento, ou separe cada página em um arquivo próprio de uma só vez. Nada é enviado, e as páginas da saída são copiadas dos originais sem ser redesenhadas.',
   benefits: [
     {
       title: 'Por intervalo ou o documento inteiro',
@@ -57,7 +57,11 @@ const ptBr: ToolContent = {
     },
     {
       q: 'Dividir reduz a qualidade do PDF?',
-      a: 'Não. As páginas são copiadas byte por byte do arquivo original em vez de serem redesenhadas, então a saída tem exatamente a qualidade da fonte — o texto continua selecionável e os gráficos vetoriais continuam nítidos.',
+      a: 'Não. As páginas são copiadas do arquivo original em vez de serem redesenhadas, então a saída tem exatamente a qualidade da fonte — o texto continua selecionável e os gráficos vetoriais continuam nítidos.',
+    },
+    {
+      q: 'Marcadores e campos de formulário sobrevivem à divisão?',
+      a: 'O conteúdo da página sim, mas os recursos do documento não. Cada arquivo de saída é um PDF novo montado com as páginas escolhidas, então marcadores, links clicáveis e campos preenchíveis não são transportados. Guarde o original se precisar deles.',
     },
   ],
 };

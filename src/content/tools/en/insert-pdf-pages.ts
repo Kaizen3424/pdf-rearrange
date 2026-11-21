@@ -53,11 +53,15 @@ const en: ToolContent = {
     },
     {
       q: 'How do I replace a page in a PDF?',
-      a: 'Delete the page you are replacing, add the PDF that contains the new page, and drag it into the empty slot. Since every page is copied byte-for-byte rather than re-rendered, the replacement keeps its fonts, images and layout exactly.',
+      a: 'Delete the page you are replacing, add the PDF that contains the new page, and drag it into the empty slot. Since every page is copied rather than re-rendered, the replacement keeps its fonts, images and layout exactly.',
     },
     {
       q: 'Can I insert pages without uploading my document?',
-      a: 'Yes — insertion happens entirely in your browser, so your file is never transmitted. Open the Network tab in your browser\'s developer tools while you work and you will see no file requests at all.',
+      a: 'Yes - insertion happens entirely in your browser, so your file is never transmitted. Open the Network tab in your browser\'s developer tools while you work and you will see no file requests at all.',
+    },
+    {
+      q: 'Do bookmarks and form fields survive the edit?',
+      a: 'Page content does, but the output is a new PDF assembled from your pages. Bookmarks, clickable links and fillable form fields are not carried into it. If the original has those features, keep it alongside the edited copy.',
     },
   ],
 };

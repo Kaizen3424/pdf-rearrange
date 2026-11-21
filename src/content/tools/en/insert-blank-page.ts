@@ -59,6 +59,10 @@ const en: ToolContent = {
       q: 'Can I change the size of the blank page?',
       a: 'Blank pages are added at A4 size. If you need a different paper size, rotate the page to change its orientation, or adjust the page size itself after inserting it.',
     },
+    {
+      q: 'Will my bookmarks and form fields still be there?',
+      a: 'Your pages keep their text, fonts, images and layout, but the downloaded file is a new PDF. Bookmarks, clickable links and fillable form fields are not carried over, so keep the original if those matter to you.',
+    },
   ],
 };
 

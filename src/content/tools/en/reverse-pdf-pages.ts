@@ -21,7 +21,7 @@ const en: ToolContent = {
     },
     {
       title: 'Unchanged quality',
-      text: 'Only the sequence of pages changes. Each page is copied exactly as it was, so text, images, vector graphics and links are identical to the original file.',
+      text: 'Only the sequence of pages changes. Each page is copied as it was, so text, images and vector graphics keep their original quality.',
     },
   ],
   howTo: {
@@ -58,6 +58,10 @@ const en: ToolContent = {
     {
       q: 'Do I need to drag every page to fix a reversed scan?',
       a: 'No — that is the point of the reverse button. A 300-page scan is fixed in a single click rather than 299 separate drags. If only a few pages are out of place rather than the whole document, drag just those thumbnails instead.',
+    },
+    {
+      q: 'Do bookmarks or links survive the reversal?',
+      a: 'The pages keep their text, images and layout, but the file you download is a new PDF. Bookmarks, clickable links and form fields are not carried over, so keep the original if you need them.',
     },
   ],
 };

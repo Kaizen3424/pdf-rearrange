@@ -124,7 +124,7 @@ const ptBr = {
       },
       {
         title: 'Qualidade original preservada',
-        text: 'As páginas são copiadas byte por byte do seu PDF original. Fontes, vetores, imagens e links permanecem exatamente como eram — sem recompressão.',
+        text: 'As páginas são copiadas do seu PDF original em vez de redesenhadas. Fontes, vetores e imagens mantêm a qualidade original — sem recompressão.',
       },
     ],
   },
@@ -132,7 +132,7 @@ const ptBr = {
   privacySection: {
     h2: 'Seu PDF nunca sai do seu navegador.',
     p1: 'A maioria das ferramentas online de PDF envia seu arquivo para um servidor, processa lá e pede que você confie na política de exclusão deles. Nós invertemos o modelo: a reorganização de páginas acontece <strong>inteiramente no seu dispositivo</strong>, usando o mesmo motor de renderização que seu navegador já tem.',
-    p2: 'Nenhum servidor jamais recebe seu documento. Não há nada para vazar, violar ou intimar. Isso o torna seguro para contratos, registros médicos, extratos financeiros e qualquer outra coisa que você não entregaria a um estranho.',
+    p2: 'Nenhum servidor jamais recebe seu documento. Não há nada para vazar, violar ou intimar. Isso o torna seguro para contratos, registros médicos, extratos financeiros e qualquer outra coisa que você não entregaria a um estranho. Não aceite nossa palavra: o <a href="https://github.com/Kaizen3424/pdf-rearrange">código-fonte é público</a>, então você pode conferir exatamente o que acontece com seu arquivo.',
     readPromise: 'Leia nossa promessa de privacidade',
     tryNow: 'Experimente agora',
     bullets: [
@@ -177,7 +177,7 @@ const ptBr = {
       },
       {
         q: 'Como substituir uma página de PDF sem perder a formatação?',
-        a: 'Exclua a página que deseja substituir, adicione o PDF que contém a nova página e arraste-a para a posição vazia. Como cada página é copiada byte por byte em vez de re-renderizada, fontes, imagens, vetores, links e metadados são preservados exatamente — nada é recomprimido ou reestilizado.',
+        a: 'Exclua a página que deseja substituir, adicione o PDF que contém a nova página e arraste-a para a posição vazia. Como cada página é copiada em vez de redesenhada, fontes, imagens e vetores mantêm a qualidade original — nada é recomprimido ou reestilizado.',
       },
       {
         q: 'Como trocar, adicionar, remover e girar páginas de PDF?',
@@ -359,7 +359,7 @@ const ptBr = {
       p1: 'Reorganizar as páginas de um PDF é um trabalho pequeno. Você digitalizou um contrato de trás para frente, ou o resumo de um relatório acabou no final, e só quer isso corrigido. No entanto, a maioria das ferramentas para essa tarefa simples pede muito em troca: seu arquivo é enviado para um servidor que você não conhece, você atinge um limite diário depois de dois documentos, e geralmente há um prompt de upgrade esperando.',
       p2: 'Criamos o Rearrange PDF porque nada disso é necessário. Reordenar páginas não precisa de um servidor — um navegador moderno tem tudo o que é preciso para ler, exibir e reconstruir um PDF. Então é isso que este site é: uma única página, uma área de envio e uma grade de miniaturas que você pode arrastar. Sem envios, sem contas, sem anúncios, sem limites.',
       howItWorksH2: 'Como funciona',
-      howItWorksP: 'Nos bastidores, a ferramenta usa duas bibliotecas de código aberto que rodam inteiramente no seu navegador: <strong>PDF.js</strong> renderiza cada página como uma miniatura, e <strong>pdf-lib</strong> assembla seu novo documento copiando as páginas originais — byte por byte, então formatação, fontes e qualidade são preservadas exatamente. Quando você clica em baixar, o PDF finalizado é criado ali mesmo na aba e entregue à caixa de diálogo de salvamento do seu navegador.',
+      howItWorksP: 'Nos bastidores, a ferramenta usa duas bibliotecas de código aberto que rodam inteiramente no seu navegador: <strong>PDF.js</strong> renderiza cada página como uma miniatura, e <strong>pdf-lib</strong> monta seu novo documento copiando as páginas originais, então formatação, fontes e qualidade são preservadas exatamente. Marcadores e campos de formulário não são transportados, porque a saída é um PDF novo. Quando você clica em baixar, o arquivo pronto é criado ali mesmo na aba e entregue à caixa de diálogo de salvamento do seu navegador.',
       getInTouchH2: 'Entre em contato',
       getInTouchP: 'Encontrou um PDF que não funciona? Tem uma ideia para a ferramenta? Lemos tudo — <a href="/contact">entre em contato</a> pelo email <a href="mailto:kaizen3242@gmail.com">kaizen3242@gmail.com</a>.',
       ctaH2: 'Experimente com seu próprio arquivo',
@@ -495,7 +495,7 @@ const ptBr = {
         },
         {
           title: '4. Sem garantia',
-          text: 'O serviço é fornecido "como está", gratuitamente, sem garantias de qualquer tipo. Trabalhamos duro para mantê-lo preciso e confiável — o conteúdo das páginas é copiado byte por byte do seu arquivo original — mas não podemos garantir disponibilidade ininterrupta ou adequação a um propósito particular. Mantenha backups de documentos importantes.',
+          text: 'O serviço é fornecido "como está", gratuitamente, sem garantias de qualquer tipo. Trabalhamos duro para mantê-lo preciso e confiável — o conteúdo das páginas é copiado do seu arquivo original em vez de redesenhado — mas não podemos garantir disponibilidade ininterrupta ou adequação a um propósito particular. Mantenha backups de documentos importantes.',
         },
         {
           title: '5. Limitação de responsabilidade',

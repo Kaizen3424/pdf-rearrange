@@ -16,8 +16,8 @@ const en: ToolContent = {
       text: 'Add every file first, then drag pages into the sequence you need. Interleave chapters from different documents, put a cover sheet on top, or drop an appendix at the end — the order is entirely yours.',
     },
     {
-      title: 'Lossless, byte-for-byte',
-      text: 'Every page is copied straight from your original file rather than re-rendered, so fonts, vector graphics, images and links come out exactly as they went in.',
+      title: 'Copied, never re-rendered',
+      text: 'Every page is copied straight from your original file rather than re-rendered, so text stays selectable and fonts, vector graphics and images keep their original quality.',
     },
     {
       title: 'No upload, ever',
@@ -57,7 +57,11 @@ const en: ToolContent = {
     },
     {
       q: 'Will merging reduce the quality of my PDF?',
-      a: 'No. Pages are copied byte-for-byte from the originals rather than being re-rendered or re-compressed, so text stays sharp, vector graphics stay vector, and fonts and links are preserved exactly.',
+      a: 'No. Pages are copied from the originals rather than being re-rendered or re-compressed, so text stays sharp, vector graphics stay vector, and fonts and images keep their original quality.',
+    },
+    {
+      q: 'What happens to bookmarks, links and form fields?',
+      a: 'The page content is copied unchanged, but the result is a new PDF assembled from your pages: document-level features such as bookmarks, clickable links and fillable form fields are not carried over. Keep your original file if you still need those.',
     },
   ],
 };

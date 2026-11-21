@@ -16,8 +16,8 @@ const ptBr: ToolContent = {
       text: 'Adicione todos os arquivos primeiro e depois arraste as páginas para a sequência desejada. Intercale capítulos de documentos diferentes, coloque uma folha de rosto no topo ou deixe um apêndice no final. A ordem é inteiramente sua.',
     },
     {
-      title: 'Sem perdas, byte por byte',
-      text: 'Cada página é copiada direto do arquivo original em vez de ser redesenhada, então fontes, gráficos vetoriais, imagens e links saem exatamente como entraram.',
+      title: 'Copiadas, nunca redesenhadas',
+      text: 'Cada página é copiada direto do arquivo original em vez de ser redesenhada, então o texto continua selecionável e fontes, gráficos vetoriais e imagens mantêm a qualidade original.',
     },
     {
       title: 'Nunca enviado',
@@ -57,7 +57,11 @@ const ptBr: ToolContent = {
     },
     {
       q: 'Juntar reduz a qualidade do meu PDF?',
-      a: 'Não. As páginas são copiadas byte por byte dos originais em vez de redesenhadas ou recomprimidas, então o texto continua nítido, os gráficos vetoriais continuam vetoriais e fontes e links são preservados exatamente.',
+      a: 'Não. As páginas são copiadas dos originais em vez de redesenhadas ou recomprimidas, então o texto continua nítido, os gráficos vetoriais continuam vetoriais e fontes e imagens mantêm a qualidade original.',
+    },
+    {
+      q: 'O que acontece com marcadores, links e campos de formulário?',
+      a: 'O conteúdo da página é copiado sem alterações, mas o resultado é um PDF novo montado a partir das suas páginas: marcadores, links clicáveis e campos de formulário preenchíveis não são transportados. Guarde o arquivo original se precisar deles.',
     },
   ],
 };

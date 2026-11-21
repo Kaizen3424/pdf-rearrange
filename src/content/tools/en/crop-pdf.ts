@@ -63,6 +63,10 @@ const en: ToolContent = {
       q: 'Is my PDF uploaded?',
       a: 'No. The crop is applied inside your browser tab and nothing is transmitted.',
     },
+    {
+      q: 'Do bookmarks or form fields survive cropping?',
+      a: 'The cropped pages keep their text, fonts and images, but the downloaded file is a new PDF. Bookmarks, clickable links and fillable form fields are not carried over, so keep the original if you need them.',
+    },
   ],
 };
 

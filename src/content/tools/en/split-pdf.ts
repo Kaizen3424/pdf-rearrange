@@ -9,7 +9,7 @@ const en: ToolContent = {
   breadcrumb: 'Split PDF',
   h1: 'Split a PDF into separate documents',
   intro:
-    'Break one PDF into as many files as you need. Choose a page range and get one document back, or split every page into its own file in one pass. Nothing is uploaded, and the output pages are byte-for-byte copies of your originals.',
+    'Break one PDF into as many files as you need. Choose a page range and get one document back, or split every page into its own file in one pass. Nothing is uploaded, and the output pages are copied from your originals without being re-rendered.',
   benefits: [
     {
       title: 'Split by range or entirely',
@@ -57,7 +57,11 @@ const en: ToolContent = {
     },
     {
       q: 'Does splitting reduce PDF quality?',
-      a: 'No. Pages are copied byte-for-byte from the original file rather than being re-rendered, so the split output is identical in quality to the source — text stays selectable and vector graphics stay sharp.',
+      a: 'No. Pages are copied from the original file rather than being re-rendered, so the split output is identical in quality to the source - text stays selectable and vector graphics stay sharp.',
+    },
+    {
+      q: 'Do bookmarks and form fields survive a split?',
+      a: 'Page content does, but document-level features do not. Each output is a new PDF built from the chosen pages, so bookmarks, clickable links and form fields are not carried over. Keep the original if you need them.',
     },
   ],
 };

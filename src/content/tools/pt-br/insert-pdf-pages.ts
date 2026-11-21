@@ -53,11 +53,15 @@ const ptBr: ToolContent = {
     },
     {
       q: 'Como substituir uma página em um PDF?',
-      a: 'Exclua a página que você está trocando, adicione o PDF que contém a página nova e arraste para a vaga que ficou. Como cada página é copiada byte por byte em vez de redesenhada, a substituta mantém exatamente as fontes, imagens e o layout de origem.',
+      a: 'Exclua a página que você está trocando, adicione o PDF que contém a página nova e arraste para a vaga que ficou. Como cada página é copiada em vez de redesenhada, a substituta mantém exatamente as fontes, imagens e o layout de origem.',
     },
     {
       q: 'Posso inserir páginas sem enviar meu documento?',
       a: 'Sim — a inserção acontece inteiramente no seu navegador, então seu arquivo nunca é transmitido. Abra a aba Rede nas ferramentas de desenvolvedor enquanto trabalha e você não verá nenhuma requisição de arquivo.',
+    },
+    {
+      q: 'Marcadores e campos de formulário sobrevivem à edição?',
+      a: 'O conteúdo da página sim, mas o arquivo baixado é um PDF novo montado com as suas páginas. Marcadores, links clicáveis e campos de formulário preenchíveis não são transportados. Se o original tiver esses recursos, guarde-o junto com a cópia editada.',
     },
   ],
 };

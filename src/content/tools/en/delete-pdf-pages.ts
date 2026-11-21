@@ -21,7 +21,7 @@ const en: ToolContent = {
     },
     {
       title: 'Unchanged quality',
-      text: 'The surviving pages are copied exactly as they were — fonts, images, vectors and links are not re-rendered or re-compressed, so deleting a page costs you nothing in fidelity.',
+      text: 'The surviving pages are copied as they were - fonts, images and vectors are not re-rendered or re-compressed, so deleting a page costs you nothing in fidelity.',
     },
   ],
   howTo: {
@@ -57,7 +57,11 @@ const en: ToolContent = {
     },
     {
       q: 'What if I delete too many pages?',
-      a: 'Do not worry — deletions are undoable, so nothing is final until you download. If you have already exported, keep the original file and delete the pages from that copy instead.',
+      a: 'Do not worry - deletions are undoable, so nothing is final until you download. If you have already exported, keep the original file and delete the pages from that copy instead.',
+    },
+    {
+      q: 'Do bookmarks, links or form fields survive?',
+      a: 'The remaining pages keep their text, fonts, images and vector graphics exactly as they were. Bookmarks, clickable links and fillable form fields belong to the document as a whole, so they are not included in the new file. Keep the original if you need them.',
     },
   ],
 };

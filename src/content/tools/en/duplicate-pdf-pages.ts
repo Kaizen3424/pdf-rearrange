@@ -21,7 +21,7 @@ const en: ToolContent = {
     },
     {
       title: 'Identical quality, every time',
-      text: 'Copies are byte-for-byte duplicates of the source page, not re-renders, so text, vector graphics and embedded fonts are indistinguishable from the original.',
+      text: 'Copies are taken from the source page rather than re-rendered, so text, vector graphics and embedded fonts are indistinguishable from the original.',
     },
   ],
   howTo: {
@@ -57,7 +57,11 @@ const en: ToolContent = {
     },
     {
       q: 'Does duplicating a page change the file quality?',
-      a: 'No. The copy is a byte-for-byte duplicate of the original page rather than a re-render, so the duplicated page is visually and textually identical to its source, down to the embedded fonts and links.',
+      a: 'No. The copy is taken from the original page rather than re-rendered, so the duplicated page is visually and textually identical to its source, down to the embedded fonts.',
+    },
+    {
+      q: 'Do bookmarks or form fields get duplicated too?',
+      a: 'No. Bookmarks, clickable links and form fields belong to the document as a whole rather than to a single page, so the new file contains the copied pages but not those document-level features. Keep the original if you need them.',
     },
   ],
 };

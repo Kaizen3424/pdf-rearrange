@@ -21,7 +21,7 @@ const ptBr: ToolContent = {
     },
     {
       title: 'Mesma qualidade, sempre',
-      text: 'As cópias são duplicatas byte por byte da página de origem, não versões redesenhadas, então texto, gráficos vetoriais e fontes incorporadas ficam indistinguíveis do original.',
+      text: 'As cópias vêm da página de origem, não de um redesenho, então texto, gráficos vetoriais e fontes incorporadas ficam indistinguíveis do original.',
     },
   ],
   howTo: {
@@ -57,7 +57,11 @@ const ptBr: ToolContent = {
     },
     {
       q: 'Duplicar uma página altera a qualidade do arquivo?',
-      a: 'Não. A cópia é uma duplicata byte por byte da página original, não um redesenho, então a página duplicada é idêntica à fonte tanto visual quanto no texto, até nas fontes incorporadas e nos links.',
+      a: 'Não. A cópia vem da página original, não de um redesenho, então a página duplicada é idêntica à fonte tanto visual quanto no texto, até nas fontes incorporadas.',
+    },
+    {
+      q: 'Marcadores e campos de formulário também são duplicados?',
+      a: 'Não. Marcadores, links clicáveis e campos de formulário pertencem ao documento como um todo, não a uma única página. O arquivo novo traz as páginas copiadas, mas não esses recursos. Guarde o original se precisar deles.',
     },
   ],
 };

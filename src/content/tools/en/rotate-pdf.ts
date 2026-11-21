@@ -57,7 +57,11 @@ const en: ToolContent = {
     },
     {
       q: 'Does rotating a PDF lower its quality?',
-      a: 'No. Rotation changes only how the page is displayed, not the underlying content. Text stays selectable, links keep working and images are not re-compressed, so the rotated file is exactly as sharp as the original.',
+      a: 'No. Rotation changes only how the page is displayed, not the underlying content. Text stays selectable and images are not re-compressed, so the rotated file is exactly as sharp as the original.',
+    },
+    {
+      q: 'Do bookmarks and form fields survive rotation?',
+      a: 'The pages keep their text, images and layout, but the downloaded file is a new PDF. Bookmarks, clickable links and fillable form fields are not carried over, so keep the original if you need them.',
     },
   ],
 };
