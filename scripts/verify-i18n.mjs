@@ -364,13 +364,14 @@ for (const page of pages) {
     }
   }
 
-  // og:locale + og:locale:alternate (all other locales).
+  // og:locale + og:locale:alternate, from the same published-locale set as
+  // hreflang — an unavailable translation must not be advertised here either.
   const ogLocale = /<meta property="og:locale" content="([^"]+)"/.exec(html)?.[1];
   if (ogLocale !== meta.ogLocale) fail('og:locale', `${where}: og:locale ${ogLocale} != ${meta.ogLocale}`);
   const ogAlt = matchAll(html, /<meta property="og:locale:alternate" content="([^"]+)"/g).map(
     (m) => m[1],
   );
-  const expectedOgAlt = verifiableLocales
+  const expectedOgAlt = expectedLocalesFor(logical)
     .filter((code) => code !== locale)
     .map((code) => metaByCode.get(code).ogLocale);
   if (ogAlt.length !== expectedOgAlt.length) {

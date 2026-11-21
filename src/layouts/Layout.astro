@@ -4,6 +4,7 @@ import jpFontCss from '@fontsource-variable/noto-sans-jp/index.css?url';
 import krFontCss from '@fontsource-variable/noto-sans-kr/index.css?url';
 import '../styles/global.css';
 import { defaultLocale, getAlternates, getDictionary, localeMeta, localePath, type Locale } from '../i18n/utils';
+import { localesForLogicalPath } from '../content/registry';
 
 interface Props {
   title: string;
@@ -37,11 +38,13 @@ const canonical = canonicalPath
   ? new URL(localePath(canonicalPath, locale), site).href
   : new URL(Astro.url.pathname, site).href;
 const alternates = canonicalPath && !noindex ? getAlternates(canonicalPath, site) : [];
-const ogAlternates = noindex
+// Same source as hreflang: a locale that has no page for this URL must not be
+// advertised as an available translation here either.
+const ogAlternates = noindex || !canonicalPath
   ? []
-  : Object.values(localeMeta)
-      .filter((entry) => entry.code !== locale)
-      .map((entry) => entry.ogLocale);
+  : localesForLogicalPath(canonicalPath)
+      .filter((code) => code !== locale)
+      .map((code) => localeMeta[code].ogLocale);
 const ogImage = new URL('/og-image.png', site).href;
 const ogImageAlt = dict.ogImageAlt;
 const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
