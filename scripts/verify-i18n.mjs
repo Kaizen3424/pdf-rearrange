@@ -255,8 +255,12 @@ const englishLogical = logicalByLocale.get(defaultLocale) ?? new Set();
 // A locale directory that is empty or absent is a build that silently shipped
 // one language: nothing in the per-page checks would notice, because those
 // checks only look at pages that exist.
+const publishedLocales = new Set([...restrictedTo.values()].flat());
 for (const code of localeCodes) {
   if (code === defaultLocale) continue;
+  // The registry can publish nothing in a locale at all. That is a valid
+  // state: no routes, no dist directory, nothing to verify.
+  if (!publishedLocales.has(code)) continue;
   const dir = path.join(dist, code);
   if (!hasDist || !existsSync(dir)) {
     fail('locale directory', `dist/${code}/ is missing — no ${code} pages were emitted`);
@@ -470,6 +474,9 @@ if (masterSlugs === null) {
   for (const code of verifiableLocales) {
     const own = await toolSlugsIn(code);
     if (own === null) {
+      // A locale the registry publishes no tools in has no directory by design.
+      // Absence there is the intended state, not a missing-copy failure.
+      if (requiredSlugsFor(code).length === 0) continue;
       fail('tool copy', `${code}: missing src/content/tools/${code}/ — directory absent`);
       continue;
     }

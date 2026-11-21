@@ -22,7 +22,15 @@ const indexable = (robots) => !robots || !/noindex/.test(robots);
  * is the right default for pages like `/about`.
  */
 const REGISTRY = new Map(); // logical path -> Locale[]
-const ALL_LOCALES = 8;
+/** Locale URL prefixes, read from the same source the routes use. */
+let LOCALE_CODES = [];
+try {
+  const ui = readFileSync(join('src', 'i18n', 'ui.ts'), 'utf8');
+  const match = /export const locales = \[([^\]]+)\]/.exec(ui);
+  if (match) LOCALE_CODES = [...match[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
+} catch {
+  // Fall back to treating a two-segment index.html as a tool page.
+}
 try {
   const registry = JSON.parse(readFileSync(join('src', 'content', 'registry.json'), 'utf8'));
   for (const entry of [...(registry.tools ?? []), ...(registry.pages ?? [])]) {
@@ -40,9 +48,11 @@ function expectedHreflangCount(rel) {
   // before it. `/index.html` for the homepage has nothing before it, which is
   // correctly unregistered and so falls back to the full locale count.
   const last = segments[segments.length - 1];
-  const logical = last === 'index.html' ? segments[segments.length - 2] : last;
-  const locales = logical === undefined ? undefined : REGISTRY.get(logical);
-  return (locales ? locales.length : ALL_LOCALES) + 1;
+  let logical = last === 'index.html' ? segments[segments.length - 2] : last;
+  // `pt-br/index.html` is a homepage, not a tool called "pt-br".
+  if (logical !== undefined && LOCALE_CODES.includes(logical)) logical = '';
+  const locales = logical === undefined ? REGISTRY.get('') : REGISTRY.get(logical);
+  return (locales ?? (logical === '' ? [] : LOCALE_CODES)).length + 1;
 }
 
 function walk(dir, out = []) {

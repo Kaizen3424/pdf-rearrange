@@ -15,6 +15,7 @@
       "engine": "organize",
       "focus": "merge",
       "primary": "merge pdf",
+      "locales": ["en", "pt-br"],
       "related": [
         "split-pdf",
         "insert-pdf-pages",
@@ -26,6 +27,7 @@
       "icon": "columns",
       "engine": "split",
       "primary": "split pdf",
+      "locales": ["en", "pt-br"],
       "related": [
         "extract-pdf-pages",
         "merge-pdf",
@@ -38,6 +40,7 @@
       "engine": "organize",
       "focus": "delete",
       "primary": "delete pdf pages",
+      "locales": ["en", "pt-br"],
       "related": [
         "extract-pdf-pages",
         "split-pdf",
@@ -50,6 +53,7 @@
       "engine": "organize",
       "focus": "rotate",
       "primary": "rotate pdf",
+      "locales": ["en"],
       "related": [
         "reverse-pdf-pages",
         "merge-pdf",
@@ -62,6 +66,7 @@
       "engine": "organize",
       "focus": "reverse",
       "primary": "reverse pdf pages",
+      "locales": ["en"],
       "related": [
         "rotate-pdf",
         "merge-pdf",
@@ -73,6 +78,7 @@
       "icon": "scan-line",
       "engine": "extract",
       "primary": "extract pdf pages",
+      "locales": ["en"],
       "related": [
         "delete-pdf-pages",
         "split-pdf",
@@ -85,6 +91,7 @@
       "engine": "organize",
       "focus": "insert",
       "primary": "insert pdf pages",
+      "locales": ["en", "pt-br"],
       "related": [
         "merge-pdf",
         "insert-blank-page",
@@ -97,6 +104,7 @@
       "engine": "organize",
       "focus": "duplicate",
       "primary": "duplicate pdf pages",
+      "locales": ["en", "pt-br"],
       "related": [
         "insert-pdf-pages",
         "merge-pdf",
@@ -109,6 +117,7 @@
       "engine": "organize",
       "focus": "blank",
       "primary": "insert blank page pdf",
+      "locales": ["en", "pt-br"],
       "related": [
         "insert-pdf-pages",
         "merge-pdf",
@@ -121,6 +130,7 @@
       "engine": "geometry",
       "focus": "crop",
       "primary": "crop pdf",
+      "locales": ["en"],
       "related": [
         "rotate-pdf",
         "split-pdf",
@@ -128,5 +138,34 @@
       ]
     }
   ],
-  "pages": []
+  "pages": [
+    {
+      "path": "",
+      "locales": ["en", "pt-br"]
+    },
+    {
+      "path": "about",
+      "locales": ["en", "pt-br"]
+    },
+    {
+      "path": "contact",
+      "locales": ["en", "pt-br"]
+    },
+    {
+      "path": "privacy",
+      "locales": ["en", "pt-br"]
+    },
+    {
+      "path": "terms",
+      "locales": ["en", "pt-br"]
+    },
+    {
+      "path": "tools",
+      "locales": ["en", "pt-br"]
+    },
+    {
+      "path": "how-to-organize-pdf-pages",
+      "locales": ["en", "pt-br"]
+    }
+  ]
 }

@@ -90,8 +90,8 @@ export interface ToolEntry {
 export interface PageEntry {
   /**
    * Logical path without a leading slash, e.g. `smallpdf-alternative`. The
-   * homepage is `/`. Used for non-tool editorial pages that may be staged per
-   * locale the same way tools are.
+   * homepage is the empty string, because `localesForLogicalPath` strips
+   * slashes before looking up — `/` and `` both normalise to ``.
    */
   path: string;
   /** Locales published in. Omit for all of them. */
@@ -186,7 +186,7 @@ function assertRegistry(): void {
   }
 
   for (const page of raw.pages) {
-    if (typeof page.path !== 'string' || page.path === '') fail('a page has no path');
+    if (typeof page.path !== 'string') fail('a page has no path');
     if (seen.has(page.path)) fail(`${page.path} is registered as both a tool and a page`);
     seen.add(page.path);
     checkLocales(page.path, page.locales);
@@ -239,14 +239,20 @@ export function toolsForLocale(locale: Locale): ToolEntry[] {
  *
  * Paths are passed with or without a leading slash and with or without a
  * trailing slash. Anything unregistered returns every locale, which is the
- * correct default: `/about/` and `/` have no reason to ever be restricted, and
- * defaulting to "all" means forgetting to register a new page costs nothing.
+ * correct default: forgetting to register a new page costs nothing.
+ *
+ * Editorial pages ARE registered, and restricted to the locales with content
+ * behind them. Six locales were left with no tool pages at all — publishing
+ * `/de/` would have meant a homepage whose tool grid, `/tools/` hub and every
+ * "related tools" block rendered empty.
  */
 export function localesForLogicalPath(logicalPath: string): Locale[] {
   const key = logicalPath.replace(/^\/+|\/+$/g, '');
-  const tool = key === '' ? undefined : bySlug.get(key);
+  // `Map.get('')` is simply `undefined`, so the homepage needs no special case:
+  // it is registered as the empty path and resolves like any other page.
+  const tool = bySlug.get(key);
   if (tool) return toolLocales(tool);
-  const page = key === '' ? undefined : pagePaths.get(key);
+  const page = pagePaths.get(key);
   if (page) return page.locales ?? [...locales];
   return [...locales];
 }
