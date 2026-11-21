@@ -57,11 +57,7 @@ function readRegistryLocales() {
   return byPath;
 }
 
-/**
- * Non-tool page paths from `registry.json`, whether or not they carry a
- * restriction. Separate from `restrictedTo`, which only holds paths that
- * actually declare `locales`.
- */
+/** Locale restrictions declared in `registry.json`, for tools and pages alike. */
 const restrictedTo = readRegistryLocales();
 
 /** Locales a logical path should be emitted in, per the registry. */

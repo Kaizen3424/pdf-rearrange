@@ -41,12 +41,12 @@ try {
   // which is what this script assumed before the registry existed.
 }
 
-/** `merge-pdf-alternative/index.html` or `fr/merge-pdf-alternative/index.html`. */
+/** `merge-pdf/index.html` or `fr/merge-pdf/index.html`. */
 function expectedHreflangCount(rel) {
   const segments = rel.split('/').filter(Boolean);
   // The last segment is the file (`index.html`); the logical path is the one
-  // before it. `/index.html` for the homepage has nothing before it, which is
-  // correctly unregistered and so falls back to the full locale count.
+  // before it. A locale prefix on a homepage is stripped below, leaving the
+  // empty path the registry uses for `/`.
   const last = segments[segments.length - 1];
   let logical = last === 'index.html' ? segments[segments.length - 2] : last;
   // `pt-br/index.html` is a homepage, not a tool called "pt-br".
